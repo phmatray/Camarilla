@@ -14,5 +14,15 @@
             <response code="200">OK</response>
             <response code="500">Internal Server Error</response>
         </member>
+        <member name="M:Camarilla.RestApi.Controllers.UserInformationsController.GetSample">
+            <summary>
+                Get a fake user information
+            </summary>
+            <remarks>
+                Get an object of a fake object userInformation
+            </remarks>
+            <response code="200">OK</response>
+            <response code="500">Internal Server Error</response>
+        </member>
     </members>
 </doc>
