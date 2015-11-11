@@ -43,6 +43,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -87,9 +103,40 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Db\CamarillaDBInitializer.cs" />
+    <Compile Include="Db\CamarillaContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Asset\Asset.cs" />
+    <Compile Include="Models\Asset\Enum\AssetCategory.cs" />
+    <Compile Include="Models\Asset\Enum\AssetSideEffect.cs" />
+    <Compile Include="Models\CamarillaUser\CamarillaUser.cs" />
+    <Compile Include="Models\Clan\Clan.cs" />
+    <Compile Include="Models\Clan\Enum\ClanCategory.cs" />
+    <Compile Include="Models\Clan\Enum\ClanKind.cs" />
+    <Compile Include="Models\Discipline\Discipline.cs" />
+    <Compile Include="Models\Discipline\Enum\DisciplineLevel.cs" />
+    <Compile Include="Models\Historical\Enum\LevelHistorical.cs" />
+    <Compile Include="Models\Historical\Historical.cs" />
+    <Compile Include="Models\IModel.cs" />
+    <Compile Include="Models\Mail\Mail.cs" />
+    <Compile Include="Models\Persona\Persona.cs" />
+    <Compile Include="Models\Persona\PersonaAsset.cs" />
+    <Compile Include="Models\Persona\PersonaDiscipline.cs" />
+    <Compile Include="Models\Persona\PersonaHistorical.cs" />
+    <Compile Include="Models\Persona\PersonaMail.cs" />
+    <Compile Include="Models\Persona\PersonaSkill.cs" />
+    <Compile Include="Models\Persona\PersonaStatistic.cs" />
+    <Compile Include="Models\Race\Race.cs" />
+    <Compile Include="Models\Skill\Enum\SkillCategory.cs" />
+    <Compile Include="Models\Skill\Enum\SkillLevel.cs" />
+    <Compile Include="Models\Skill\Skill.cs" />
+    <Compile Include="Models\Statistic\Enum\StatisticCategory.cs" />
+    <Compile Include="Models\Statistic\Enum\StatisticLevel.cs" />
+    <Compile Include="Models\Statistic\Statistic.cs" />
+    <Compile Include="Models\UserInformation\Enum\Gender.cs" />
+    <Compile Include="Models\UserInformation\UserInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -103,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
