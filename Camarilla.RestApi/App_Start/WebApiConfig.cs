@@ -7,10 +7,8 @@ namespace Camarilla.RestApi
 {
     public static class WebApiConfig
     {
-        public static HttpConfiguration Register()
+        public static HttpConfiguration Register(HttpConfiguration config)
         {
-            var config = new HttpConfiguration();
-
             // Web API configuration and services
 
             // Web API routes

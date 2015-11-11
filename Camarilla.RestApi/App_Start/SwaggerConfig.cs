@@ -1,19 +1,26 @@
+/* 
+    Documentation:
+    http://bitoftech.net/2014/08/25/asp-net-web-api-documentation-using-swagger/
+    https://cmatskas.com/webapi-documentation-done-right-with-swagger/
+    https://github.com/tjoudeh/WebApiSwagger/blob/master/WebApiSwagger/Controllers/StudentsController.cs
+*/
+
 using System.Web.Http;
 using WebActivatorEx;
 using Camarilla.RestApi;
 using Swashbuckle.Application;
 
-[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
+//[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
 namespace Camarilla.RestApi
 {
     public class SwaggerConfig
     {
-        public static void Register()
+        public static HttpConfiguration Register(HttpConfiguration config)
         {
-            var thisAssembly = typeof(SwaggerConfig).Assembly;
+            //var thisAssembly = typeof(SwaggerConfig).Assembly;
 
-            GlobalConfiguration.Configuration 
+            config
                 .EnableSwagger(c =>
                     {
                         // By default, the service root url is inferred from the request used to access the docs.
@@ -32,7 +39,7 @@ namespace Camarilla.RestApi
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "Camarilla.RestApi");
+                        c.SingleApiVersion("v1", "CamarillaAPI");
 
                         // If your API has multiple versions, use "MultipleApiVersions" instead of "SingleApiVersion".
                         // In this case, you must provide a lambda that tells Swashbuckle which actions should be
@@ -96,7 +103,7 @@ namespace Camarilla.RestApi
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
-                        //c.IncludeXmlComments(GetXmlCommentsPath());
+                        c.IncludeXmlComments(GetXmlCommentsPath());
 
                         // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                         // exposed in your API. However, there may be occasions when more control of the output is needed.
@@ -219,6 +226,13 @@ namespace Camarilla.RestApi
                         //
                         //c.EnableOAuth2Support("test-client-id", "test-realm", "Swagger UI");
                     });
+
+            return config;
+        }
+
+        private static string GetXmlCommentsPath()
+        {
+            return $@"{System.AppDomain.CurrentDomain.BaseDirectory}\bin\Camarilla.RestApi.XML";
         }
     }
 }

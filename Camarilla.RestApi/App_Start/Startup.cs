@@ -1,4 +1,5 @@
-﻿using Camarilla.RestApi;
+﻿using System.Web.Http;
+using Camarilla.RestApi;
 using Microsoft.Owin;
 using Owin;
 
@@ -10,7 +11,12 @@ namespace Camarilla.RestApi
     {
         public void Configuration(IAppBuilder app)
         {
-            app.UseWebApi(WebApiConfig.Register());
+            var config = new HttpConfiguration();
+
+            WebApiConfig.Register(config);
+            SwaggerConfig.Register(config);
+
+            app.UseWebApi(config);
         }
     }
 }
