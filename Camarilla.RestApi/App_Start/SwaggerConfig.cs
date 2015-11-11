@@ -5,6 +5,7 @@
     https://github.com/tjoudeh/WebApiSwagger/blob/master/WebApiSwagger/Controllers/StudentsController.cs
 */
 
+using System;
 using System.Web.Http;
 using WebActivatorEx;
 using Camarilla.RestApi;
@@ -232,7 +233,7 @@ namespace Camarilla.RestApi
 
         private static string GetXmlCommentsPath()
         {
-            return $@"{System.AppDomain.CurrentDomain.BaseDirectory}\bin\Camarilla.RestApi.XML";
+            return $@"{AppDomain.CurrentDomain.BaseDirectory}\XmlComments.xml";
         }
     }
 }
