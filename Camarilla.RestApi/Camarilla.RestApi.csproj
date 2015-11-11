@@ -108,6 +108,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Managers\Base\IManager.cs" />
+    <Compile Include="Managers\CamarillaRoleManager.cs" />
+    <Compile Include="Managers\CamarillaUserManager.cs" />
+    <Compile Include="Managers\UserInformationManager.cs" />
     <Compile Include="Models\Asset\Asset.cs" />
     <Compile Include="Models\Asset\Enum\AssetCategory.cs" />
     <Compile Include="Models\Asset\Enum\AssetSideEffect.cs" />
