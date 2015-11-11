@@ -7,8 +7,10 @@ namespace Camarilla.RestApi
 {
     public static class WebApiConfig
     {
-        public static void Register(HttpConfiguration config)
+        public static HttpConfiguration Register()
         {
+            var config = new HttpConfiguration();
+
             // Web API configuration and services
 
             // Web API routes
@@ -19,6 +21,8 @@ namespace Camarilla.RestApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            return config;
         }
     }
 }
