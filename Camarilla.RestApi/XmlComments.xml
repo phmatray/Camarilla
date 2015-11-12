@@ -14,6 +14,21 @@
             <response code="200">OK</response>
             <response code="500">Internal Server Error</response>
         </member>
+        <member name="M:Camarilla.RestApi.Controllers.UsersController.GetByUsername(System.String)">
+            <summary>
+                Get a user from DB
+            </summary>
+            <param name="username">
+                Email
+            </param>
+            <remarks>
+                Get a user from database by its username
+            </remarks>
+            <response code="200">OK</response>
+            <response code="400">Bad request</response>
+            <response code="404">Not found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
         <member name="M:Camarilla.RestApi.Controllers.UsersController.GetSample">
             <summary>
                 Get a fake user
@@ -29,7 +44,7 @@
                 Get a fake user from DB
             </summary>
             <remarks>
-                Get an object of a fake object user from database
+                Get a fake object that represents a user from database
             </remarks>
             <response code="200">OK</response>
             <response code="500">Internal Server Error</response>
