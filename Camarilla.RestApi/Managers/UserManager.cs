@@ -4,16 +4,16 @@ using Microsoft.AspNet.Identity;
 
 namespace Camarilla.RestApi.Managers
 {
-    internal class CamarillaUserManager : UserManager<CamarillaUser>
+    internal class UserManager : UserManager<User>, IManager
     {
-        public CamarillaUserManager(CamarillaUserStore store)
+        public UserManager(UserStore store)
             : base(store)
         {
         }
 
         public void SaveAll()
         {
-            var userStore = Store as CamarillaUserStore;
+            var userStore = Store as UserStore;
 
             userStore?.SaveAll();
         }

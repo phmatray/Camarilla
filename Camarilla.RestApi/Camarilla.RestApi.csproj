@@ -127,25 +127,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="XmlComments.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\UserInformationsController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Db\CamarillaDBInitializer.cs" />
     <Compile Include="Db\CamarillaContext.cs" />
     <Compile Include="Managers\Base\IManager.cs" />
-    <Compile Include="Managers\CamarillaRoleManager.cs" />
-    <Compile Include="Managers\CamarillaUserManager.cs" />
-    <Compile Include="Managers\UserInformationManager.cs" />
+    <Compile Include="Managers\RoleManager.cs" />
+    <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Migrations\201511121511112_InitialCreate.cs" />
+    <Compile Include="Migrations\201511121511112_InitialCreate.Designer.cs">
+      <DependentUpon>201511121511112_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Asset\Asset.cs" />
     <Compile Include="Models\Asset\Enum\AssetCategory.cs" />
     <Compile Include="Models\Asset\Enum\AssetSideEffect.cs" />
-    <Compile Include="Models\CamarillaUser\CamarillaUser.cs" />
+    <Compile Include="Models\User\User.cs" />
     <Compile Include="Models\Clan\Clan.cs" />
     <Compile Include="Models\Clan\Enum\ClanCategory.cs" />
     <Compile Include="Models\Clan\Enum\ClanKind.cs" />
@@ -169,12 +174,11 @@
     <Compile Include="Models\Statistic\Enum\StatisticCategory.cs" />
     <Compile Include="Models\Statistic\Enum\StatisticLevel.cs" />
     <Compile Include="Models\Statistic\Statistic.cs" />
-    <Compile Include="Models\UserInformation\Enum\Gender.cs" />
-    <Compile Include="Models\UserInformation\UserInformation.cs" />
+    <Compile Include="Models\User\Enum\Gender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stores\Base\IStore.cs" />
-    <Compile Include="Stores\Concretes\CamarillaRoleStore.cs" />
-    <Compile Include="Stores\Concretes\CamarillaUserStore.cs" />
+    <Compile Include="Stores\Concretes\RoleStore.cs" />
+    <Compile Include="Stores\Concretes\UserStore.cs" />
     <Compile Include="Stores\Concretes\ClanStore.cs" />
     <Compile Include="Stores\Concretes\PersonaStore.cs" />
     <Compile Include="Stores\Concretes\RaceStore.cs" />
@@ -188,6 +192,7 @@
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -195,6 +200,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201511121511112_InitialCreate.resx">
+      <DependentUpon>201511121511112_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

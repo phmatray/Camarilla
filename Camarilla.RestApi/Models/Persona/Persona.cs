@@ -16,7 +16,7 @@ namespace Camarilla.RestApi.Models
         public virtual Clan Clan { get; set; }
         public virtual Race Race { get; set; }
         public virtual Persona Sire { get; set; }
-        public virtual CamarillaUser CamarillaUser { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<PersonaMail> LetterBox { get; set; } = new List<PersonaMail>();
     }
 }

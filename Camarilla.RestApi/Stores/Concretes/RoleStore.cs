@@ -3,9 +3,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Camarilla.RestApi.Stores.Concretes
 {
-    public class CamarillaRoleStore : RoleStore<IdentityRole>
+    public class RoleStore : RoleStore<IdentityRole>
     {
-        public CamarillaRoleStore(DbContext context)
+        public RoleStore(DbContext context)
             : base(context)
         {
         }

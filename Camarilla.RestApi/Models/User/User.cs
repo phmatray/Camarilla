@@ -1,14 +1,22 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Camarilla.RestApi.Models
 {
-    public class UserInformation : IModel
+    public class User : IdentityUser, IModel
     {
-        [DisplayName("ID")]
-        public int Id { get; set; }
+        public User()
+        {
+        }
 
-        [DisplayName("Prénom")]
+        public User(string userName)
+            : base(userName)
+        {
+        }
+
+        [DisplayName("Pr�nom")]
         public string FirstName { get; set; } = string.Empty;
 
         [DisplayName("Nom")]
@@ -20,7 +28,6 @@ namespace Camarilla.RestApi.Models
         [DisplayName("Genre")]
         public Gender Gender { get; set; }
 
-        [DisplayName("Utilisateur")]
-        public virtual CamarillaUser CamarillaUser { get; set; }
+        public virtual ICollection<Persona> Personae { get; set; }
     }
 }

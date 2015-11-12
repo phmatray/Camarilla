@@ -11,25 +11,20 @@ namespace Camarilla.RestApi.Db
     {
         protected override void Seed(CamarillaContext context)
         {
-            var userStore = new CamarillaUserStore(context);
-            var userManager = new CamarillaUserManager(userStore);
+            //var userStore = new UserStore(context);
+            //var userManager = new UserManager(userStore);
 
-            var userInformation = new UserInformation
-            {
-                Birthday = new DateTime(1988, 8, 1),
-                FirstName = "Philippe",
-                LastName = "Matray",
-                Gender = Gender.Male
-            };
+            //var user = new User("phmatray")
+            //{
+            //    Email = "phmatray@gmail.com",
+            //    PhoneNumber = "0032473322929",
+            //    Birthday = new DateTime(1988, 8, 1),
+            //    FirstName = "Philippe",
+            //    LastName = "Matray",
+            //    Gender = Gender.Male
+            //};
 
-            var camarillaUser = new CamarillaUser("phmatray")
-            {
-                Email = "phmatray@gmail.com",
-                PhoneNumber = "0032473322929",
-                UserInformation = userInformation
-            };
-
-            userManager.Create(camarillaUser, "camarilla");
+            //userManager.Create(user, "camarilla");
 
             base.Seed(context);
         }

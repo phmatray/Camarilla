@@ -5,18 +5,19 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Camarilla.RestApi.Db
 {
-    public class CamarillaContext : IdentityDbContext<CamarillaUser>
+    public class CamarillaContext : IdentityDbContext<User>
     {
         static CamarillaContext()
         {
-            var dbInitializer = new DropCreateDatabaseAlways<CamarillaContext>();
-            Database.SetInitializer(dbInitializer);
+            //var dbInitializer = new DropCreateDatabaseAlways<CamarillaContext>();
+            //Database.SetInitializer(dbInitializer);
         }
 
-        public IQueryable<UserInformation> UserInformations { get; set; }
+        //public IQueryable<UserInformation> UserInformations { get; set; }
         //{
 
-        //public CamarillaContext() : base("CamarillaConnection")
-        //}
+        public CamarillaContext() : base("CamarillaContext")
+        {
+        }
     }
 }

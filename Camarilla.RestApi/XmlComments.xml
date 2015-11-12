@@ -4,22 +4,32 @@
         <name>Camarilla.RestApi</name>
     </assembly>
     <members>
-        <member name="M:Camarilla.RestApi.Controllers.UserInformationsController.Get">
+        <member name="M:Camarilla.RestApi.Controllers.UsersController.Get">
             <summary>
-                Get all user informations
+                Get all users
             </summary>
             <remarks>
-                Get an array of all userInformations
+                Get an array of all users
             </remarks>
             <response code="200">OK</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:Camarilla.RestApi.Controllers.UserInformationsController.GetSample">
+        <member name="M:Camarilla.RestApi.Controllers.UsersController.GetSample">
             <summary>
-                Get a fake user information
+                Get a fake user
             </summary>
             <remarks>
-                Get an object of a fake object userInformation
+                Get an object of a fake object user
+            </remarks>
+            <response code="200">OK</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Camarilla.RestApi.Controllers.UsersController.GetSampleFromDb">
+            <summary>
+                Get a fake user from DB
+            </summary>
+            <remarks>
+                Get an object of a fake object user from database
             </remarks>
             <response code="200">OK</response>
             <response code="500">Internal Server Error</response>

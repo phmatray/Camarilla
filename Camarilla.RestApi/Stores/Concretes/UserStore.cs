@@ -4,9 +4,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Camarilla.RestApi.Stores.Concretes
 {
-    public class CamarillaUserStore : UserStore<CamarillaUser>
+    public class UserStore : UserStore<User>
     {
-        public CamarillaUserStore(DbContext context)
+        public UserStore(DbContext context)
             : base(context)
         {
             AutoSaveChanges = false;

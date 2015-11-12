@@ -3,9 +3,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Camarilla.RestApi.Managers
 {
-    public class CamarillaRoleManager : RoleManager<IdentityRole>
+    public class RoleManager : RoleManager<IdentityRole>, IManager
     {
-        public CamarillaRoleManager(IRoleStore<IdentityRole, string> store)
+        public RoleManager(IRoleStore<IdentityRole, string> store)
             : base(store)
         {
         }
