@@ -20,12 +20,11 @@ namespace Camarilla.RestApi.Controllers
         ///     Get all users
         /// </summary>
         /// <remarks>
-        ///     Get an array of all users
+        ///     Get an array of all users.
         /// </remarks>
         /// <response code="200">OK</response>
-        /// <response code="500">Internal Server Error</response>
-        [HttpGet]
         [Route("users")]
+        [HttpGet]
         [ResponseType(typeof (List<UserReturnModel>))]
         public IHttpActionResult GetUsers()
         {
@@ -38,16 +37,17 @@ namespace Camarilla.RestApi.Controllers
         /// <summary>
         ///     Get a user
         /// </summary>
-        /// <param name="username">
-        ///     Email
+        /// <param name="id">
+        ///     ID
         /// </param>
         /// <remarks>
-        ///     Get a user from database by its username
+        ///     Get a user from database by its username.
         /// </remarks>
         /// <response code="200">OK</response>
         /// <response code="404">Not found</response>
-        /// <response code="500">Internal Server Error</response>
         [Route("user/{id:guid}", Name = "GetUserById")]
+        [HttpGet]
+        [ResponseType(typeof(UserReturnModel))]
         public async Task<IHttpActionResult> GetUser(string id)
         {
             var user = await TheUserManager.FindByIdAsync(id);
@@ -64,17 +64,16 @@ namespace Camarilla.RestApi.Controllers
         ///     Get a user
         /// </summary>
         /// <param name="username">
-        ///     Email
+        ///     Username
         /// </param>
         /// <remarks>
-        ///     Get a user from database by its username
+        ///     Get a user from database by its username.
         /// </remarks>
         /// <response code="200">OK</response>
         /// <response code="404">Not found</response>
-        /// <response code="500">Internal Server Error</response>
-        [HttpGet]
         [Route("user/{username}")]
-        [ResponseType(typeof(User))]
+        [HttpGet]
+        [ResponseType(typeof(UserReturnModel))]
         public async Task<IHttpActionResult> GetUserByName(string username)
         {
             var user = await TheUserManager.FindByNameAsync(username);
@@ -85,9 +84,21 @@ namespace Camarilla.RestApi.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        ///     Create a user
+        /// </summary>
+        /// <param name="createUserModel">
+        ///     CreateUserModel
+        /// </param>
+        /// <remarks>
+        ///     Create a user in the database.
+        /// </remarks>
+        /// <response code="201">Created</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("create")]
-        [ResponseType(typeof(User))]
+        [ResponseType(typeof(UserReturnModel))]
         public async Task<IHttpActionResult> CreateUser(CreateUserBindingModel createUserModel)
         {
             if (!ModelState.IsValid)
@@ -111,52 +122,5 @@ namespace Camarilla.RestApi.Controllers
 
             return Created(locationHeader, TheModelFactory.Create(user));
         }
-
-
-        ///// <summary>
-        /////     Get a fake user
-        ///// </summary>
-        ///// <remarks>
-        /////     Get an object of a fake object user
-        ///// </remarks>
-        ///// <response code="200">OK</response>
-        ///// <response code="500">Internal Server Error</response>
-        //[HttpGet]
-        //[Route("sample")]
-        //[ResponseType(typeof (User))]
-        //public IHttpActionResult GetSample()
-        //{
-        //    var userInformation = new User
-        //    {
-        //        FirstName = "Philippe",
-        //        LastName = "Matray",
-        //        Birthday = new DateTime(1988, 8, 1),
-        //        Gender = Gender.Male
-        //    };
-
-        //    return Ok(userInformation);
-        //}
-
-        ///// <summary>
-        /////     Get a fake user from DB
-        ///// </summary>
-        ///// <remarks>
-        /////     Get a fake object that represents a user from database
-        ///// </remarks>
-        ///// <response code="200">OK</response>
-        ///// <response code="500">Internal Server Error</response>
-        //[HttpGet]
-        //[Route("sampledb")]
-        //[ResponseType(typeof (User))]
-        //public IHttpActionResult GetSampleFromDb()
-        //{
-        //    var context = new CamarillaContext();
-        //    var store = new UserStore(context);
-        //    var manager = new UserManager(store);
-
-        //    var user = manager.FindByEmail("phmatray@gmail.com");
-
-        //    return Ok(user);
-        //}
     }
 }
