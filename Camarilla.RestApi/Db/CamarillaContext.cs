@@ -1,23 +1,20 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using Camarilla.RestApi.Models;
+﻿using Camarilla.RestApi.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Camarilla.RestApi.Db
 {
     public class CamarillaContext : IdentityDbContext<User>
     {
-        static CamarillaContext()
+        public CamarillaContext()
+            : base("CamarillaContext", false)
         {
-            //var dbInitializer = new DropCreateDatabaseAlways<CamarillaContext>();
-            //Database.SetInitializer(dbInitializer);
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
         }
 
-        //public IQueryable<UserInformation> UserInformations { get; set; }
-        //{
-
-        public CamarillaContext() : base("CamarillaContext")
+        public static CamarillaContext Create()
         {
+            return new CamarillaContext();
         }
     }
 }

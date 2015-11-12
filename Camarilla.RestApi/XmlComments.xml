@@ -4,7 +4,7 @@
         <name>Camarilla.RestApi</name>
     </assembly>
     <members>
-        <member name="M:Camarilla.RestApi.Controllers.UsersController.Get">
+        <member name="M:Camarilla.RestApi.Controllers.AccountsController.GetUsers">
             <summary>
                 Get all users
             </summary>
@@ -14,9 +14,9 @@
             <response code="200">OK</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:Camarilla.RestApi.Controllers.UsersController.GetByUsername(System.String)">
+        <member name="M:Camarilla.RestApi.Controllers.AccountsController.GetUser(System.String)">
             <summary>
-                Get a user from DB
+                Get a user
             </summary>
             <param name="username">
                 Email
@@ -25,28 +25,21 @@
                 Get a user from database by its username
             </remarks>
             <response code="200">OK</response>
-            <response code="400">Bad request</response>
             <response code="404">Not found</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:Camarilla.RestApi.Controllers.UsersController.GetSample">
+        <member name="M:Camarilla.RestApi.Controllers.AccountsController.GetUserByName(System.String)">
             <summary>
-                Get a fake user
+                Get a user
             </summary>
+            <param name="username">
+                Email
+            </param>
             <remarks>
-                Get an object of a fake object user
+                Get a user from database by its username
             </remarks>
             <response code="200">OK</response>
-            <response code="500">Internal Server Error</response>
-        </member>
-        <member name="M:Camarilla.RestApi.Controllers.UsersController.GetSampleFromDb">
-            <summary>
-                Get a fake user from DB
-            </summary>
-            <remarks>
-                Get a fake object that represents a user from database
-            </remarks>
-            <response code="200">OK</response>
+            <response code="404">Not found</response>
             <response code="500">Internal Server Error</response>
         </member>
     </members>

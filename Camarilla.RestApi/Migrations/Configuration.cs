@@ -2,6 +2,8 @@ using System;
 using System.Data.Entity.Migrations;
 using Camarilla.RestApi.Db;
 using Camarilla.RestApi.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Camarilla.RestApi.Migrations
 {
@@ -19,19 +21,21 @@ namespace Camarilla.RestApi.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
 
-            var user = new User("phmatray")
+            var manager = new UserManager<User>(new UserStore<User>(new CamarillaContext()));
+
+            var user = new User
             {
+                UserName = "SuperPowerUser",
                 Email = "phmatray@gmail.com",
-                PhoneNumber = "0032473322929",
+                EmailConfirmed = true,
                 Birthday = new DateTime(1988, 8, 1),
                 FirstName = "Philippe",
                 LastName = "Matray",
                 Gender = Gender.Male,
-                JoinDate = DateTime.Now
+                JoinDate = DateTime.Now.AddYears(-3)
             };
 
-            context.Users.AddOrUpdate(u => u.Email, user);
-            context.SaveChanges();
+            manager.Create(user, "MySuperP@ssword!");
         }
     }
 }

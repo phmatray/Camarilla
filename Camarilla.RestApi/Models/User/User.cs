@@ -7,15 +7,6 @@ namespace Camarilla.RestApi.Models
 {
     public class User : IdentityUser, IModel
     {
-        public User()
-        {
-        }
-
-        public User(string userName)
-            : base(userName)
-        {
-        }
-
         [DisplayName("Prénom")]
         public string FirstName { get; set; } = string.Empty;
 
@@ -23,10 +14,10 @@ namespace Camarilla.RestApi.Models
         public string LastName { get; set; } = string.Empty;
 
         [DisplayName("Date de naissance")]
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         [DisplayName("Date d'inscription")]
-        public DateTime JoinDate { get; set; }
+        public DateTime? JoinDate { get; set; }
 
         [DisplayName("Genre")]
         public Gender Gender { get; set; }
