@@ -25,6 +25,9 @@ namespace Camarilla.RestApi.Models
         [DisplayName("Date de naissance")]
         public DateTime Birthday { get; set; }
 
+        [DisplayName("Date d'inscription")]
+        public DateTime JoinDate { get; set; }
+
         [DisplayName("Genre")]
         public Gender Gender { get; set; }
 

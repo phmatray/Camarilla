@@ -26,7 +26,8 @@ namespace Camarilla.RestApi.Migrations
                 Birthday = new DateTime(1988, 8, 1),
                 FirstName = "Philippe",
                 LastName = "Matray",
-                Gender = Gender.Male
+                Gender = Gender.Male,
+                JoinDate = DateTime.Now
             };
 
             context.Users.AddOrUpdate(u => u.Email, user);
