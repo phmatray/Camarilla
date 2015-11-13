@@ -1,5 +1,7 @@
+using System;
 using Camarilla.RestApi.Db;
 using Camarilla.RestApi.Models;
+using Camarilla.RestApi.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -18,6 +20,18 @@ namespace Camarilla.RestApi.Managers
         {
             var dbContext = context.Get<CamarillaContext>();
             var userManager = new UserManager(new UserStore<User>(dbContext));
+
+            userManager.EmailService = new EmailService();
+
+            var dataProtectionProvider = options.DataProtectionProvider;
+            if (dataProtectionProvider != null)
+            {
+                userManager.UserTokenProvider = new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"))
+                {
+                    //Code for email confirmation and reset password life time
+                    TokenLifespan = TimeSpan.FromHours(24)
+                };
+            }
 
             return userManager;
         }

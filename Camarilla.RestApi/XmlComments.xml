@@ -53,5 +53,42 @@
             <response code="400">Bad Request</response>
             <response code="500">Internal Server Error</response>
         </member>
+        <member name="M:Camarilla.RestApi.Controllers.AccountsController.ConfirmEmail(System.String,System.String)">
+            <summary>
+                Confirm email address
+            </summary>
+            <param name="userId">
+                Username
+            </param>
+            <param name="token">
+                Token provided by email
+            </param>
+            <remarks>
+                Confirm the email address of a user.
+            </remarks>
+            <response code="200">OK</response>
+            <response code="400">Bad Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Camarilla.RestApi.Controllers.AccountsController.ConfirmEmailWithPassword(System.String,System.String,System.String)">
+            <summary>
+                Confirm email address
+            </summary>
+            <param name="userId">
+                Username
+            </param>
+            <param name="password">
+                User password
+            </param>
+            <param name="token">
+                Token provided by email
+            </param>
+            <remarks>
+                Confirm the email address of a user.
+            </remarks>
+            <response code="200">OK</response>
+            <response code="400">Bad Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
     </members>
 </doc>
