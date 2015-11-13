@@ -22,6 +22,7 @@ namespace Camarilla.RestApi.Controllers
         /// </remarks>
         /// <response code="200">OK</response>
         [HttpGet]
+        [Authorize]
         [Route("users")]
         [ResponseType(typeof (List<UserReturnModel>))]
         public IHttpActionResult GetUsers()
@@ -44,6 +45,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="200">OK</response>
         /// <response code="404">Not found</response>
         [HttpGet]
+        [Authorize]
         [Route("user/{id:guid}", Name = "GetUserById")]
         [ResponseType(typeof(UserReturnModel))]
         public async Task<IHttpActionResult> GetUser(string id)
@@ -72,6 +74,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="404">Not found</response>
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
+        [Authorize]
         [Route("user/{id:guid}")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> DeleteUser(string id)
@@ -107,6 +110,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="200">OK</response>
         /// <response code="404">Not found</response>
         [HttpGet]
+        [Authorize]
         [Route("user/{username}")]
         [ResponseType(typeof(UserReturnModel))]
         public async Task<IHttpActionResult> GetUserByName(string username)
@@ -132,6 +136,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
+        [AllowAnonymous]
         [Route("create")]
         [ResponseType(typeof(UserReturnModel))]
         public async Task<IHttpActionResult> CreateUser(CreateUserBindingModel createUserModel)
@@ -179,6 +184,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
+        [AllowAnonymous]
         [Route("confirmEmail", Name = "ConfirmEmailRoute")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string token = "")
@@ -220,6 +226,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
+        [AllowAnonymous]
         [Route("confirmEmail", Name = "ConfirmEmailRouteWithPassword")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> ConfirmEmailWithPassword(string userId = "", string password = "", string token = "")
@@ -255,6 +262,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
+        [Authorize]
         [Route("changePassword")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
