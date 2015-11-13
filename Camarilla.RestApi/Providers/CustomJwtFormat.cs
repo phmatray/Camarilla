@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.IdentityModel.Tokens;
-using System.Linq;
-using System.Web;
 using Camarilla.RestApi.Services;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler.Encoder;
@@ -25,7 +21,7 @@ namespace Camarilla.RestApi.Providers
         {
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             var audienceId = AppSettingsService.GetAuthorizationServerAudienceId();

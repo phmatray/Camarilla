@@ -28,6 +28,11 @@ namespace Camarilla.RestApi.Services
             return ConfigurationManager.AppSettings["emailService:Account"];
         }
 
+        public static string GetAuthorizationServerAudienceName()
+        {
+            return ConfigurationManager.AppSettings["authorizationServer:AudienceName"];
+        }
+
         public static string GetAuthorizationServerAudienceId()
         {
             return ConfigurationManager.AppSettings["authorizationServer:AudienceId"];
