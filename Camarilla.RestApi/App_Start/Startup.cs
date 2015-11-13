@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using Camarilla.RestApi;
-using Camarilla.RestApi.Db;
+using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Managers;
 using Camarilla.RestApi.Providers;
 using Camarilla.RestApi.Services;

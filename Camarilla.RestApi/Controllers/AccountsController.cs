@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Camarilla.RestApi.ControllerModels;
+using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
 using Microsoft.AspNet.Identity;
 
@@ -322,6 +323,67 @@ namespace Camarilla.RestApi.Controllers
             {
                 ModelState.AddModelError("", "Failed to add user roles");
                 return BadRequest(ModelState);
+            }
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Authorize(Roles = "Admin")]
+        [Route("user/{id:guid}/assignclaims")]
+        public async Task<IHttpActionResult> AssignClaimsToUser([FromUri] string id, [FromBody] List<ClaimBindingModel> claimsToAssign)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var appUser = await TheUserManager.FindByIdAsync(id);
+
+            if (appUser == null)
+            {
+                return NotFound();
+            }
+
+            foreach (ClaimBindingModel claimModel in claimsToAssign)
+            {
+                if (appUser.Claims.Any(c => c.ClaimType == claimModel.Type))
+                {
+
+                    await TheUserManager.RemoveClaimAsync(id, ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
+                }
+
+                await TheUserManager.AddClaimAsync(id, ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
+            }
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [Route("user/{id:guid}/removeclaims")]
+        [HttpPut]
+        public async Task<IHttpActionResult> RemoveClaimsFromUser([FromUri] string id, [FromBody] List<ClaimBindingModel> claimsToRemove)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var appUser = await TheUserManager.FindByIdAsync(id);
+
+            if (appUser == null)
+            {
+                return NotFound();
+            }
+
+            foreach (ClaimBindingModel claimModel in claimsToRemove)
+            {
+                if (appUser.Claims.Any(c => c.ClaimType == claimModel.Type))
+                {
+                    await TheUserManager.RemoveClaimAsync(id, ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
+                }
             }
 
             return Ok();

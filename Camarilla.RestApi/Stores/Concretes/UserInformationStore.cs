@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Camarilla.RestApi.Db;
 using Camarilla.RestApi.Models;
 using Camarilla.RestApi.Stores.Interfaces;
 

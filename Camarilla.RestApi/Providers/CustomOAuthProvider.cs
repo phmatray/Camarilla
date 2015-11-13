@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
+using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Managers;
 using Camarilla.RestApi.Models;
 using Microsoft.AspNet.Identity.Owin;
@@ -18,7 +19,6 @@ namespace Camarilla.RestApi.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-
             var allowedOrigin = "*";
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
@@ -41,10 +41,11 @@ namespace Camarilla.RestApi.Providers
 
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, "JWT");
 
+            oAuthIdentity.AddClaims(ExtendedClaimsProvider.GetClaims(user));
+
             var ticket = new AuthenticationTicket(oAuthIdentity, null);
 
             context.Validated(ticket);
-
         }
     }
 }

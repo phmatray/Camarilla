@@ -1,4 +1,4 @@
-using Camarilla.RestApi.Db;
+using Camarilla.RestApi.Infrastructure;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;

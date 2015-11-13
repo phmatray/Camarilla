@@ -1,7 +1,7 @@
 ﻿using Camarilla.RestApi.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace Camarilla.RestApi.Db
+namespace Camarilla.RestApi.Infrastructure
 {
     public class CamarillaContext : IdentityDbContext<User>
     {
