@@ -33,6 +33,23 @@ namespace Camarilla.RestApi.Managers
                 };
             }
 
+            //Configure validation logic for usernames
+            userManager.UserValidator = new UserValidator<User>(userManager)
+            {
+                AllowOnlyAlphanumericUserNames = true,
+                RequireUniqueEmail = true
+            };
+
+            //Configure validation logic for passwords
+            userManager.PasswordValidator = new PasswordValidator
+            {
+                RequiredLength = 6,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = true,
+                RequireLowercase = true,
+                RequireUppercase = false
+            };
+
             return userManager;
         }
     }
