@@ -1,7 +1,10 @@
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http.Routing;
 using Camarilla.RestApi.Managers;
 using Camarilla.RestApi.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Camarilla.RestApi.ControllerModels
 {
@@ -31,5 +34,36 @@ namespace Camarilla.RestApi.ControllerModels
                 Claims = _appUserManager.GetClaimsAsync(user.Id).Result
             };
         }
+
+        public RoleReturnModel Create(IdentityRole appRole)
+        {
+
+            return new RoleReturnModel
+            {
+                Url = _urlHelper.Link("GetRoleById", new { id = appRole.Id }),
+                Id = appRole.Id,
+                Name = appRole.Name
+            };
+        }
+    }
+
+    public class UserReturnModel
+    {
+        public string Url { get; set; }
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public DateTime? JoinDate { get; set; }
+        public IList<string> Roles { get; set; }
+        public IList<System.Security.Claims.Claim> Claims { get; set; }
+    }
+
+    public class RoleReturnModel
+    {
+        public string Url { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 }

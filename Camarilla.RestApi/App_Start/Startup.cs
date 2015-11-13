@@ -36,6 +36,7 @@ namespace Camarilla.RestApi
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(CamarillaContext.Create);
             app.CreatePerOwinContext<UserManager>(UserManager.Create);
+            app.CreatePerOwinContext<RoleManager>(RoleManager.Create);
 
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions
             {

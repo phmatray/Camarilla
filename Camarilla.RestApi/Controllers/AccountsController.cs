@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -22,7 +21,7 @@ namespace Camarilla.RestApi.Controllers
         /// </remarks>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("users")]
         [ResponseType(typeof (List<UserReturnModel>))]
         public IHttpActionResult GetUsers()
@@ -45,7 +44,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="200">OK</response>
         /// <response code="404">Not found</response>
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}", Name = "GetUserById")]
         [ResponseType(typeof(UserReturnModel))]
         public async Task<IHttpActionResult> GetUser(string id)
@@ -74,7 +73,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="404">Not found</response>
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> DeleteUser(string id)
@@ -110,7 +109,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="200">OK</response>
         /// <response code="404">Not found</response>
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("user/{username}")]
         [ResponseType(typeof(UserReturnModel))]
         public async Task<IHttpActionResult> GetUserByName(string username)
@@ -278,6 +277,51 @@ namespace Camarilla.RestApi.Controllers
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
+
+
+
+        [HttpPut]
+        [Authorize(Roles = "Admin")]
+        [Route("user/{id:guid}/roles")]
+        public async Task<IHttpActionResult> AssignRolesToUser([FromUri] string id, [FromBody] string[] rolesToAssign)
+        {
+
+            var appUser = await TheUserManager.FindByIdAsync(id);
+
+            if (appUser == null)
+            {
+                return NotFound();
+            }
+
+            var currentRoles = await TheUserManager.GetRolesAsync(appUser.Id);
+
+            var rolesNotExists = rolesToAssign.Except(AppRoleManager.Roles.Select(x => x.Name)).ToArray();
+
+            if (rolesNotExists.Count() > 0)
+            {
+
+                ModelState.AddModelError("", string.Format("Roles '{0}' does not exixts in the system", string.Join(",", rolesNotExists)));
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult removeResult = await TheUserManager.RemoveFromRolesAsync(appUser.Id, currentRoles.ToArray());
+
+            if (!removeResult.Succeeded)
+            {
+                ModelState.AddModelError("", "Failed to remove user roles");
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult addResult = await TheUserManager.AddToRolesAsync(appUser.Id, rolesToAssign);
+
+            if (!addResult.Succeeded)
+            {
+                ModelState.AddModelError("", "Failed to add user roles");
+                return BadRequest(ModelState);
             }
 
             return Ok();

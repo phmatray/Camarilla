@@ -1,5 +1,6 @@
 using System;
 using System.Data.Entity.Migrations;
+using System.Linq;
 using Camarilla.RestApi.Db;
 using Camarilla.RestApi.Models;
 using Microsoft.AspNet.Identity;
@@ -23,6 +24,8 @@ namespace Camarilla.RestApi.Migrations
 
             var manager = new UserManager<User>(new UserStore<User>(new CamarillaContext()));
 
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new CamarillaContext()));
+
             var user = new User
             {
                 UserName = "SuperPowerUser",
@@ -35,7 +38,19 @@ namespace Camarilla.RestApi.Migrations
                 JoinDate = DateTime.Now.AddYears(-3)
             };
 
-            manager.Create(user, "MySuperP@ssword!");
+            manager.Create(user, "ChangeMe1234");
+
+            if (!roleManager.Roles.Any())
+            {
+                roleManager.Create(new IdentityRole { Name = "SuperAdmin" });
+                roleManager.Create(new IdentityRole { Name = "Admin" });
+                roleManager.Create(new IdentityRole { Name = "Hacker" });
+                roleManager.Create(new IdentityRole { Name = "User" });
+            }
+
+            var adminUser = manager.FindByName("SuperPowerUser");
+
+            manager.AddToRoles(adminUser.Id, new string[] { "SuperAdmin", "Admin", "Hacker" });
         }
     }
 }

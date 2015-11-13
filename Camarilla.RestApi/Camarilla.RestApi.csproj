@@ -181,11 +181,12 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ControllerModels\RoleBindingModels.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
     <Compile Include="ControllerModels\ModelFactory.cs" />
-    <Compile Include="ControllerModels\UserReturnModel.cs" />
     <Compile Include="ControllerModels\AccountBindingModels.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Db\CamarillaDBInitializer.cs" />
     <Compile Include="Db\CamarillaContext.cs" />
     <Compile Include="Managers\Base\IManager.cs" />
