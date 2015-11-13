@@ -59,6 +59,43 @@ namespace Camarilla.RestApi.Controllers
         }
 
         /// <summary>
+        ///     Delete a user
+        /// </summary>
+        /// <param name="id">
+        ///     ID
+        /// </param>
+        /// <remarks>
+        ///     Delete a user from database by its username.
+        /// </remarks>
+        /// <response code="200">OK</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="404">Not found</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpDelete]
+        [Route("user/{id:guid}")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> DeleteUser(string id)
+        {
+            //Only SuperAdmin or Admin can delete users (Later when implement roles)
+
+            var appUser = await TheUserManager.FindByIdAsync(id);
+
+            if (appUser != null)
+            {
+                IdentityResult result = await TheUserManager.DeleteAsync(appUser);
+
+                if (!result.Succeeded)
+                {
+                    return GetErrorResult(result);
+                }
+
+                return Ok();
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
         ///     Get a user
         /// </summary>
         /// <param name="username">
@@ -238,5 +275,4 @@ namespace Camarilla.RestApi.Controllers
             return Ok();
         }
     }
-
 }
