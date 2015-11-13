@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
+using Camarilla.RestApi.Models;
 
 namespace Camarilla.RestApi.Services
 {
@@ -41,6 +42,28 @@ namespace Camarilla.RestApi.Services
         public static string GetAuthorizationServerAudienceSecret()
         {
             return ConfigurationManager.AppSettings["authorizationServer:AudienceSecret"];
+        }
+
+        public static User GetGod()
+        {
+            return new User
+            {
+                UserName = ConfigurationManager.AppSettings["god:username"],
+                Email = ConfigurationManager.AppSettings["god:email"],
+                EmailConfirmed = Convert.ToBoolean(ConfigurationManager.AppSettings["god:emailConfirmed"]),
+                Birthday = new DateTime(
+                    Convert.ToInt32(ConfigurationManager.AppSettings["god:birthday.year"]),
+                    Convert.ToInt32(ConfigurationManager.AppSettings["god:birthday.month"]),
+                    Convert.ToInt32(ConfigurationManager.AppSettings["god:birthday.day"])),
+                FirstName = ConfigurationManager.AppSettings["god:firstName"],
+                LastName = ConfigurationManager.AppSettings["god:lastName"],
+                Gender = (Gender) Convert.ToInt32(ConfigurationManager.AppSettings["god:gender"])
+            };
+        }
+
+        public static string GetGodPassword()
+        {
+            return ConfigurationManager.AppSettings["god:password"];
         }
     }
 }

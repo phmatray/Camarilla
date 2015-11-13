@@ -3,6 +3,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using Camarilla.RestApi.Db;
 using Camarilla.RestApi.Models;
+using Camarilla.RestApi.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -26,31 +27,22 @@ namespace Camarilla.RestApi.Migrations
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new CamarillaContext()));
 
-            var user = new User
-            {
-                UserName = "SuperPowerUser",
-                Email = "phmatray@gmail.com",
-                EmailConfirmed = true,
-                Birthday = new DateTime(1988, 8, 1),
-                FirstName = "Philippe",
-                LastName = "Matray",
-                Gender = Gender.Male,
-                JoinDate = DateTime.Now.AddYears(-3)
-            };
+            var god = AppSettingsService.GetGod();
+            god.JoinDate = DateTime.Now.AddYears(-3);
 
-            manager.Create(user, "ChangeMe1234");
+            manager.Create(god, AppSettingsService.GetGodPassword());
 
             if (!roleManager.Roles.Any())
             {
-                roleManager.Create(new IdentityRole { Name = "SuperAdmin" });
+                roleManager.Create(new IdentityRole { Name = "God" });
                 roleManager.Create(new IdentityRole { Name = "Admin" });
                 roleManager.Create(new IdentityRole { Name = "Hacker" });
                 roleManager.Create(new IdentityRole { Name = "User" });
             }
 
-            var adminUser = manager.FindByName("SuperPowerUser");
+            var adminUser = manager.FindByName("God");
 
-            manager.AddToRoles(adminUser.Id, new string[] { "SuperAdmin", "Admin", "Hacker" });
+            manager.AddToRoles(adminUser.Id, new string[] { "God", "Admin", "Hacker" });
         }
     }
 }
