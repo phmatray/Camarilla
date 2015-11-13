@@ -172,7 +172,7 @@
     <Compile Include="Controllers\Base\BaseApiController.cs" />
     <Compile Include="ControllerModels\ModelFactory.cs" />
     <Compile Include="ControllerModels\UserReturnModel.cs" />
-    <Compile Include="ControllerModels\CreateUserBindingModel.cs" />
+    <Compile Include="ControllerModels\AccountBindingModels.cs" />
     <Compile Include="Db\CamarillaDBInitializer.cs" />
     <Compile Include="Db\CamarillaContext.cs" />
     <Compile Include="Managers\Base\IManager.cs" />

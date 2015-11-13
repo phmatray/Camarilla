@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -203,5 +204,39 @@ namespace Camarilla.RestApi.Controllers
                 return GetErrorResult(result);
             }
         }
+
+        /// <summary>
+        ///     Change password
+        /// </summary>
+        /// <param name="model">
+        ///     ChangePasswordBindingModel
+        /// </param>
+        /// <remarks>
+        ///     Change the password of the current user.
+        /// </remarks>
+        /// <response code="200">OK</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPost]
+        [Route("changePassword")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userId = User.Identity.GetUserId();
+            var result = await TheUserManager.ChangePasswordAsync(userId, model.OldPassword, model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
     }
+
 }

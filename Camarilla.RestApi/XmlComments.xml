@@ -90,5 +90,19 @@
             <response code="400">Bad Request</response>
             <response code="500">Internal Server Error</response>
         </member>
+        <member name="M:Camarilla.RestApi.Controllers.AccountsController.ChangePassword(Camarilla.RestApi.ControllerModels.ChangePasswordBindingModel)">
+            <summary>
+                Change password
+            </summary>
+            <param name="model">
+                ChangePasswordBindingModel
+            </param>
+            <remarks>
+                Change the password of the current user.
+            </remarks>
+            <response code="200">OK</response>
+            <response code="400">Bad Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
     </members>
 </doc>
