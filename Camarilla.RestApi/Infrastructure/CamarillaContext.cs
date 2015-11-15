@@ -1,4 +1,5 @@
-﻿using Camarilla.RestApi.Models;
+﻿using System.Data.Entity;
+using Camarilla.RestApi.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Camarilla.RestApi.Infrastructure
@@ -11,6 +12,8 @@ namespace Camarilla.RestApi.Infrastructure
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
         }
+
+        public DbSet<Clan> Clans { get; set; }
 
         public static CamarillaContext Create()
         {

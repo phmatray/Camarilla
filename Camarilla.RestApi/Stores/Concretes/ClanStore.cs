@@ -1,16 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Threading.Tasks;
+using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
+using Camarilla.RestApi.Stores.Helpers;
 using Camarilla.RestApi.Stores.Interfaces;
+using Microsoft.AspNet.Identity;
 
 namespace Camarilla.RestApi.Stores.Concretes
 {
     public class ClanStore : IClanStore<Clan>
     {
-        public Task CreateAsync(Clan entity)
+        private readonly CamarillaContext _context;
+
+        public ClanStore(CamarillaContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+
+        public async Task<IdentityResult> CreateAsync(Clan entity)
+        {
+            return await this.CatchIdentityErrorsAsync(async () =>
+            {
+                if (entity == null)
+                    throw new ArgumentNullException(nameof(entity));
+
+                var clan = _context.Clans.Add(entity);
+                entity.Id = clan.Id;
+
+                await _context.SaveChangesAsync();
+            });
         }
 
         public Task UpdateAsync(Clan entity)
@@ -23,24 +44,22 @@ namespace Camarilla.RestApi.Stores.Concretes
             throw new NotImplementedException();
         }
 
-        public Task<List<Clan>> FindAllAsync()
+        public async Task<List<Clan>> FindAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Clans
+                .ToListAsync();
         }
 
-        public Task<Clan> FindByIdAsync(int id)
+        public async Task<Clan> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Clans
+                .FirstOrDefaultAsync(clan => clan.Id == id);
         }
 
-        public Task<Clan> FindByNameAsync(string name)
+        public async Task<Clan> FindByNameAsync(string name)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Clan> FindDefaultAsync()
-        {
-            throw new NotImplementedException();
+            return await _context.Clans
+                .FirstOrDefaultAsync(clan => clan.Name == name);
         }
     }
 }

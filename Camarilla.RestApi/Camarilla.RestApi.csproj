@@ -182,12 +182,14 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ControllerModels\ClaimBindingModel.cs" />
+    <Compile Include="ControllerModels\ClanBindingModels.cs" />
     <Compile Include="ControllerModels\RoleBindingModels.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
     <Compile Include="ControllerModels\ModelFactory.cs" />
     <Compile Include="ControllerModels\AccountBindingModels.cs" />
     <Compile Include="Controllers\ClaimsController.cs" />
+    <Compile Include="Controllers\ClansController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Infrastructure\CamarillaContext.cs" />
     <Compile Include="Infrastructure\ClaimsAuthorizationAttribute.cs" />
@@ -242,16 +244,13 @@
     <Compile Include="Services\AppSettingsService.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Stores\Base\IStore.cs" />
-    <Compile Include="Stores\Concretes\RoleStore.cs" />
-    <Compile Include="Stores\Concretes\UserStore.cs" />
     <Compile Include="Stores\Concretes\ClanStore.cs" />
     <Compile Include="Stores\Concretes\PersonaStore.cs" />
     <Compile Include="Stores\Concretes\RaceStore.cs" />
-    <Compile Include="Stores\Concretes\UserInformationStore.cs" />
+    <Compile Include="Stores\Helpers\StoreHelpers.cs" />
     <Compile Include="Stores\Interfaces\IClanStore.cs" />
     <Compile Include="Stores\Interfaces\IPersonaStore.cs" />
     <Compile Include="Stores\Interfaces\IRaceStore.cs" />
-    <Compile Include="Stores\Interfaces\IUserInformationStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

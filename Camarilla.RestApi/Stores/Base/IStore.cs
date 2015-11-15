@@ -1,11 +1,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace Camarilla.RestApi.Stores.Base
 {
-    public interface IStore<TEntity, in TKey> where TEntity : class
+    public interface IStore
     {
-        Task CreateAsync(TEntity entity);
+    }
+
+    public interface IStore<TEntity, in TKey>
+        : IStore
+        where TEntity : class
+    {
+        Task<IdentityResult> CreateAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
         Task<List<TEntity>> FindAllAsync();

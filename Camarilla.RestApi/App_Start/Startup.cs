@@ -6,13 +6,14 @@ using Camarilla.RestApi.Managers;
 using Camarilla.RestApi.Providers;
 using Camarilla.RestApi.Services;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler.Encoder;
 using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 
-[assembly: OwinStartup(typeof(Startup))]
+[assembly: OwinStartup(typeof (Startup))]
 
 namespace Camarilla.RestApi
 {
@@ -20,14 +21,13 @@ namespace Camarilla.RestApi
     {
         public void Configuration(IAppBuilder app)
         {
-
-            HttpConfiguration httpConfig = new HttpConfiguration();
+            var httpConfig = new HttpConfiguration();
 
             ConfigureOAuthTokenGeneration(app);
             ConfigureOAuthTokenConsumption(app);
             WebApiConfig.Register(httpConfig);
             SwaggerConfig.Register(httpConfig);
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(httpConfig);
         }
 
@@ -38,7 +38,7 @@ namespace Camarilla.RestApi
             app.CreatePerOwinContext<UserManager>(UserManager.Create);
             app.CreatePerOwinContext<RoleManager>(RoleManager.Create);
 
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions
+            var OAuthServerOptions = new OAuthAuthorizationServerOptions
             {
                 //For Dev enviroment only (on production should be AllowInsecureHttp = false)
                 AllowInsecureHttp = true,
@@ -55,15 +55,16 @@ namespace Camarilla.RestApi
         private void ConfigureOAuthTokenConsumption(IAppBuilder app)
         {
             var issuer = "http://localhost:20890";
-            string audienceId = AppSettingsService.GetAuthorizationServerAudienceId();
-            byte[] audienceSecret = TextEncodings.Base64Url.Decode(AppSettingsService.GetAuthorizationServerAudienceSecret());
+            var audienceId = AppSettingsService.GetAuthorizationServerAudienceId();
+            var audienceSecret = TextEncodings.Base64Url
+                .Decode(AppSettingsService.GetAuthorizationServerAudienceSecret());
 
             // Api controllers with an [Authorize] attribute will be validated with JWT
             app.UseJwtBearerAuthentication(
                 new JwtBearerAuthenticationOptions
                 {
                     AuthenticationMode = AuthenticationMode.Active,
-                    AllowedAudiences = new[] { audienceId },
+                    AllowedAudiences = new[] {audienceId},
                     IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
                     {
                         new SymmetricKeyIssuerSecurityTokenProvider(issuer, audienceSecret)

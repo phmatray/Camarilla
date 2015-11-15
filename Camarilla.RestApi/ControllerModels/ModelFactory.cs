@@ -37,12 +37,24 @@ namespace Camarilla.RestApi.ControllerModels
 
         public RoleReturnModel Create(IdentityRole appRole)
         {
-
             return new RoleReturnModel
             {
                 Url = _urlHelper.Link("GetRoleById", new { id = appRole.Id }),
                 Id = appRole.Id,
                 Name = appRole.Name
+            };
+        }
+
+        public ClanReturnModel Create(Clan clan)
+        {
+            return new ClanReturnModel
+            {
+                Url = _urlHelper.Link("GetClanById", new { id = clan.Id}),
+                Id = clan.Id,
+                ClanCategory = clan.ClanCategory,
+                ClanKind = clan.ClanKind,
+                Description = clan.Description,
+                Name = clan.Name
             };
         }
     }
@@ -64,6 +76,16 @@ namespace Camarilla.RestApi.ControllerModels
     {
         public string Url { get; set; }
         public string Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class ClanReturnModel
+    {
+        public string Url { get; set; }
+        public int Id { get; set; }
+        public ClanCategory ClanCategory { get; set; }
+        public ClanKind ClanKind { get; set; }
+        public string Description { get; set; }
         public string Name { get; set; }
     }
 }

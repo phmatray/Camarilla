@@ -9,6 +9,5 @@ namespace Camarilla.RestApi.Stores.Interfaces
         where TModel : Clan
     {
         Task<Clan> FindByNameAsync(string name);
-        Task<Clan> FindDefaultAsync();
     }
 }

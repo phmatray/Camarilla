@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Camarilla.RestApi.Models;
 using Camarilla.RestApi.Stores.Interfaces;
+using Microsoft.AspNet.Identity;
 
 namespace Camarilla.RestApi.Stores.Concretes
 {
     public class RaceStore : IRaceStore<Race>
     {
-        public Task CreateAsync(Race entity)
+        public Task<IdentityResult> CreateAsync(Race entity)
         {
             throw new NotImplementedException();
         }
