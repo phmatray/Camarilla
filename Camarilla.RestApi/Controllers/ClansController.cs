@@ -113,36 +113,23 @@ namespace Camarilla.RestApi.Controllers
             return Created(locationHeader, TheModelFactory.Create(clan));
         }
 
-        //// DELETE: api/Clans/5
-        //[HttpDelete]
-        ////[Route("{id:Int32}")]
-        //[ResponseType(typeof(Clan))]
-        //public async Task<IHttpActionResult> DeleteClan(int id)
-        //{
-        //    Clan clan = await db.Clans.FindAsync(id);
-        //    if (clan == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpDelete]
+        [Route("{id}")]
+        [ResponseType(typeof(Clan))]
+        public async Task<IHttpActionResult> DeleteClan(int id)
+        {
+            var clan = await TheClanStore.FindByIdAsync(id);
 
-        //    db.Clans.Remove(clan);
-        //    await db.SaveChangesAsync();
+            if (clan != null)
+            {
+                var result = await TheClanStore.DeleteAsync(clan);
 
-        //    return Ok(clan);
-        //}
+                return !result.Succeeded
+                    ? GetErrorResult(result)
+                    : Ok();
+            }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
-
-        //private bool ClanExists(int id)
-        //{
-        //    return db.Clans.Count(e => e.Id == id) > 0;
-        //}
+            return NotFound();
+        }
     }
 }

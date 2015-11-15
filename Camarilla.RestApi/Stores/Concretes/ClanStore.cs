@@ -39,9 +39,16 @@ namespace Camarilla.RestApi.Stores.Concretes
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(Clan entity)
+        public async Task<IdentityResult> DeleteAsync(Clan entity)
         {
-            throw new NotImplementedException();
+            return await this.CatchIdentityErrorsAsync(async () =>
+            {
+                if (entity == null)
+                    throw new ArgumentNullException(nameof(entity));
+
+                _context.Clans.Remove(entity);
+                await _context.SaveChangesAsync();
+            });
         }
 
         public async Task<List<Clan>> FindAllAsync()

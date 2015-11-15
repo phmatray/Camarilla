@@ -60,7 +60,6 @@ namespace Camarilla.RestApi.Controllers
         [Route("{id:guid}")]
         public async Task<IHttpActionResult> DeleteRole(string Id)
         {
-
             var role = await this.AppRoleManager.FindByIdAsync(Id);
 
             if (role != null)
@@ -76,7 +75,6 @@ namespace Camarilla.RestApi.Controllers
             }
 
             return NotFound();
-
         }
 
         [Route("ManageUsersInRole")]
