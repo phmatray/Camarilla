@@ -11,6 +11,9 @@ using Microsoft.AspNet.Identity;
 
 namespace Camarilla.RestApi.Controllers
 {
+    /// <summary>
+    ///     Accounts
+    /// </summary>
     [RoutePrefix("api/accounts")]
     public class AccountsController : BaseApiController
     {
@@ -47,7 +50,7 @@ namespace Camarilla.RestApi.Controllers
         [HttpGet]
         [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}", Name = "GetUserById")]
-        [ResponseType(typeof(UserReturnModel))]
+        [ResponseType(typeof (UserReturnModel))]
         public async Task<IHttpActionResult> GetUser(string id)
         {
             var user = await TheUserManager.FindByIdAsync(id);
@@ -76,7 +79,7 @@ namespace Camarilla.RestApi.Controllers
         [HttpDelete]
         [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}")]
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof (void))]
         public async Task<IHttpActionResult> DeleteUser(string id)
         {
             //Only SuperAdmin or Admin can delete users (Later when implement roles)
@@ -85,7 +88,7 @@ namespace Camarilla.RestApi.Controllers
 
             if (appUser != null)
             {
-                IdentityResult result = await TheUserManager.DeleteAsync(appUser);
+                var result = await TheUserManager.DeleteAsync(appUser);
 
                 if (!result.Succeeded)
                 {
@@ -112,7 +115,7 @@ namespace Camarilla.RestApi.Controllers
         [HttpGet]
         [Authorize(Roles = "Admin")]
         [Route("user/{username}")]
-        [ResponseType(typeof(UserReturnModel))]
+        [ResponseType(typeof (UserReturnModel))]
         public async Task<IHttpActionResult> GetUserByName(string username)
         {
             var user = await TheUserManager.FindByNameAsync(username);
@@ -137,8 +140,8 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [AllowAnonymous]
-        [Route("create")]
-        [ResponseType(typeof(UserReturnModel))]
+        [Route("")]
+        [ResponseType(typeof (UserReturnModel))]
         public async Task<IHttpActionResult> CreateUser(CreateUserBindingModel createUserModel)
         {
             if (!ModelState.IsValid)
@@ -159,11 +162,11 @@ namespace Camarilla.RestApi.Controllers
                 return GetErrorResult(addUserResult);
 
             var token = await TheUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, token = token }));
+            var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new {userId = user.Id, token}));
             await TheUserManager.SendEmailAsync(user.Id, "Confirm your account",
                 $"Please confirm your account by clicking <a href=\"{callbackUrl}\">here</a>");
 
-            var locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
+            var locationHeader = new Uri(Url.Link("GetUserById", new {id = user.Id}));
 
             return Created(locationHeader, TheModelFactory.Create(user));
         }
@@ -186,7 +189,7 @@ namespace Camarilla.RestApi.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("confirmEmail", Name = "ConfirmEmailRoute")]
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof (void))]
         public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string token = "")
         {
             if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(token))
@@ -195,16 +198,13 @@ namespace Camarilla.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await TheUserManager.ConfirmEmailAsync(userId, token);
+            var result = await TheUserManager.ConfirmEmailAsync(userId, token);
 
             if (result.Succeeded)
             {
                 return Ok();
             }
-            else
-            {
-                return GetErrorResult(result);
-            }
+            return GetErrorResult(result);
         }
 
         /// <summary>
@@ -228,8 +228,9 @@ namespace Camarilla.RestApi.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("confirmEmail", Name = "ConfirmEmailRouteWithPassword")]
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> ConfirmEmailWithPassword(string userId = "", string password = "", string token = "")
+        [ResponseType(typeof (void))]
+        public async Task<IHttpActionResult> ConfirmEmailWithPassword(string userId = "", string password = "",
+            string token = "")
         {
             if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(token))
             {
@@ -237,16 +238,13 @@ namespace Camarilla.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await TheUserManager.ConfirmEmailAsync(userId, token);
+            var result = await TheUserManager.ConfirmEmailAsync(userId, token);
 
             if (result.Succeeded)
             {
                 return Ok();
             }
-            else
-            {
-                return GetErrorResult(result);
-            }
+            return GetErrorResult(result);
         }
 
         /// <summary>
@@ -264,7 +262,7 @@ namespace Camarilla.RestApi.Controllers
         [HttpPost]
         [Authorize]
         [Route("changePassword")]
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof (void))]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -283,33 +281,42 @@ namespace Camarilla.RestApi.Controllers
             return Ok();
         }
 
-
-
+        /// <summary>
+        ///     Assign roles to user
+        /// </summary>
+        /// <param name="id">
+        ///     ID
+        /// </param>
+        /// <param name="rolesToAssign">
+        ///     Roles to assign
+        /// </param>
+        /// <remarks>
+        ///     Assign roles to a user specified by its ID.
+        /// </remarks>
+        /// <response code="200">OK</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="404">Not found</response>
         [HttpPut]
         [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}/roles")]
         public async Task<IHttpActionResult> AssignRolesToUser([FromUri] string id, [FromBody] string[] rolesToAssign)
         {
-
             var appUser = await TheUserManager.FindByIdAsync(id);
 
             if (appUser == null)
-            {
                 return NotFound();
-            }
 
             var currentRoles = await TheUserManager.GetRolesAsync(appUser.Id);
 
             var rolesNotExists = rolesToAssign.Except(AppRoleManager.Roles.Select(x => x.Name)).ToArray();
 
-            if (rolesNotExists.Count() > 0)
+            if (rolesNotExists.Any())
             {
-
-                ModelState.AddModelError("", string.Format("Roles '{0}' does not exixts in the system", string.Join(",", rolesNotExists)));
+                ModelState.AddModelError("", $"Roles '{string.Join(",", rolesNotExists)}' does not exixts in the system");
                 return BadRequest(ModelState);
             }
 
-            IdentityResult removeResult = await TheUserManager.RemoveFromRolesAsync(appUser.Id, currentRoles.ToArray());
+            var removeResult = await TheUserManager.RemoveFromRolesAsync(appUser.Id, currentRoles.ToArray());
 
             if (!removeResult.Succeeded)
             {
@@ -317,7 +324,7 @@ namespace Camarilla.RestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult addResult = await TheUserManager.AddToRolesAsync(appUser.Id, rolesToAssign);
+            var addResult = await TheUserManager.AddToRolesAsync(appUser.Id, rolesToAssign);
 
             if (!addResult.Succeeded)
             {
@@ -328,62 +335,82 @@ namespace Camarilla.RestApi.Controllers
             return Ok();
         }
 
+        /// <summary>
+        ///     Assign claims to user
+        /// </summary>
+        /// <param name="id">
+        ///     ID
+        /// </param>
+        /// <param name="claimsToAssign">
+        ///     An array of ClaimBindingModels to assign
+        /// </param>
+        /// <remarks>
+        ///     Assign claims to a user specified by its ID.
+        /// </remarks>
+        /// <response code="200">OK</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="404">Not found</response>
         [HttpPut]
         [Authorize(Roles = "Admin")]
-        [Route("user/{id:guid}/assignclaims")]
-        public async Task<IHttpActionResult> AssignClaimsToUser([FromUri] string id, [FromBody] List<ClaimBindingModel> claimsToAssign)
+        [Route("user/{id:guid}/claims")]
+        public async Task<IHttpActionResult> AssignClaimsToUser([FromUri] string id,
+            [FromBody] List<ClaimBindingModel> claimsToAssign)
         {
-
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             var appUser = await TheUserManager.FindByIdAsync(id);
 
             if (appUser == null)
-            {
                 return NotFound();
-            }
 
-            foreach (ClaimBindingModel claimModel in claimsToAssign)
+            foreach (var claimModel in claimsToAssign)
             {
                 if (appUser.Claims.Any(c => c.ClaimType == claimModel.Type))
-                {
+                    await
+                        TheUserManager.RemoveClaimAsync(id,
+                            ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
 
-                    await TheUserManager.RemoveClaimAsync(id, ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
-                }
-
-                await TheUserManager.AddClaimAsync(id, ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
+                await
+                    TheUserManager.AddClaimAsync(id,
+                        ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
             }
 
             return Ok();
         }
 
+        /// <summary>
+        ///     Remove claims from user
+        /// </summary>
+        /// <param name="id">
+        ///     ID
+        /// </param>
+        /// <param name="claimsToRemove">
+        ///     An array of ClaimBindingModels to remove
+        /// </param>
+        /// <returns>
+        ///     Remove claims from user specified by its ID.
+        /// </returns>
         [Authorize(Roles = "Admin")]
-        [Route("user/{id:guid}/removeclaims")]
-        [HttpPut]
-        public async Task<IHttpActionResult> RemoveClaimsFromUser([FromUri] string id, [FromBody] List<ClaimBindingModel> claimsToRemove)
+        [Route("user/{id:guid}/claims")]
+        [HttpDelete]
+        public async Task<IHttpActionResult> RemoveClaimsFromUser([FromUri] string id,
+            [FromBody] List<ClaimBindingModel> claimsToRemove)
         {
-
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             var appUser = await TheUserManager.FindByIdAsync(id);
 
             if (appUser == null)
-            {
                 return NotFound();
-            }
 
-            foreach (ClaimBindingModel claimModel in claimsToRemove)
+            foreach (var claimModel in claimsToRemove)
             {
                 if (appUser.Claims.Any(c => c.ClaimType == claimModel.Type))
-                {
-                    await TheUserManager.RemoveClaimAsync(id, ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
-                }
+                    await
+                        TheUserManager.RemoveClaimAsync(id,
+                            ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
             }
 
             return Ok();

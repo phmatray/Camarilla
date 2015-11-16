@@ -4,6 +4,11 @@
         <name>Camarilla.RestApi</name>
     </assembly>
     <members>
+        <member name="T:Camarilla.RestApi.Controllers.AccountsController">
+            <summary>
+                Accounts
+            </summary>
+        </member>
         <member name="M:Camarilla.RestApi.Controllers.AccountsController.GetUsers">
             <summary>
                 Get all users
@@ -118,6 +123,54 @@
             <response code="200">OK</response>
             <response code="400">Bad Request</response>
             <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Camarilla.RestApi.Controllers.AccountsController.AssignRolesToUser(System.String,System.String[])">
+            <summary>
+                Assign roles to user
+            </summary>
+            <param name="id">
+                ID
+            </param>
+            <param name="rolesToAssign">
+                Roles to assign
+            </param>
+            <remarks>
+                Assign roles to a user specified by its ID.
+            </remarks>
+            <response code="200">OK</response>
+            <response code="400">Bad Request</response>
+            <response code="404">Not found</response>
+        </member>
+        <member name="M:Camarilla.RestApi.Controllers.AccountsController.AssignClaimsToUser(System.String,System.Collections.Generic.List{Camarilla.RestApi.ControllerModels.ClaimBindingModel})">
+            <summary>
+                Assign claims to user
+            </summary>
+            <param name="id">
+                ID
+            </param>
+            <param name="claimsToAssign">
+                An array of ClaimBindingModels to assign
+            </param>
+            <remarks>
+                Assign claims to a user specified by its ID.
+            </remarks>
+            <response code="200">OK</response>
+            <response code="400">Bad Request</response>
+            <response code="404">Not found</response>
+        </member>
+        <member name="M:Camarilla.RestApi.Controllers.AccountsController.RemoveClaimsFromUser(System.String,System.Collections.Generic.List{Camarilla.RestApi.ControllerModels.ClaimBindingModel})">
+            <summary>
+                Remove claims from user
+            </summary>
+            <param name="id">
+                ID
+            </param>
+            <param name="claimsToRemove">
+                An array of ClaimBindingModels to remove
+            </param>
+            <returns>
+                Remove claims from user specified by its ID.
+            </returns>
         </member>
     </members>
 </doc>
