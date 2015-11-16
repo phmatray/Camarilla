@@ -34,9 +34,17 @@ namespace Camarilla.RestApi.Stores.Concretes
             });
         }
 
-        public Task UpdateAsync(Clan entity)
+        public async Task<IdentityResult> UpdateAsync(Clan entity)
         {
-            throw new NotImplementedException();
+            return await this.CatchIdentityErrorsAsync(async () =>
+            {
+                if (entity == null)
+                    throw new ArgumentNullException(nameof(entity));
+
+                _context.Entry(entity).State = EntityState.Modified;
+
+                await _context.SaveChangesAsync();
+            });
         }
 
         public async Task<IdentityResult> DeleteAsync(Clan entity)

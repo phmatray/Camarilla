@@ -13,8 +13,8 @@ namespace Camarilla.RestApi.Stores.Base
         where TEntity : class
     {
         Task<IdentityResult> CreateAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-        Task DeleteAsync(TEntity entity);
+        Task<IdentityResult> UpdateAsync(TEntity entity);
+        Task<IdentityResult> DeleteAsync(TEntity entity);
         Task<List<TEntity>> FindAllAsync();
         Task<TEntity> FindByIdAsync(TKey id);
     }

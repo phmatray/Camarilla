@@ -27,7 +27,7 @@ namespace Camarilla.RestApi.Controllers
 
         [HttpGet]
         [Route("")]
-        [ResponseType(typeof(List<ClanReturnModel>))]
+        [ResponseType(typeof (List<ClanReturnModel>))]
         public async Task<IHttpActionResult> GetClans()
         {
             var clanReturnModels = (await TheClanStore.FindAllAsync())
@@ -38,58 +38,42 @@ namespace Camarilla.RestApi.Controllers
 
         [HttpGet]
         [Route("{id}", Name = "GetClanById")]
-        [ResponseType(typeof(ClanReturnModel))]
+        [ResponseType(typeof (ClanReturnModel))]
         public async Task<IHttpActionResult> GetClan(int id)
         {
             var clan = await TheClanStore.FindByIdAsync(id);
 
             if (clan != null)
-            {
                 return Ok(TheModelFactory.Create(clan));
-            }
 
             return NotFound();
         }
 
-        //[HttpPut]
-        //[Route("{id:Int32}")]
-        //[ResponseType(typeof(void))]
-        //public async Task<IHttpActionResult> PutClan(int id, Clan clan)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        [HttpPut]
+        [Route("{id}")]
+        [ResponseType(typeof (ClanReturnModel))]
+        public async Task<IHttpActionResult> PutClan(int id, UpdateClanBindingModel updateClanModel)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-        //    if (id != clan.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+            var clan = await TheClanStore.FindByIdAsync(id);
 
-        //    db.Entry(clan).State = EntityState.Modified;
+            if (clan == null)
+                return NotFound();
 
-        //    try
-        //    {
-        //        await db.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ClanExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+            UpdateEntity(ref clan, updateClanModel);
 
-        //    return StatusCode(HttpStatusCode.NoContent);
-        //}
+            var result = await TheClanStore.UpdateAsync(clan);
+
+            return !result.Succeeded
+                ? GetErrorResult(result)
+                : Ok();
+        }
 
         [HttpPost]
         [Route("")]
-        [ResponseType(typeof(Clan))]
+        [ResponseType(typeof (ClanReturnModel))]
         public async Task<IHttpActionResult> PostClan(CreateClanBindingModel createClanModel)
         {
             if (!ModelState.IsValid)
@@ -115,7 +99,7 @@ namespace Camarilla.RestApi.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [ResponseType(typeof(Clan))]
+        [ResponseType(typeof (void))]
         public async Task<IHttpActionResult> DeleteClan(int id)
         {
             var clan = await TheClanStore.FindByIdAsync(id);
@@ -130,6 +114,19 @@ namespace Camarilla.RestApi.Controllers
             }
 
             return NotFound();
+        }
+
+        protected void UpdateEntity(ref Clan clan, UpdateClanBindingModel updateClanModel)
+        {
+            if (updateClanModel.Name != null)
+                clan.Name = updateClanModel.Name;
+            if (updateClanModel.Description != null)
+                clan.Description = updateClanModel.Description;
+
+            // We don't check because ClanCategory is an enum.
+            clan.ClanCategory = updateClanModel.ClanCategory;
+            // We don't check because ClanKinnd is an enum.
+            clan.ClanKind = updateClanModel.ClanKind;
         }
     }
 }

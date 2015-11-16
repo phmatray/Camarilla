@@ -14,12 +14,12 @@ namespace Camarilla.RestApi.Stores.Concretes
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Race entity)
+        public Task<IdentityResult> UpdateAsync(Race entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(Race entity)
+        public Task<IdentityResult> DeleteAsync(Race entity)
         {
             throw new NotImplementedException();
         }

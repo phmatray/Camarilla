@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using Camarilla.RestApi.Stores.Base;
@@ -16,6 +17,10 @@ namespace Camarilla.RestApi.Stores.Helpers
             try
             {
                 await resultBody();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                errors.Add(ex.Message);
             }
             catch (Exception ex)
             {
