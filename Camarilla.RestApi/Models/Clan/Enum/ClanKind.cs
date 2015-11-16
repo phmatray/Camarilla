@@ -4,7 +4,6 @@ namespace Camarilla.RestApi.Models
 {
     public enum ClanKind
     {
-        [Display(Name = "Aucun")] None,
         [Display(Name = "Humain")] Human,
         [Display(Name = "Brujah")] Brujah,
         [Display(Name = "Gangrel Urbain")] UrbanGangrel,

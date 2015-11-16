@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Threading.Tasks;
+using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
+using Camarilla.RestApi.Stores.Helpers;
 using Camarilla.RestApi.Stores.Interfaces;
 using Microsoft.AspNet.Identity;
 
@@ -9,34 +12,68 @@ namespace Camarilla.RestApi.Stores.Concretes
 {
     public class PersonaStore : IPersonaStore<Persona>
     {
-        public Task<IdentityResult> CreateAsync(Persona entity)
+        private readonly CamarillaContext _context;
+
+        public PersonaStore(CamarillaContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<IdentityResult> UpdateAsync(Persona entity)
+        public async Task<IdentityResult> CreateAsync(Persona entity)
         {
-            throw new NotImplementedException();
+            return await this.CatchIdentityErrorsAsync(async () =>
+            {
+                if (entity == null)
+                    throw new ArgumentNullException(nameof(entity));
+
+                var persona = _context.Personae.Add(entity);
+                entity.Id = persona.Id;
+
+                await _context.SaveChangesAsync();
+            });
         }
 
-        public Task<IdentityResult> DeleteAsync(Persona entity)
+        public async Task<IdentityResult> UpdateAsync(Persona entity)
         {
-            throw new NotImplementedException();
+            return await this.CatchIdentityErrorsAsync(async () =>
+            {
+                if (entity == null)
+                    throw new ArgumentNullException(nameof(entity));
+
+                _context.Entry(entity).State = EntityState.Modified;
+
+                await _context.SaveChangesAsync();
+            });
         }
 
-        public Task<List<Persona>> FindAllAsync()
+        public async Task<IdentityResult> DeleteAsync(Persona entity)
         {
-            throw new NotImplementedException();
+            return await this.CatchIdentityErrorsAsync(async () =>
+            {
+                if (entity == null)
+                    throw new ArgumentNullException(nameof(entity));
+
+                _context.Personae.Remove(entity);
+                await _context.SaveChangesAsync();
+            });
         }
 
-        public Task<Persona> FindByIdAsync(int id)
+        public async Task<List<Persona>> FindAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Personae
+                .ToListAsync();
         }
 
-        public Task<Persona> FindByNameAsync(string name)
+        public async Task<Persona> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Personae
+                .FirstOrDefaultAsync(persona => persona.Id == id);
+        }
+
+        public async Task<Persona> FindByNameAsync(string name)
+        {
+            return await _context.Personae
+                .FirstOrDefaultAsync(persona => persona.Name == name);
         }
     }
 }

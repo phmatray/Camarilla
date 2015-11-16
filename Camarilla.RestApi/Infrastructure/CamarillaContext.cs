@@ -14,6 +14,7 @@ namespace Camarilla.RestApi.Infrastructure
         }
 
         public DbSet<Clan> Clans { get; set; }
+        public DbSet<Persona> Personae { get; set; }
 
         public static CamarillaContext Create()
         {

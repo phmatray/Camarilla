@@ -183,6 +183,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ControllerModels\ClaimBindingModel.cs" />
     <Compile Include="ControllerModels\ClanBindingModels.cs" />
+    <Compile Include="ControllerModels\PersonaBindingModels.cs" />
     <Compile Include="ControllerModels\RoleBindingModels.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="ControllerModels\AccountBindingModels.cs" />
     <Compile Include="Controllers\ClaimsController.cs" />
     <Compile Include="Controllers\ClansController.cs" />
+    <Compile Include="Controllers\PersonaeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Infrastructure\CamarillaContext.cs" />
     <Compile Include="Infrastructure\ClaimsAuthorizationAttribute.cs" />

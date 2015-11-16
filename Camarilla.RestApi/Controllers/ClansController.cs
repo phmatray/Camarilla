@@ -122,11 +122,10 @@ namespace Camarilla.RestApi.Controllers
                 clan.Name = updateClanModel.Name;
             if (updateClanModel.Description != null)
                 clan.Description = updateClanModel.Description;
-
-            // We don't check because ClanCategory is an enum.
-            clan.ClanCategory = updateClanModel.ClanCategory;
-            // We don't check because ClanKinnd is an enum.
-            clan.ClanKind = updateClanModel.ClanKind;
+            if (updateClanModel.ClanCategory.HasValue)
+                clan.ClanCategory = updateClanModel.ClanCategory.Value;
+            if (updateClanModel.ClanKind.HasValue)
+                clan.ClanKind = updateClanModel.ClanKind.Value;
         }
     }
 }
