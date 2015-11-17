@@ -37,7 +37,7 @@ namespace Camarilla.RestApi.Controllers
         }
 
         [HttpGet]
-        [Route("{id}", Name = "GetPersonaById")]
+        [Route("{id:int}", Name = "GetPersonaById")]
         [ResponseType(typeof(PersonaReturnModel))]
         public async Task<IHttpActionResult> GetPersona(int id)
         {
@@ -50,7 +50,7 @@ namespace Camarilla.RestApi.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(PersonaReturnModel))]
         public async Task<IHttpActionResult> PutPersona(int id, UpdatePersonaBindingModel updatePersonaModel)
         {
@@ -102,7 +102,7 @@ namespace Camarilla.RestApi.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> DeletePersona(int id)
         {

@@ -37,7 +37,7 @@ namespace Camarilla.RestApi.Controllers
         }
 
         [HttpGet]
-        [Route("{id}", Name = "GetClanById")]
+        [Route("{id:int}", Name = "GetClanById")]
         [ResponseType(typeof (ClanReturnModel))]
         public async Task<IHttpActionResult> GetClan(int id)
         {
@@ -50,7 +50,7 @@ namespace Camarilla.RestApi.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         [ResponseType(typeof (ClanReturnModel))]
         public async Task<IHttpActionResult> PutClan(int id, UpdateClanBindingModel updateClanModel)
         {
@@ -98,7 +98,7 @@ namespace Camarilla.RestApi.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         [ResponseType(typeof (void))]
         public async Task<IHttpActionResult> DeleteClan(int id)
         {
