@@ -11,6 +11,8 @@ namespace Camarilla.RestApi.Infrastructure
         {
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
+
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<CamarillaContext, CamarillaContextMigrationConfiguration>());
         }
 
         public DbSet<Clan> Clans { get; set; }

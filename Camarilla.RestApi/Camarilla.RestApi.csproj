@@ -195,6 +195,7 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Infrastructure\CamarillaContext.cs" />
     <Compile Include="Infrastructure\ClaimsAuthorizationAttribute.cs" />
+    <Compile Include="Infrastructure\CamarillaContextMigrationConfiguration.cs" />
     <Compile Include="Infrastructure\ExtendedClaimsProvider.cs" />
     <Compile Include="Managers\Base\IManager.cs" />
     <Compile Include="Managers\RoleManager.cs" />
