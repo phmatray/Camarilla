@@ -13,11 +13,9 @@ namespace Camarilla.RestApi.Stores.Concretes
 {
     public class ClanStore : RepositoryBase, IClanStore<Clan>
     {
-        private readonly CamarillaContext _context;
-
         public ClanStore(CamarillaContext context)
+            : base(context)
         {
-            _context = context;
         }
 
         public IQueryable<Clan> GetAll()

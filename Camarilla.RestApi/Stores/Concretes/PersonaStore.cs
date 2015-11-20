@@ -13,11 +13,9 @@ namespace Camarilla.RestApi.Stores.Concretes
 {
     public class PersonaStore : RepositoryBase, IPersonaStore<Persona>
     {
-        private readonly CamarillaContext _context;
-
         public PersonaStore(CamarillaContext context)
+            : base(context)
         {
-            _context = context;
         }
 
         public IQueryable<Persona> GetAll()

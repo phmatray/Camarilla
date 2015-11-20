@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
+using Camarilla.RestApi.Infrastructure;
 using Microsoft.AspNet.Identity;
 
 namespace Camarilla.RestApi.Stores.Base
 {
     public abstract class RepositoryBase
     {
+        protected readonly CamarillaContext _context;
+
+        protected RepositoryBase(CamarillaContext context)
+        {
+            _context = context;
+        }
+
         protected async Task<IdentityResult> CatchIdentityErrorsAsync(Func<Task> resultBody)
         {
             var errors = new List<string>();

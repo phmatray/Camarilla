@@ -12,11 +12,9 @@ namespace Camarilla.RestApi.Stores.Concretes
 {
     public class RaceStore : RepositoryBase, IRaceStore<Race>
     {
-        private readonly CamarillaContext _context;
-
         public RaceStore(CamarillaContext context)
+            : base(context)
         {
-            _context = context;
         }
 
         public IQueryable<Race> GetAll()
