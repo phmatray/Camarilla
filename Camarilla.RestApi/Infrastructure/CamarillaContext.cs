@@ -15,6 +15,7 @@ namespace Camarilla.RestApi.Infrastructure
             //Database.SetInitializer(new MigrateDatabaseToLatestVersion<CamarillaContext, CamarillaContextMigrationConfiguration>());
         }
 
+        public DbSet<Race> Races { get; set; }
         public DbSet<Clan> Clans { get; set; }
         public DbSet<Persona> Personae { get; set; }
 

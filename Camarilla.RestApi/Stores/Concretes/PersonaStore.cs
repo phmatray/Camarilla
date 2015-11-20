@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
@@ -17,6 +18,12 @@ namespace Camarilla.RestApi.Stores.Concretes
         public PersonaStore(CamarillaContext context)
         {
             _context = context;
+        }
+
+        public IQueryable<Persona> GetAll()
+        {
+            return _context.Personae
+                .AsQueryable();
         }
 
         public async Task<IdentityResult> CreateAsync(Persona entity)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
@@ -19,6 +20,11 @@ namespace Camarilla.RestApi.Stores.Concretes
             _context = context;
         }
 
+        public IQueryable<Clan> GetAll()
+        {
+            return _context.Clans
+                .AsQueryable();
+        }
 
         public async Task<IdentityResult> CreateAsync(Clan entity)
         {
