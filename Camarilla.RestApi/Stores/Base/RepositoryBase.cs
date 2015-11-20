@@ -1,16 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
-using Camarilla.RestApi.Stores.Base;
 using Microsoft.AspNet.Identity;
 
-namespace Camarilla.RestApi.Stores.Helpers
+namespace Camarilla.RestApi.Stores.Base
 {
-    public static class StoreHelpers
+    public abstract class RepositoryBase
     {
-        public static async Task<IdentityResult> CatchIdentityErrorsAsync(this IStore store, Func<Task> resultBody)
+        protected async Task<IdentityResult> CatchIdentityErrorsAsync(Func<Task> resultBody)
         {
             var errors = new List<string>();
 

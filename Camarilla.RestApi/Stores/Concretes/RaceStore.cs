@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
+using Camarilla.RestApi.Stores.Base;
 using Camarilla.RestApi.Stores.Interfaces;
 using Microsoft.AspNet.Identity;
 
 namespace Camarilla.RestApi.Stores.Concretes
 {
-    public class RaceStore : IRaceStore<Race>
+    public class RaceStore : RepositoryBase, IRaceStore<Race>
     {
         private readonly CamarillaContext _context;
 

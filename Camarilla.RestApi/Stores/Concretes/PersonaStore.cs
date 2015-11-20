@@ -5,13 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
-using Camarilla.RestApi.Stores.Helpers;
+using Camarilla.RestApi.Stores.Base;
 using Camarilla.RestApi.Stores.Interfaces;
 using Microsoft.AspNet.Identity;
 
 namespace Camarilla.RestApi.Stores.Concretes
 {
-    public class PersonaStore : IPersonaStore<Persona>
+    public class PersonaStore : RepositoryBase, IPersonaStore<Persona>
     {
         private readonly CamarillaContext _context;
 
@@ -28,7 +28,7 @@ namespace Camarilla.RestApi.Stores.Concretes
 
         public async Task<IdentityResult> CreateAsync(Persona entity)
         {
-            return await this.CatchIdentityErrorsAsync(async () =>
+            return await CatchIdentityErrorsAsync(async () =>
             {
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
@@ -42,7 +42,7 @@ namespace Camarilla.RestApi.Stores.Concretes
 
         public async Task<IdentityResult> UpdateAsync(Persona entity)
         {
-            return await this.CatchIdentityErrorsAsync(async () =>
+            return await CatchIdentityErrorsAsync(async () =>
             {
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
@@ -55,7 +55,7 @@ namespace Camarilla.RestApi.Stores.Concretes
 
         public async Task<IdentityResult> DeleteAsync(Persona entity)
         {
-            return await this.CatchIdentityErrorsAsync(async () =>
+            return await CatchIdentityErrorsAsync(async () =>
             {
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
