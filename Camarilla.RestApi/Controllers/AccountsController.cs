@@ -7,6 +7,7 @@ using System.Web.Http.Description;
 using Camarilla.RestApi.ControllerModels;
 using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
+using Camarilla.RestApi.Stores.Concretes;
 using Microsoft.AspNet.Identity;
 
 namespace Camarilla.RestApi.Controllers
@@ -25,7 +26,7 @@ namespace Camarilla.RestApi.Controllers
         /// </remarks>
         /// <response code="200">OK</response>
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("users")]
         [ResponseType(typeof (List<UserReturnModel>))]
         public IHttpActionResult GetUsers()
@@ -49,7 +50,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="404">Not found</response>
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        [Route("user/{id:guid}", Name = "GetUserById")]
+        [Route("users/{id:guid}", Name = "GetUserById")]
         [ResponseType(typeof (UserReturnModel))]
         public async Task<IHttpActionResult> GetUser(string id)
         {
@@ -62,6 +63,24 @@ namespace Camarilla.RestApi.Controllers
 
             return NotFound();
         }
+
+
+        [HttpGet]
+        [Route("users/{id:guid}/personae")]
+        [ResponseType(typeof (PersonaReturnModel))]
+        public async Task<IHttpActionResult> GetPersonaeForUser(string id)
+        {
+            var user = await TheUserManager.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                return Ok(user.Personae.Select(persona => TheModelFactory.Create(persona)));
+            }
+
+            return NotFound();
+        }
+
+
 
         /// <summary>
         ///     Delete a user
@@ -78,7 +97,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Authorize(Roles = "Admin")]
-        [Route("user/{id:guid}")]
+        [Route("users/{id:guid}")]
         [ResponseType(typeof (void))]
         public async Task<IHttpActionResult> DeleteUser(string id)
         {
@@ -114,7 +133,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="404">Not found</response>
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        [Route("user/{username}")]
+        [Route("users/{username}")]
         [ResponseType(typeof (UserReturnModel))]
         public async Task<IHttpActionResult> GetUserByName(string username)
         {
@@ -140,7 +159,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [AllowAnonymous]
-        [Route("")]
+        [Route("users")]
         [ResponseType(typeof (UserReturnModel))]
         public async Task<IHttpActionResult> CreateUser(CreateUserBindingModel createUserModel)
         {
@@ -298,7 +317,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="404">Not found</response>
         [HttpPut]
         [Authorize(Roles = "Admin")]
-        [Route("user/{id:guid}/roles")]
+        [Route("users/{id:guid}/roles")]
         public async Task<IHttpActionResult> AssignRolesToUser([FromUri] string id, [FromBody] string[] rolesToAssign)
         {
             var appUser = await TheUserManager.FindByIdAsync(id);
@@ -352,7 +371,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="404">Not found</response>
         [HttpPut]
         [Authorize(Roles = "Admin")]
-        [Route("user/{id:guid}/claims")]
+        [Route("users/{id:guid}/claims")]
         public async Task<IHttpActionResult> AssignClaimsToUser([FromUri] string id,
             [FromBody] List<ClaimBindingModel> claimsToAssign)
         {
@@ -367,13 +386,13 @@ namespace Camarilla.RestApi.Controllers
             foreach (var claimModel in claimsToAssign)
             {
                 if (appUser.Claims.Any(c => c.ClaimType == claimModel.Type))
-                    await
-                        TheUserManager.RemoveClaimAsync(id,
-                            ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
-
-                await
-                    TheUserManager.AddClaimAsync(id,
+                {
+                    await TheUserManager.RemoveClaimAsync(id,
                         ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
+                }
+
+                await TheUserManager.AddClaimAsync(id,
+                    ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
             }
 
             return Ok();
@@ -391,9 +410,9 @@ namespace Camarilla.RestApi.Controllers
         /// <returns>
         ///     Remove claims from user specified by its ID.
         /// </returns>
-        [Authorize(Roles = "Admin")]
-        [Route("user/{id:guid}/claims")]
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
+        [Route("users/{id:guid}/claims")]
         public async Task<IHttpActionResult> RemoveClaimsFromUser([FromUri] string id,
             [FromBody] List<ClaimBindingModel> claimsToRemove)
         {
@@ -415,5 +434,43 @@ namespace Camarilla.RestApi.Controllers
 
             return Ok();
         }
+
+        //[HttpPost]
+        //[Route("users/{id:guid}/personae/{personaId}")]
+        //public async Task<IHttpActionResult> AssignPersonaeToUser([FromUri] string id, [FromUri] int personaId)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
+
+        //    var user = await TheUserManager.FindByIdAsync(id);
+
+        //    if (user == null)
+        //        return NotFound();
+
+        //    //var persona = await ThePersonaManager
+
+        //    ////foreach (var personaId in personaIds)
+        //    ////{
+        //    ////    var personaStore = new PersonaStore();
+
+        //    ////    if (user.Personae.Any(p => p.Id == personaId))
+        //    ////        await TheUserManager.UpdateAsync(user);
+        //    ////}
+
+
+        //    ////foreach (var claimModel in personaIds)
+        //    ////{
+        //    ////    if (user.Claims.Any(c => c.ClaimType == claimModel.Type))
+        //    ////    {
+        //    ////        await TheUserManager.RemoveClaimAsync(id,
+        //    ////            ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
+        //    ////    }
+
+        //    ////    await TheUserManager.AddClaimAsync(id,
+        //    ////        ExtendedClaimsProvider.CreateClaim(claimModel.Type, claimModel.Value));
+        //    ////}
+
+        //    //return Ok();
+        //}
     }
 }

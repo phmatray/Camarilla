@@ -1,4 +1,10 @@
-﻿using System.Data.Entity.Migrations;
+﻿using System;
+using System.Data.Entity.Migrations;
+using System.Linq;
+using Camarilla.RestApi.Models;
+using Camarilla.RestApi.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Camarilla.RestApi.Infrastructure
 {
@@ -8,13 +14,45 @@ namespace Camarilla.RestApi.Infrastructure
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
+
+            //AutomaticMigrationsEnabled = false;
         }
 
-//#if DEBUG
-//        protected override void Seed(CamarillaContext context)
-//        {
-//            new CamarillaDataSeeder(context).Seed();
-//        }
-//#endif
+        protected override void Seed(CamarillaContext context)
+        {
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+
+            var manager = new UserManager<User>(new UserStore<User>(new CamarillaContext()));
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new CamarillaContext()));
+
+            var god = AppSettingsService.GetGod();
+            god.JoinDate = DateTime.Now.AddYears(-3);
+
+            manager.Create(god, AppSettingsService.GetGodPassword());
+
+            if (!roleManager.Roles.Any())
+            {
+                roleManager.Create(new IdentityRole {Name = "God"});
+                roleManager.Create(new IdentityRole {Name = "Admin"});
+                roleManager.Create(new IdentityRole {Name = "Hacker"});
+                roleManager.Create(new IdentityRole {Name = "User"});
+            }
+
+            var adminUser = manager.FindByName("God");
+
+            manager.AddToRoles(adminUser.Id, "God", "Admin", "Hacker");
+        }
+
+        //        protected override void Seed(CamarillaContext context)
+
+        //#if DEBUG
+        //        {
+        //            new CamarillaDataSeeder(context).Seed();
+        //        }
+        //#endif
     }
 }

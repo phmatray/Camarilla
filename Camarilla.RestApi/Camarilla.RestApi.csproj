@@ -216,7 +216,6 @@
     <Compile Include="Migrations\201511161823306_OptionalGender.Designer.cs">
       <DependentUpon>201511161823306_OptionalGender.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Asset\Asset.cs" />
     <Compile Include="Models\Asset\Enum\AssetCategory.cs" />
     <Compile Include="Models\Asset\Enum\AssetSideEffect.cs" />

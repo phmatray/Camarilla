@@ -11,10 +11,10 @@ namespace Camarilla.RestApi.Models
     public class User : IdentityUser, IModel
     {
         [DisplayName("Prénom")]
-        public string FirstName { get; set; } = string.Empty;
+        public string FirstName { get; set; }
 
         [DisplayName("Nom")]
-        public string LastName { get; set; } = string.Empty;
+        public string LastName { get; set; }
 
         [DisplayName("Date de naissance")]
         public DateTime? Birthday { get; set; }
@@ -23,9 +23,9 @@ namespace Camarilla.RestApi.Models
         public DateTime? JoinDate { get; set; }
 
         [DisplayName("Genre")]
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
-        public virtual ICollection<Persona> Personae { get; set; }
+        public virtual ICollection<Persona> Personae { get; set; } = new List<Persona>();
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
         {

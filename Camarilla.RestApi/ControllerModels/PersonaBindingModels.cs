@@ -10,6 +10,8 @@
         public int Nights { get; set; }
         public int Willingness { get; set; }
         public int Humanity { get; set; }
+        public int ClanId { get; set; }
+        public string UserId { get; set; }
     }
 
     public class UpdatePersonaBindingModel

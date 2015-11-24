@@ -120,6 +120,26 @@ namespace Camarilla.RestApi.Controllers
             return NotFound();
         }
 
+        //[HttpGet]
+        //[Route("{id:int}/mails")]
+        //[ResponseType(typeof(List<Mail>))]
+        //public async Task<IHttpActionResult> GetLetterBox(int id)
+        //{
+        //    var persona = await ThePersonaStore.FindByIdAsync(id);
+
+        //    if (persona != null)
+        //    {
+        //        var result = persona.LetterBox
+        //            .Select(mail => TheModelFactory.Create(mail));
+
+        //        return !result.Succeeded
+        //            ? GetErrorResult(result)
+        //            : Ok();
+        //    }
+
+        //    return NotFound();
+        //}
+
         protected void UpdateEntity(ref Persona persona, UpdatePersonaBindingModel updatePersonaModel)
         {
             if (updatePersonaModel.Name != null)
