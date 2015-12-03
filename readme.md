@@ -14,7 +14,7 @@ Ce repository contient le serveur permettant la gestion de fiches de personnages
 
 ## Liens vers les projets compilés
 * [Serveur](http://camarilla-api.azurewebsites.net/swagger)
-* Client (à venir)
+* [Client](http://camarilla-ardente.azurewebsites.net/)
 
 ## Autres liens
 * [Site principal](http://www.camarilla.be/)
