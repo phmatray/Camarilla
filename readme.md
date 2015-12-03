@@ -8,10 +8,16 @@ La Camarilla Ardente est un jeu librement inspiré du best seller "Vampire : la 
 
 Ce repository contient le serveur permettant la gestion de fiches de personnages.
 
-## Liens utiles
+## Liens vers les projets GitHub
+* GitHub du projet Serveur (cette page)
+* [GitHub du projet Client](https://github.com/phmatray/Camarilla-Client)
+
+## Liens vers les projets compilés
 * [Serveur](http://camarilla-api.azurewebsites.net/swagger)
+* Client (à venir)
+
+## Autres liens
 * [Site principal](http://www.camarilla.be/)
-* Client Web (à venir)
 
 ## Comment Contribuer
 1. Forkez le projet principal
