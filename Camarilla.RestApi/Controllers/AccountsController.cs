@@ -49,7 +49,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="200">OK</response>
         /// <response code="404">Not found</response>
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("users/{id:guid}", Name = "GetUserById")]
         [ResponseType(typeof (UserReturnModel))]
         public async Task<IHttpActionResult> GetUser(string id)
@@ -96,7 +96,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="404">Not found</response>
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("users/{id:guid}")]
         [ResponseType(typeof (void))]
         public async Task<IHttpActionResult> DeleteUser(string id)
@@ -132,7 +132,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="200">OK</response>
         /// <response code="404">Not found</response>
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("users/{username}")]
         [ResponseType(typeof (UserReturnModel))]
         public async Task<IHttpActionResult> GetUserByName(string username)
@@ -279,7 +279,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         [Route("changePassword")]
         [ResponseType(typeof (void))]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
@@ -316,7 +316,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="400">Bad Request</response>
         /// <response code="404">Not found</response>
         [HttpPut]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("users/{id:guid}/roles")]
         public async Task<IHttpActionResult> AssignRolesToUser([FromUri] string id, [FromBody] string[] rolesToAssign)
         {
@@ -370,7 +370,7 @@ namespace Camarilla.RestApi.Controllers
         /// <response code="400">Bad Request</response>
         /// <response code="404">Not found</response>
         [HttpPut]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("users/{id:guid}/claims")]
         public async Task<IHttpActionResult> AssignClaimsToUser([FromUri] string id,
             [FromBody] List<ClaimBindingModel> claimsToAssign)
@@ -411,7 +411,7 @@ namespace Camarilla.RestApi.Controllers
         ///     Remove claims from user specified by its ID.
         /// </returns>
         [HttpDelete]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("users/{id:guid}/claims")]
         public async Task<IHttpActionResult> RemoveClaimsFromUser([FromUri] string id,
             [FromBody] List<ClaimBindingModel> claimsToRemove)

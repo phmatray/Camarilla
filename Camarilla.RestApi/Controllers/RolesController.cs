@@ -7,14 +7,22 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Camarilla.RestApi.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    /// <summary>
+    ///     Roles controller
+    /// </summary>
+    //[Authorize(Roles = "Admin")]
     [RoutePrefix("api/roles")]
     public class RolesController : BaseApiController
     {
+        /// <summary>
+        ///     Get role by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("{id:guid}", Name = "GetRoleById")]
-        public async Task<IHttpActionResult> GetRole(string Id)
+        public async Task<IHttpActionResult> GetRole(string id)
         {
-            var role = await AppRoleManager.FindByIdAsync(Id);
+            var role = await AppRoleManager.FindByIdAsync(id);
 
             if (role != null)
                 return Ok(TheModelFactory.Create(role));
@@ -22,6 +30,10 @@ namespace Camarilla.RestApi.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        ///     Get all roles
+        /// </summary>
+        /// <returns></returns>
         [Route("", Name = "GetAllRoles")]
         public IHttpActionResult GetAllRoles()
         {
@@ -30,6 +42,11 @@ namespace Camarilla.RestApi.Controllers
             return Ok(roles);
         }
 
+        /// <summary>
+        ///     Create a role
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Route("create")]
         public async Task<IHttpActionResult> Create(CreateRoleBindingModel model)
         {
@@ -47,10 +64,15 @@ namespace Camarilla.RestApi.Controllers
             return Created(locationHeader, TheModelFactory.Create(role));
         }
 
+        /// <summary>
+        ///     Delete a role
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("{id:guid}")]
-        public async Task<IHttpActionResult> DeleteRole(string Id)
+        public async Task<IHttpActionResult> DeleteRole(string id)
         {
-            var role = await AppRoleManager.FindByIdAsync(Id);
+            var role = await AppRoleManager.FindByIdAsync(id);
 
             if (role != null)
             {
@@ -65,6 +87,11 @@ namespace Camarilla.RestApi.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        ///     Manage users in role
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Route("ManageUsersInRole")]
         public async Task<IHttpActionResult> ManageUsersInRole(UsersInRoleModel model)
         {

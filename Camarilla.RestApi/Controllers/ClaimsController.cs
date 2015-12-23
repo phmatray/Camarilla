@@ -8,7 +8,7 @@ namespace Camarilla.RestApi.Controllers
     public class ClaimsController : BaseApiController
     {
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         [Route("")]
         public IHttpActionResult GetClaims()
         {

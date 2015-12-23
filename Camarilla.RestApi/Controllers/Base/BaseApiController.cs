@@ -7,42 +7,38 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace Camarilla.RestApi.Controllers
 {
+    /// <summary>
+    ///     Used by ApiController to provide some managers.
+    /// </summary>
     public abstract class BaseApiController : ApiController
     {
-        private ModelFactory _modelFactory;
-        private readonly UserManager _theUserManager = null;
         private readonly RoleManager _theRoleManager = null;
+        private readonly UserManager _theUserManager = null;
+        private ModelFactory _modelFactory;
 
+        /// <summary>
+        ///     The user manager
+        /// </summary>
         protected UserManager TheUserManager
-        {
-            get
-            {
-                return _theUserManager ??
-                       Request.GetOwinContext().GetUserManager<UserManager>();
-            }
-        }
+            => _theUserManager ?? Request.GetOwinContext().GetUserManager<UserManager>();
 
+        /// <summary>
+        ///     The app role manager
+        /// </summary>
         protected RoleManager AppRoleManager
-        {
-            get
-            {
-                return _theRoleManager ??
-                       Request.GetOwinContext().GetUserManager<RoleManager>();
-            }
-        }
+            => _theRoleManager ?? Request.GetOwinContext().GetUserManager<RoleManager>();
 
+        /// <summary>
+        ///     The model factory
+        /// </summary>
         protected ModelFactory TheModelFactory
-        {
-            get
-            {
-                if (_modelFactory == null)
-                {
-                    _modelFactory = new ModelFactory(this.Request, this.TheUserManager);
-                }
-                return _modelFactory;
-            }
-        }
+            => _modelFactory ?? (_modelFactory = new ModelFactory(Request, TheUserManager));
 
+        /// <summary>
+        ///     Get error result
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
         protected IHttpActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null)
@@ -50,26 +46,24 @@ namespace Camarilla.RestApi.Controllers
                 return InternalServerError();
             }
 
-            if (!result.Succeeded)
+            if (result.Succeeded)
+                return null;
+
+            if (result.Errors != null)
             {
-                if (result.Errors != null)
+                foreach (var error in result.Errors)
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-                    }
+                    ModelState.AddModelError("", error);
                 }
-
-                if (ModelState.IsValid)
-                {
-                    // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
-                }
-
-                return BadRequest(ModelState);
             }
 
-            return null;
+            if (ModelState.IsValid)
+            {
+                // No ModelState errors are available to send, so just return an empty BadRequest.
+                return BadRequest();
+            }
+
+            return BadRequest(ModelState);
         }
     }
 }
