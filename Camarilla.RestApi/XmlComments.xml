@@ -172,5 +172,71 @@
                 Remove claims from user specified by its ID.
             </returns>
         </member>
+        <member name="T:Camarilla.RestApi.Controllers.BaseApiController">
+            <summary>
+                Used by ApiController to provide some managers.
+            </summary>
+        </member>
+        <member name="P:Camarilla.RestApi.Controllers.BaseApiController.TheUserManager">
+            <summary>
+                The user manager
+            </summary>
+        </member>
+        <member name="P:Camarilla.RestApi.Controllers.BaseApiController.AppRoleManager">
+            <summary>
+                The app role manager
+            </summary>
+        </member>
+        <member name="P:Camarilla.RestApi.Controllers.BaseApiController.TheModelFactory">
+            <summary>
+                The model factory
+            </summary>
+        </member>
+        <member name="M:Camarilla.RestApi.Controllers.BaseApiController.GetErrorResult(Microsoft.AspNet.Identity.IdentityResult)">
+            <summary>
+                Get error result
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Camarilla.RestApi.Controllers.RolesController">
+            <summary>
+                Roles controller
+            </summary>
+        </member>
+        <member name="M:Camarilla.RestApi.Controllers.RolesController.GetRole(System.String)">
+            <summary>
+                Get role by id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Camarilla.RestApi.Controllers.RolesController.GetAllRoles">
+            <summary>
+                Get all roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Camarilla.RestApi.Controllers.RolesController.Create(Camarilla.RestApi.ControllerModels.CreateRoleBindingModel)">
+            <summary>
+                Create a role
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Camarilla.RestApi.Controllers.RolesController.DeleteRole(System.String)">
+            <summary>
+                Delete a role
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Camarilla.RestApi.Controllers.RolesController.ManageUsersInRole(Camarilla.RestApi.ControllerModels.UsersInRoleModel)">
+            <summary>
+                Manage users in role
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

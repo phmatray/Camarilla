@@ -13,14 +13,14 @@ namespace Camarilla.RestApi.Controllers
     public abstract class BaseApiController : ApiController
     {
         private readonly RoleManager _theRoleManager = null;
-        private readonly UserManager _theUserManager = null;
+        private readonly ApplicationUserManager _theUserManager = null;
         private ModelFactory _modelFactory;
 
         /// <summary>
         ///     The user manager
         /// </summary>
-        protected UserManager TheUserManager
-            => _theUserManager ?? Request.GetOwinContext().GetUserManager<UserManager>();
+        protected ApplicationUserManager TheUserManager
+            => _theUserManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
         /// <summary>
         ///     The app role manager

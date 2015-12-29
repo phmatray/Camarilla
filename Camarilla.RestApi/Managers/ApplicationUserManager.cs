@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
 using Camarilla.RestApi.Services;
@@ -9,17 +10,17 @@ using Microsoft.Owin;
 
 namespace Camarilla.RestApi.Managers
 {
-    public class UserManager : UserManager<User>, IManager
+    public class ApplicationUserManager : UserManager<User>, IManager
     {
-        public UserManager(UserStore<User> store)
+        public ApplicationUserManager(UserStore<User> store)
             : base(store)
         {
         }
 
-        public static UserManager Create(IdentityFactoryOptions<UserManager> options, IOwinContext context)
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var dbContext = context.Get<CamarillaContext>();
-            var userManager = new UserManager(new UserStore<User>(dbContext));
+            var userManager = new ApplicationUserManager(new ApplicationUserStore<User>(dbContext));
 
             userManager.EmailService = new EmailService();
 

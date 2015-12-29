@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -7,7 +8,6 @@ using System.Web.Http.Description;
 using Camarilla.RestApi.ControllerModels;
 using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
-using Camarilla.RestApi.Stores.Concretes;
 using Microsoft.AspNet.Identity;
 
 namespace Camarilla.RestApi.Controllers
@@ -31,7 +31,9 @@ namespace Camarilla.RestApi.Controllers
         [ResponseType(typeof (List<UserReturnModel>))]
         public IHttpActionResult GetUsers()
         {
-            var userReturnModels = TheUserManager.Users.ToList()
+            var userReturnModels = TheUserManager.Users
+                .Include(x => x.Personae)
+                .ToList()
                 .Select(user => TheModelFactory.Create(user));
 
             return Ok(userReturnModels);
@@ -64,7 +66,6 @@ namespace Camarilla.RestApi.Controllers
             return NotFound();
         }
 
-
         [HttpGet]
         [Route("users/{id:guid}/personae")]
         [ResponseType(typeof (PersonaReturnModel))]
@@ -80,7 +81,20 @@ namespace Camarilla.RestApi.Controllers
             return NotFound();
         }
 
+        [HttpGet]
+        [Route("users/{username}/personae")]
+        [ResponseType(typeof(PersonaReturnModel))]
+        public async Task<IHttpActionResult> GetPersonaeForUserByName(string username)
+        {
+            var user = await TheUserManager.FindByNameAsync(username);
 
+            if (user != null)
+            {
+                return Ok(user.Personae.Select(persona => TheModelFactory.Create(persona)));
+            }
+
+            return NotFound();
+        }
 
         /// <summary>
         ///     Delete a user

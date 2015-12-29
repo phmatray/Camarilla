@@ -23,7 +23,7 @@ namespace Camarilla.RestApi.Providers
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
-            var userManager = context.OwinContext.GetUserManager<UserManager>();
+            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
             User user = await userManager.FindAsync(context.UserName, context.Password);
 

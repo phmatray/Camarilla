@@ -17,13 +17,7 @@ namespace Camarilla.RestApi.Controllers
         private readonly PersonaStore _thePersonaStore = null;
 
         protected PersonaStore ThePersonaStore
-        {
-            get
-            {
-                return _thePersonaStore ??
-                       new PersonaStore(new CamarillaContext());
-            }
-        }
+            => _thePersonaStore ?? new PersonaStore(new CamarillaContext());
 
         [HttpGet]
         [Route("")]
@@ -78,28 +72,73 @@ namespace Camarilla.RestApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
+            if (string.IsNullOrWhiteSpace(createPersonaModel.Username))
+                return BadRequest("Username cannot be null");
+            
             var persona = new Persona
             {
                 Name = createPersonaModel.Name,
                 Background = createPersonaModel.Background,
-                Generation = createPersonaModel.Generation,
-                ExperienceActual = createPersonaModel.ExperienceActual,
-                ExperienceRemaining = createPersonaModel.ExperienceRemaining,
-                Nights = createPersonaModel.Nights,
-                Willingness = createPersonaModel.Willingness,
-                Humanity = createPersonaModel.Humanity
+                Generation = 1,
+                ExperienceActual = 3000,
+                ExperienceRemaining = 3000,
+                Nights = 0,
+                Willingness = 10,
+                Humanity = 10,
             };
 
-            var addPersonaResult = await ThePersonaStore.CreateAsync(persona);
+            var user = await TheUserManager.FindByNameAsync(createPersonaModel.Username);
+            if (user == null)
+                return BadRequest("User not found");
 
-            if (!addPersonaResult.Succeeded)
-                return GetErrorResult(addPersonaResult);
+            user.Personae.Add(persona);
+
+            var updateUserResult = await TheUserManager.UpdateAsync(user);
+
+            if (!updateUserResult.Succeeded)
+                return GetErrorResult(updateUserResult);
 
             var locationHeader = new Uri(Url.Link("GetPersonaById", new { id = persona.Id }));
 
             return Created(locationHeader, TheModelFactory.Create(persona));
         }
+
+        //[HttpPost]
+        //[Route("")]
+        //[ResponseType(typeof(PersonaReturnModel))]
+        //public async Task<IHttpActionResult> PostPersona(CreatePersonaBindingModel createPersonaModel)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
+        //    if (string.IsNullOrWhiteSpace(createPersonaModel.Username))
+        //        return BadRequest("Username cannot be null");
+
+        //    var user = await TheUserManager.FindByNameAsync(createPersonaModel.Username);
+        //    if (user == null)
+        //        return BadRequest("User not found");
+
+        //    var persona = new Persona
+        //    {
+        //        Name = createPersonaModel.Name,
+        //        Background = createPersonaModel.Background,
+        //        Generation = 1,
+        //        ExperienceActual = 3000,
+        //        ExperienceRemaining = 3000,
+        //        Nights = 0,
+        //        Willingness = 10,
+        //        Humanity = 10,
+        //        User = user
+        //    };
+
+        //    var addPersonaResult = await ThePersonaStore.CreateAsync(persona);
+
+        //    if (!addPersonaResult.Succeeded)
+        //        return GetErrorResult(addPersonaResult);
+
+        //    var locationHeader = new Uri(Url.Link("GetPersonaById", new { id = persona.Id }));
+
+        //    return Created(locationHeader, TheModelFactory.Create(persona));
+        //}
 
         [HttpDelete]
         [Route("{id:int}")]

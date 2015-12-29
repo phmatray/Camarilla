@@ -201,9 +201,10 @@
     <Compile Include="Infrastructure\ClaimsAuthorizationAttribute.cs" />
     <Compile Include="Infrastructure\CamarillaContextMigrationConfiguration.cs" />
     <Compile Include="Infrastructure\ExtendedClaimsProvider.cs" />
+    <Compile Include="Managers\ApplicationUserStore.cs" />
     <Compile Include="Managers\Base\IManager.cs" />
     <Compile Include="Managers\RoleManager.cs" />
-    <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Managers\ApplicationUserManager.cs" />
     <Compile Include="Migrations\201511121511112_InitialCreate.cs" />
     <Compile Include="Migrations\201511121511112_InitialCreate.Designer.cs">
       <DependentUpon>201511121511112_InitialCreate.cs</DependentUpon>

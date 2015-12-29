@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http.Routing;
@@ -11,10 +12,10 @@ namespace Camarilla.RestApi.ControllerModels
 {
     public class ModelFactory
     {
-        private readonly UserManager _userManager;
+        private readonly ApplicationUserManager _userManager;
         private readonly UrlHelper _urlHelper;
 
-        public ModelFactory(HttpRequestMessage request, UserManager userManager)
+        public ModelFactory(HttpRequestMessage request, ApplicationUserManager userManager)
         {
             _urlHelper = new UrlHelper(request);
             _userManager = userManager;
@@ -48,6 +49,7 @@ namespace Camarilla.RestApi.ControllerModels
                 JoinDate = user.JoinDate,
                 Roles = _userManager.GetRolesAsync(user.Id).Result,
                 Claims = _userManager.GetClaimsAsync(user.Id).Result,
+                Personae = user.Personae.Select(CreateLite).ToList()
             };
         }
 
@@ -154,6 +156,7 @@ namespace Camarilla.RestApi.ControllerModels
         public DateTime? JoinDate { get; set; }
         public IList<string> Roles { get; set; }
         public IList<Claim> Claims { get; set; }
+        public IList<PersonaReturnModelLite> Personae { get; set; } 
     }
 
     public class RoleReturnModelLite
