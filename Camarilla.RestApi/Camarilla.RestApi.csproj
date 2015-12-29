@@ -188,15 +188,18 @@
     <Compile Include="ControllerModels\ClaimBindingModel.cs" />
     <Compile Include="ControllerModels\ClanBindingModels.cs" />
     <Compile Include="ControllerModels\PersonaBindingModels.cs" />
+    <Compile Include="ControllerModels\RaceBindingModels.cs" />
     <Compile Include="ControllerModels\RoleBindingModels.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
     <Compile Include="ControllerModels\ModelFactory.cs" />
     <Compile Include="ControllerModels\AccountBindingModels.cs" />
     <Compile Include="Controllers\ClaimsController.cs" />
+    <Compile Include="Controllers\RacesController.cs" />
     <Compile Include="Controllers\ClansController.cs" />
     <Compile Include="Controllers\PersonaeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Helpers\EnumExtensions.cs" />
     <Compile Include="Infrastructure\CamarillaContext.cs" />
     <Compile Include="Infrastructure\ClaimsAuthorizationAttribute.cs" />
     <Compile Include="Infrastructure\CamarillaContextMigrationConfiguration.cs" />
@@ -221,9 +224,14 @@
     <Compile Include="Migrations\201511161823306_OptionalGender.Designer.cs">
       <DependentUpon>201511161823306_OptionalGender.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512291750556_ExtendPersona.cs" />
+    <Compile Include="Migrations\201512291750556_ExtendPersona.Designer.cs">
+      <DependentUpon>201512291750556_ExtendPersona.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Asset\Asset.cs" />
     <Compile Include="Models\Asset\Enum\AssetCategory.cs" />
     <Compile Include="Models\Asset\Enum\AssetSideEffect.cs" />
+    <Compile Include="Models\Persona\Enum\PersonaGender.cs" />
     <Compile Include="Models\User\User.cs" />
     <Compile Include="Models\Clan\Clan.cs" />
     <Compile Include="Models\Clan\Enum\ClanCategory.cs" />
@@ -288,6 +296,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511161823306_OptionalGender.resx">
       <DependentUpon>201511161823306_OptionalGender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512291750556_ExtendPersona.resx">
+      <DependentUpon>201512291750556_ExtendPersona.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

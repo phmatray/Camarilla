@@ -187,6 +187,11 @@
                 The app role manager
             </summary>
         </member>
+        <member name="P:Camarilla.RestApi.Controllers.BaseApiController.ThePersonaStore">
+            <summary>
+                The persona store
+            </summary>
+        </member>
         <member name="P:Camarilla.RestApi.Controllers.BaseApiController.TheModelFactory">
             <summary>
                 The model factory
@@ -237,6 +242,12 @@
             </summary>
             <param name="model"></param>
             <returns></returns>
+        </member>
+        <member name="M:Camarilla.RestApi.Helpers.EnumExtensions.GetAttribute``1(System.Enum)">
+            <summary>
+                A generic extension method that aids in reflecting
+                and retrieving any attribute that is applied to an `Enum`.
+            </summary>
         </member>
     </members>
 </doc>

@@ -1,7 +1,9 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
 using Camarilla.RestApi.ControllerModels;
+using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Managers;
+using Camarilla.RestApi.Stores.Concretes;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -14,6 +16,7 @@ namespace Camarilla.RestApi.Controllers
     {
         private readonly RoleManager _theRoleManager = null;
         private readonly ApplicationUserManager _theUserManager = null;
+        private readonly PersonaStore _thePersonaStore = null;
         private ModelFactory _modelFactory;
 
         /// <summary>
@@ -27,6 +30,12 @@ namespace Camarilla.RestApi.Controllers
         /// </summary>
         protected RoleManager AppRoleManager
             => _theRoleManager ?? Request.GetOwinContext().GetUserManager<RoleManager>();
+
+        /// <summary>
+        ///     The persona store
+        /// </summary>
+        protected PersonaStore ThePersonaStore
+            => _thePersonaStore ?? new PersonaStore(new CamarillaContext());
 
         /// <summary>
         ///     The model factory

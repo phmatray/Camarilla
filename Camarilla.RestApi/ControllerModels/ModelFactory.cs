@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http.Routing;
+using Camarilla.RestApi.Helpers;
 using Camarilla.RestApi.Managers;
 using Camarilla.RestApi.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -78,6 +80,34 @@ namespace Camarilla.RestApi.ControllerModels
             };
         }
 
+        public RaceReturnModelLite CreateLite(Race race)
+        {
+            if (race == null)
+                return null;
+
+            return new RaceReturnModelLite
+            {
+                Url = _urlHelper.Link("GetRaceById", new { id = race.Id }),
+                Id = race.Id,
+                Name = race.Name
+            };
+        }
+
+        public RaceReturnModel Create(Race race)
+        {
+            if (race == null)
+                return null;
+
+            return new RaceReturnModel
+            {
+                Url = _urlHelper.Link("GetRaceById", new { id = race.Id }),
+                Id = race.Id,
+                Name = race.Name,
+                Description = race.Description,
+                Experience = race.Experience
+            };
+        }
+
         public ClanReturnModelLite CreateLite(Clan clan)
         {
             if (clan == null)
@@ -86,7 +116,8 @@ namespace Camarilla.RestApi.ControllerModels
             return new ClanReturnModelLite
             {
                 Url = _urlHelper.Link("GetClanById", new { id = clan.Id }),
-                Id = clan.Id
+                Id = clan.Id,
+                Name = clan.Name
             };
         }
 
@@ -127,7 +158,11 @@ namespace Camarilla.RestApi.ControllerModels
             {
                 Url = _urlHelper.Link("GetPersonaById", new {id = persona.Id}),
                 Id = persona.Id,
+                Pseudo = persona.Pseudo,
                 Name = persona.Name,
+                Gender = persona.PersonaGender.GetDisplayName(),
+                BirthDate = persona.BirthDate,
+                BirthPlace = persona.BirthPlace,
                 Background = persona.Background,
                 Generation = persona.Generation,
                 ExperienceActual = persona.ExperienceActual,
@@ -135,8 +170,10 @@ namespace Camarilla.RestApi.ControllerModels
                 Nights = persona.Nights,
                 Willingness = persona.Willingness,
                 Humanity = persona.Humanity,
+                PictureUrl = persona.PictureUrl,
+                Race = CreateLite(persona.Race),
                 Clan = CreateLite(persona.Clan),
-                UserReturnModel = CreateLite(persona.User)
+                User = CreateLite(persona.User)
             };
         }
     }
@@ -170,10 +207,24 @@ namespace Camarilla.RestApi.ControllerModels
         public string Name { get; set; }
     }
 
+    public class RaceReturnModelLite
+    {
+        public string Url { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class RaceReturnModel : RaceReturnModelLite
+    {
+        public string Description { get; set; }
+        public int Experience { get; set; }
+    }
+
     public class ClanReturnModelLite
     {
         public string Url { get; set; }
         public int Id { get; set; }
+        public string Name { get; set; }
     }
 
     public class ClanReturnModel : ClanReturnModelLite
@@ -181,7 +232,6 @@ namespace Camarilla.RestApi.ControllerModels
         public ClanCategory ClanCategory { get; set; }
         public ClanKind ClanKind { get; set; }
         public string Description { get; set; }
-        public string Name { get; set; }
     }
 
     public class PersonaReturnModelLite
@@ -192,7 +242,11 @@ namespace Camarilla.RestApi.ControllerModels
 
     public class PersonaReturnModel : PersonaReturnModelLite
     {
+        public string Pseudo { get; set; }
         public string Name { get; set; }
+        public string Gender { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public string BirthPlace { get; set; }
         public string Background { get; set; }
         public int Generation { get; set; }
         public int ExperienceActual { get; set; }
@@ -200,8 +254,10 @@ namespace Camarilla.RestApi.ControllerModels
         public int Nights { get; set; }
         public int Willingness { get; set; }
         public int Humanity { get; set; }
+        public string PictureUrl { get; set; }
+        public RaceReturnModelLite Race { get; set; }
         public ClanReturnModelLite Clan { get; set; }
-        public UserReturnModelLite UserReturnModel { get; set; }
+        public UserReturnModelLite User { get; set; }
     }
 
     //public class PersonaMailReturnModel

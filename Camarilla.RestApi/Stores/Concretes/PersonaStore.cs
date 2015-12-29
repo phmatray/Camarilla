@@ -21,6 +21,8 @@ namespace Camarilla.RestApi.Stores.Concretes
         public IQueryable<Persona> GetAll()
         {
             return _context.Personae
+                .Include(x => x.Clan)
+                .Include(x => x.Race)
                 .AsQueryable();
         }
 
@@ -65,19 +67,19 @@ namespace Camarilla.RestApi.Stores.Concretes
 
         public async Task<List<Persona>> FindAllAsync()
         {
-            return await _context.Personae
+            return await GetAll()
                 .ToListAsync();
         }
 
         public async Task<Persona> FindByIdAsync(int id)
         {
-            return await _context.Personae
+            return await GetAll()
                 .FirstOrDefaultAsync(persona => persona.Id == id);
         }
 
         public async Task<Persona> FindByNameAsync(string name)
         {
-            return await _context.Personae
+            return await GetAll()
                 .FirstOrDefaultAsync(persona => persona.Name == name);
         }
     }

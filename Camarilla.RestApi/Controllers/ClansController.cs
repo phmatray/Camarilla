@@ -16,14 +16,8 @@ namespace Camarilla.RestApi.Controllers
     {
         private readonly ClanStore _theClanStore = null;
 
-        protected ClanStore TheClanStore
-        {
-            get
-            {
-                return _theClanStore ??
-                       new ClanStore(new CamarillaContext());
-            }
-        }
+        protected ClanStore TheClanStore 
+            => _theClanStore ?? new ClanStore(new CamarillaContext());
 
         [HttpGet]
         [Route("")]

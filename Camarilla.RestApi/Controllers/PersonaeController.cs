@@ -5,20 +5,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Camarilla.RestApi.ControllerModels;
-using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
-using Camarilla.RestApi.Stores.Concretes;
 
 namespace Camarilla.RestApi.Controllers
 {
     [RoutePrefix("api/personae")]
     public class PersonaeController : BaseApiController
     {
-        private readonly PersonaStore _thePersonaStore = null;
-
-        protected PersonaStore ThePersonaStore
-            => _thePersonaStore ?? new PersonaStore(new CamarillaContext());
-
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(List<PersonaReturnModel>))]
@@ -84,7 +77,7 @@ namespace Camarilla.RestApi.Controllers
                 ExperienceRemaining = 3000,
                 Nights = 0,
                 Willingness = 10,
-                Humanity = 10,
+                Humanity = 10
             };
 
             var user = await TheUserManager.FindByNameAsync(createPersonaModel.Username);

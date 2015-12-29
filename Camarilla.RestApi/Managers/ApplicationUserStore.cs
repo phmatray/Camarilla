@@ -1,4 +1,5 @@
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using Camarilla.RestApi.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -18,6 +19,8 @@ namespace Camarilla.RestApi.Managers
                 .Include(x => x.Roles)
                 .Include(x => x.Claims)
                 .Include(x => x.Personae)
+                .Include(x => x.Personae.Select(y => y.Clan))
+                .Include(x => x.Personae.Select(y => y.Race))
                 .FirstOrDefaultAsync(x => x.Id == userId);
         }
 
@@ -27,6 +30,8 @@ namespace Camarilla.RestApi.Managers
                 .Include(x => x.Roles)
                 .Include(x => x.Claims)
                 .Include(x => x.Personae)
+                .Include(x => x.Personae.Select(y => y.Clan))
+                .Include(x => x.Personae.Select(y => y.Race))
                 .FirstOrDefaultAsync(x => x.UserName == username);
         }
     }
