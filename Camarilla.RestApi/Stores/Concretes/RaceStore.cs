@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Camarilla.RestApi.Infrastructure;
@@ -23,39 +24,67 @@ namespace Camarilla.RestApi.Stores.Concretes
                 .AsQueryable();
         }
 
-        public Task<IdentityResult> CreateAsync(Race entity)
+        public async Task<IdentityResult> CreateAsync(Race entity)
         {
-            throw new NotImplementedException();
+            return await CatchIdentityErrorsAsync(async () =>
+            {
+                if (entity == null)
+                    throw new ArgumentNullException(nameof(entity));
+
+                var race = _context.Races.Add(entity);
+                entity.Id = race.Id;
+
+                await _context.SaveChangesAsync();
+            });
         }
 
-        public Task<IdentityResult> UpdateAsync(Race entity)
+        public async Task<IdentityResult> UpdateAsync(Race entity)
         {
-            throw new NotImplementedException();
+            return await CatchIdentityErrorsAsync(async () =>
+            {
+                if (entity == null)
+                    throw new ArgumentNullException(nameof(entity));
+
+                _context.Entry(entity).State = EntityState.Modified;
+
+                await _context.SaveChangesAsync();
+            });
         }
 
-        public Task<IdentityResult> DeleteAsync(Race entity)
+        public async Task<IdentityResult> DeleteAsync(Race entity)
         {
-            throw new NotImplementedException();
+            return await CatchIdentityErrorsAsync(async () =>
+            {
+                if (entity == null)
+                    throw new ArgumentNullException(nameof(entity));
+
+                _context.Races.Remove(entity);
+                await _context.SaveChangesAsync();
+            });
         }
 
-        public Task<List<Race>> FindAllAsync()
+        public async Task<List<Race>> FindAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Races
+                .ToListAsync();
         }
 
-        public Task<Race> FindByIdAsync(int id)
+        public async Task<Race> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Races
+                .FirstOrDefaultAsync(clan => clan.Id == id);
         }
 
-        public Task<Race> FindByNameAsync(string name)
+        public async Task<Race> FindByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return await _context.Races
+                .FirstOrDefaultAsync(clan => clan.Name == name);
         }
 
-        public Task<Race> FindDefaultAsync()
+        public async Task<Race> FindDefaultAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Races
+                .FirstOrDefaultAsync();
         }
     }
 }

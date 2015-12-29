@@ -235,7 +235,7 @@ namespace Camarilla.RestApi.Controllers
 
             if (result.Succeeded)
             {
-                return Ok();
+                return await AssignRolesToUser(userId, new[] {"User"});
             }
             return GetErrorResult(result);
         }
