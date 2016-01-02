@@ -21,6 +21,8 @@ namespace Camarilla.RestApi.Stores.Concretes
         public IQueryable<Mail> GetAll()
         {
             return _context.Mails
+                .Include(x => x.From)
+                .Include(x => x.To)
                 .AsQueryable();
         }
 
@@ -65,13 +67,13 @@ namespace Camarilla.RestApi.Stores.Concretes
 
         public async Task<List<Mail>> FindAllAsync()
         {
-            return await _context.Mails
+            return await GetAll()
                 .ToListAsync();
         }
 
         public async Task<Mail> FindByIdAsync(int id)
         {
-            return await _context.Mails
+            return await GetAll()
                 .FirstOrDefaultAsync(mail => mail.Id == id);
         }
     }

@@ -73,11 +73,24 @@ namespace Camarilla.RestApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            // get the sender
+            var sender = await ThePersonaStore.FindByPseudoAsync(createMailModel.FromPseudo);
+            if (sender == null)
+                return BadRequest("Sender not found");
+
+            // get all the receivers
+            var tasks = createMailModel.ToPseudos
+                .Select(x => ThePersonaStore.FindByPseudoAsync(x));
+            var receivers = await Task.WhenAll(tasks);
+
+            // create the mail
             var mail = new Mail
             {
                 Message = createMailModel.Message,
                 Subject = createMailModel.Subject,
-                Sent = DateTime.Now
+                Sent = DateTime.Now,
+                From = sender,
+                To = receivers
             };
 
             var addMailResult = await TheMailStore.CreateAsync(mail);

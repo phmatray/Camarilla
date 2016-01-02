@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
@@ -145,7 +144,8 @@ namespace Camarilla.RestApi.ControllerModels
             return new PersonaReturnModelLite
             {
                 Url = _urlHelper.Link("GetPersonaById", new { id = persona.Id }),
-                Id = persona.Id
+                Id = persona.Id,
+                Pseudo = persona.Pseudo
             };
         }
 
@@ -177,6 +177,18 @@ namespace Camarilla.RestApi.ControllerModels
             };
         }
 
+        public MailReturnModelLite CreateLite(Mail mail)
+        {
+            if (mail == null)
+                return null;
+
+            return new MailReturnModelLite
+            {
+                Url = _urlHelper.Link("GetMailById", new {id = mail.Id}),
+                Id = mail.Id
+            };
+        }
+
         public MailReturnModel Create(Mail mail)
         {
             if (mail == null)
@@ -184,10 +196,12 @@ namespace Camarilla.RestApi.ControllerModels
 
             return new MailReturnModel
             {
-                Url = _urlHelper.Link("GetMailById", new {id = mail.Id}),
+                Url = _urlHelper.Link("GetMailById", new { id = mail.Id }),
                 Id = mail.Id,
                 Subject = mail.Subject,
-                Message = mail.Message
+                Message = mail.Message,
+                From = CreateLite(mail.From),
+                To = mail.To.Select(CreateLite).ToList()
             };
         }
 
@@ -268,17 +282,19 @@ namespace Camarilla.RestApi.ControllerModels
     {
         public string Message { get; set; }
         public string Subject { get; set; }
+        public PersonaReturnModelLite From { get; set; }
+        public IList<PersonaReturnModelLite> To { get; set; } 
     }
 
     public class PersonaReturnModelLite
     {
         public string Url { get; set; }
         public int Id { get; set; }
+        public string Pseudo { get; set; }
     }
 
     public class PersonaReturnModel : PersonaReturnModelLite
     {
-        public string Pseudo { get; set; }
         public string Name { get; set; }
         public string Gender { get; set; }
         public DateTime? BirthDate { get; set; }
