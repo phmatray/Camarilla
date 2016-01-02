@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
@@ -65,19 +66,25 @@ namespace Camarilla.RestApi.Stores.Concretes
 
         public async Task<List<Race>> FindAllAsync()
         {
-            return await _context.Races
+            return await GetAll()
+                .ToListAsync();
+        }
+
+        public async Task<List<Race>> FindAllAsync(Expression<Func<Race, bool>> predicate)
+        {
+            return await GetAll()
                 .ToListAsync();
         }
 
         public async Task<Race> FindByIdAsync(int id)
         {
-            return await _context.Races
+            return await GetAll()
                 .FirstOrDefaultAsync(clan => clan.Id == id);
         }
 
         public async Task<Race> FindByNameAsync(string name)
         {
-            return await _context.Races
+            return await GetAll()
                 .FirstOrDefaultAsync(clan => clan.Name == name);
         }
 

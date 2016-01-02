@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
@@ -65,7 +66,14 @@ namespace Camarilla.RestApi.Stores.Concretes
 
         public async Task<List<Clan>> FindAllAsync()
         {
-            return await _context.Clans
+            return await GetAll()
+                .ToListAsync();
+        }
+
+        public async Task<List<Clan>> FindAllAsync(Expression<Func<Clan, bool>> predicate)
+        {
+            return await GetAll()
+                .Where(predicate)
                 .ToListAsync();
         }
 

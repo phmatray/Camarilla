@@ -14,6 +14,7 @@ namespace Camarilla.RestApi.Controllers
     /// </summary>
     public abstract class BaseApiController : ApiController
     {
+        private CamarillaContext _context;
         private RoleManager _theRoleManager;
         private ApplicationUserManager _theUserManager;
         private PersonaStore _thePersonaStore;
@@ -22,6 +23,10 @@ namespace Camarilla.RestApi.Controllers
         private MailStore _theMailStore;
         private RaceStore _theRaceStore;
         private ModelFactory _modelFactory;
+
+        protected CamarillaContext Context
+            => _context
+            ?? (_context = CamarillaContext.Create());
 
         /// <summary>
         ///     The user manager
@@ -42,35 +47,35 @@ namespace Camarilla.RestApi.Controllers
         /// </summary>
         protected PersonaStore ThePersonaStore
             => _thePersonaStore
-            ?? (_thePersonaStore = new PersonaStore(CamarillaContext.Create()));
+            ?? (_thePersonaStore = new PersonaStore(Context));
 
         /// <summary>
         ///     The clan store
         /// </summary>
         protected ClanStore TheClanStore
             => _theClanStore 
-            ?? (_theClanStore = new ClanStore(CamarillaContext.Create()));
+            ?? (_theClanStore = new ClanStore(Context));
 
         /// <summary>
         ///     The mailbox store
         /// </summary>
         protected MailboxStore TheMailboxStore
             => _theMailboxStore
-            ?? (_theMailboxStore = new MailboxStore(CamarillaContext.Create()));
+            ?? (_theMailboxStore = new MailboxStore(Context));
 
         /// <summary>
         ///     The mail store
         /// </summary>
         protected MailStore TheMailStore
             => _theMailStore
-            ?? (_theMailStore = new MailStore(CamarillaContext.Create()));
+            ?? (_theMailStore = new MailStore(Context));
 
         /// <summary>
         ///     The race store
         /// </summary>
         protected RaceStore TheRaceStore
             => _theRaceStore
-            ?? (_theRaceStore = new RaceStore(CamarillaContext.Create()));
+            ?? (_theRaceStore = new RaceStore(Context));
 
         /// <summary>
         ///     The model factory

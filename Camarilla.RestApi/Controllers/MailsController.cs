@@ -72,9 +72,7 @@ namespace Camarilla.RestApi.Controllers
                 return BadRequest("Sender not found");
 
             // get all the receivers
-            var tasks = createMailModel.ToPseudos
-                .Select(x => ThePersonaStore.FindByPseudoAsync(x));
-            var receivers = await Task.WhenAll(tasks);
+            var receivers = await ThePersonaStore.FindAllAsync(x => createMailModel.ToPseudos.Contains(x.Pseudo));
 
             // create the mail
             var mail = new Mail
@@ -82,7 +80,7 @@ namespace Camarilla.RestApi.Controllers
                 Message = createMailModel.Message,
                 Subject = createMailModel.Subject,
                 Sent = DateTime.Now,
-                FromId = sender.Id,
+                From = sender,
                 To = receivers
             };
 
@@ -96,24 +94,24 @@ namespace Camarilla.RestApi.Controllers
             return Created(locationHeader, TheModelFactory.Create(mail));
         }
 
-        //[HttpDelete]
-        //[Route("{id:int}")]
-        //[ResponseType(typeof (void))]
-        //public async Task<IHttpActionResult> DeleteMail(int id)
-        //{
-        //    var mail = await TheMailStore.FindByIdAsync(id);
+        [HttpDelete]
+        [Route("{id:int}")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> DeleteMail(int id)
+        {
+            var mail = await TheMailStore.FindByIdAsync(id);
 
-        //    if (mail != null)
-        //    {
-        //        var result = await TheMailStore.DeleteAsync(mail);
+            if (mail != null)
+            {
+                var result = await TheMailStore.DeleteAsync(mail);
 
-        //        return !result.Succeeded
-        //            ? GetErrorResult(result)
-        //            : Ok();
-        //    }
+                return !result.Succeeded
+                    ? GetErrorResult(result)
+                    : Ok();
+            }
 
-        //    return NotFound();
-        //}
+            return NotFound();
+        }
 
         //protected void UpdateEntity(ref Mail mail, UpdateMailBindingModel updateMailModel)
         //{
