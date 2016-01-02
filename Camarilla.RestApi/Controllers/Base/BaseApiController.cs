@@ -2,8 +2,8 @@
 using System.Web.Http;
 using Camarilla.RestApi.ControllerModels;
 using Camarilla.RestApi.Infrastructure;
-using Camarilla.RestApi.Managers;
-using Camarilla.RestApi.Stores.Concretes;
+using Camarilla.RestApi.Infrastructure.Managers;
+using Camarilla.RestApi.Infrastructure.Stores.Concretes;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 

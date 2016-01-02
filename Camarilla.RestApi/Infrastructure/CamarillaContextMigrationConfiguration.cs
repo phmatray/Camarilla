@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using Camarilla.RestApi.Infrastructure.Services;
 using Camarilla.RestApi.Models;
-using Camarilla.RestApi.Services;
-using Camarilla.RestApi.Stores.Concretes;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 

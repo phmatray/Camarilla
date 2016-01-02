@@ -186,16 +186,16 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="ControllerModels\ClaimBindingModel.cs" />
-    <Compile Include="ControllerModels\ClanBindingModels.cs" />
-    <Compile Include="ControllerModels\MailBindingModels.cs" />
-    <Compile Include="ControllerModels\PersonaBindingModels.cs" />
-    <Compile Include="ControllerModels\RaceBindingModels.cs" />
-    <Compile Include="ControllerModels\RoleBindingModels.cs" />
+    <Compile Include="Controllers\ControllerModels\ClaimBindingModel.cs" />
+    <Compile Include="Controllers\ControllerModels\ClanBindingModels.cs" />
+    <Compile Include="Controllers\ControllerModels\MailBindingModels.cs" />
+    <Compile Include="Controllers\ControllerModels\PersonaBindingModels.cs" />
+    <Compile Include="Controllers\ControllerModels\RaceBindingModels.cs" />
+    <Compile Include="Controllers\ControllerModels\RoleBindingModels.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
-    <Compile Include="ControllerModels\ModelFactory.cs" />
-    <Compile Include="ControllerModels\AccountBindingModels.cs" />
+    <Compile Include="Controllers\ControllerModels\ModelFactory.cs" />
+    <Compile Include="Controllers\ControllerModels\AccountBindingModels.cs" />
     <Compile Include="Controllers\ClaimsController.cs" />
     <Compile Include="Controllers\MailsController.cs" />
     <Compile Include="Controllers\MailboxesController.cs" />
@@ -203,7 +203,7 @@
     <Compile Include="Controllers\ClansController.cs" />
     <Compile Include="Controllers\PersonaeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
-    <Compile Include="Helpers\EnumExtensions.cs" />
+    <Compile Include="Infrastructure\Helpers\EnumExtensions.cs" />
     <Compile Include="Infrastructure\CamarillaContext.cs" />
     <Compile Include="Infrastructure\ClaimsAuthorizationAttribute.cs" />
     <Compile Include="Infrastructure\CamarillaContextMigrationConfiguration.cs" />
@@ -212,10 +212,10 @@
     <Compile Include="Migrations\201601021820104_UpdateForeignKeys.Designer.cs">
       <DependentUpon>201601021820104_UpdateForeignKeys.cs</DependentUpon>
     </Compile>
-    <Compile Include="Stores\Concretes\ApplicationUserStore.cs" />
-    <Compile Include="Managers\Base\IManager.cs" />
-    <Compile Include="Managers\RoleManager.cs" />
-    <Compile Include="Managers\ApplicationUserManager.cs" />
+    <Compile Include="Infrastructure\Stores\Concretes\ApplicationUserStore.cs" />
+    <Compile Include="Infrastructure\Managers\Base\IManager.cs" />
+    <Compile Include="Infrastructure\Managers\RoleManager.cs" />
+    <Compile Include="Infrastructure\Managers\ApplicationUserManager.cs" />
     <Compile Include="Migrations\201511121511112_InitialCreate.cs" />
     <Compile Include="Migrations\201511121511112_InitialCreate.Designer.cs">
       <DependentUpon>201511121511112_InitialCreate.cs</DependentUpon>
@@ -271,22 +271,22 @@
     <Compile Include="Models\Statistic\Statistic.cs" />
     <Compile Include="Models\User\Enum\Gender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\CustomJwtFormat.cs" />
-    <Compile Include="Providers\CustomOAuthProvider.cs" />
-    <Compile Include="Services\AppSettingsService.cs" />
-    <Compile Include="Services\EmailService.cs" />
-    <Compile Include="Stores\Base\IStore.cs" />
-    <Compile Include="Stores\Base\RepositoryBase.cs" />
-    <Compile Include="Stores\Concretes\ClanStore.cs" />
-    <Compile Include="Stores\Concretes\MailboxStore.cs" />
-    <Compile Include="Stores\Concretes\MailStore.cs" />
-    <Compile Include="Stores\Concretes\PersonaStore.cs" />
-    <Compile Include="Stores\Concretes\RaceStore.cs" />
-    <Compile Include="Stores\Interfaces\IMailboxStore.cs" />
-    <Compile Include="Stores\Interfaces\IClanStore.cs" />
-    <Compile Include="Stores\Interfaces\IMailStore.cs" />
-    <Compile Include="Stores\Interfaces\IPersonaStore.cs" />
-    <Compile Include="Stores\Interfaces\IRaceStore.cs" />
+    <Compile Include="Infrastructure\Providers\CustomJwtFormat.cs" />
+    <Compile Include="Infrastructure\Providers\CustomOAuthProvider.cs" />
+    <Compile Include="Infrastructure\Services\AppSettingsService.cs" />
+    <Compile Include="Infrastructure\Services\EmailService.cs" />
+    <Compile Include="Infrastructure\Stores\Base\IStore.cs" />
+    <Compile Include="Infrastructure\Stores\Base\RepositoryBase.cs" />
+    <Compile Include="Infrastructure\Stores\Concretes\ClanStore.cs" />
+    <Compile Include="Infrastructure\Stores\Concretes\MailboxStore.cs" />
+    <Compile Include="Infrastructure\Stores\Concretes\MailStore.cs" />
+    <Compile Include="Infrastructure\Stores\Concretes\PersonaStore.cs" />
+    <Compile Include="Infrastructure\Stores\Concretes\RaceStore.cs" />
+    <Compile Include="Infrastructure\Stores\Interfaces\IMailboxStore.cs" />
+    <Compile Include="Infrastructure\Stores\Interfaces\IClanStore.cs" />
+    <Compile Include="Infrastructure\Stores\Interfaces\IMailStore.cs" />
+    <Compile Include="Infrastructure\Stores\Interfaces\IPersonaStore.cs" />
+    <Compile Include="Infrastructure\Stores\Interfaces\IRaceStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

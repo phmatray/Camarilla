@@ -263,7 +263,7 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:Camarilla.RestApi.Helpers.EnumExtensions.GetAttribute``1(System.Enum)">
+        <member name="M:Camarilla.RestApi.Infrastructure.Helpers.EnumExtensions.GetAttribute``1(System.Enum)">
             <summary>
                 A generic extension method that aids in reflecting
                 and retrieving any attribute that is applied to an `Enum`.

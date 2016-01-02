@@ -2,9 +2,9 @@
 using System.Web.Http;
 using Camarilla.RestApi;
 using Camarilla.RestApi.Infrastructure;
-using Camarilla.RestApi.Managers;
-using Camarilla.RestApi.Providers;
-using Camarilla.RestApi.Services;
+using Camarilla.RestApi.Infrastructure.Managers;
+using Camarilla.RestApi.Infrastructure.Providers;
+using Camarilla.RestApi.Infrastructure.Services;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security;
