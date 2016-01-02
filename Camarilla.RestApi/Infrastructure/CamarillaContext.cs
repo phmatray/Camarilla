@@ -18,6 +18,8 @@ namespace Camarilla.RestApi.Infrastructure
         public DbSet<Race> Races { get; set; }
         public DbSet<Clan> Clans { get; set; }
         public DbSet<Persona> Personae { get; set; }
+        public DbSet<Mailbox> Mailboxes { get; set; }
+        public DbSet<Mail> Mails { get; set; }
 
         public static CamarillaContext Create()
         {

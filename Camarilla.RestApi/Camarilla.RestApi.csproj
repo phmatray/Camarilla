@@ -187,6 +187,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ControllerModels\ClaimBindingModel.cs" />
     <Compile Include="ControllerModels\ClanBindingModels.cs" />
+    <Compile Include="ControllerModels\MailBindingModels.cs" />
     <Compile Include="ControllerModels\PersonaBindingModels.cs" />
     <Compile Include="ControllerModels\RaceBindingModels.cs" />
     <Compile Include="ControllerModels\RoleBindingModels.cs" />
@@ -195,6 +196,8 @@
     <Compile Include="ControllerModels\ModelFactory.cs" />
     <Compile Include="ControllerModels\AccountBindingModels.cs" />
     <Compile Include="Controllers\ClaimsController.cs" />
+    <Compile Include="Controllers\MailsController.cs" />
+    <Compile Include="Controllers\MailboxesController.cs" />
     <Compile Include="Controllers\RacesController.cs" />
     <Compile Include="Controllers\ClansController.cs" />
     <Compile Include="Controllers\PersonaeController.cs" />
@@ -204,7 +207,7 @@
     <Compile Include="Infrastructure\ClaimsAuthorizationAttribute.cs" />
     <Compile Include="Infrastructure\CamarillaContextMigrationConfiguration.cs" />
     <Compile Include="Infrastructure\ExtendedClaimsProvider.cs" />
-    <Compile Include="Managers\ApplicationUserStore.cs" />
+    <Compile Include="Stores\Concretes\ApplicationUserStore.cs" />
     <Compile Include="Managers\Base\IManager.cs" />
     <Compile Include="Managers\RoleManager.cs" />
     <Compile Include="Managers\ApplicationUserManager.cs" />
@@ -228,9 +231,14 @@
     <Compile Include="Migrations\201512291750556_ExtendPersona.Designer.cs">
       <DependentUpon>201512291750556_ExtendPersona.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601021329353_CreateMailbox.cs" />
+    <Compile Include="Migrations\201601021329353_CreateMailbox.Designer.cs">
+      <DependentUpon>201601021329353_CreateMailbox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Asset\Asset.cs" />
     <Compile Include="Models\Asset\Enum\AssetCategory.cs" />
     <Compile Include="Models\Asset\Enum\AssetSideEffect.cs" />
+    <Compile Include="Models\Mailbox\Mailbox.cs" />
     <Compile Include="Models\Persona\Enum\PersonaGender.cs" />
     <Compile Include="Models\User\User.cs" />
     <Compile Include="Models\Clan\Clan.cs" />
@@ -265,9 +273,13 @@
     <Compile Include="Stores\Base\IStore.cs" />
     <Compile Include="Stores\Base\RepositoryBase.cs" />
     <Compile Include="Stores\Concretes\ClanStore.cs" />
+    <Compile Include="Stores\Concretes\MailboxStore.cs" />
+    <Compile Include="Stores\Concretes\MailStore.cs" />
     <Compile Include="Stores\Concretes\PersonaStore.cs" />
     <Compile Include="Stores\Concretes\RaceStore.cs" />
+    <Compile Include="Stores\Interfaces\IMailboxStore.cs" />
     <Compile Include="Stores\Interfaces\IClanStore.cs" />
+    <Compile Include="Stores\Interfaces\IMailStore.cs" />
     <Compile Include="Stores\Interfaces\IPersonaStore.cs" />
     <Compile Include="Stores\Interfaces\IRaceStore.cs" />
   </ItemGroup>
@@ -299,6 +311,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512291750556_ExtendPersona.resx">
       <DependentUpon>201512291750556_ExtendPersona.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601021329353_CreateMailbox.resx">
+      <DependentUpon>201601021329353_CreateMailbox.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

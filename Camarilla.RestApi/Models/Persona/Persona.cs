@@ -23,6 +23,6 @@ namespace Camarilla.RestApi.Models
         public virtual Race Race { get; set; }
         public virtual Persona Sire { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<PersonaMail> LetterBox { get; set; } = new List<PersonaMail>();
+        public virtual Mailbox Mailbox { get; set; }
     }
 }

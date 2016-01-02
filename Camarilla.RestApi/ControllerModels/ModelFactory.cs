@@ -55,18 +55,6 @@ namespace Camarilla.RestApi.ControllerModels
             };
         }
 
-        internal LetterboxReturnModel Create(ICollection<PersonaMail> letterBox)
-        {
-            throw new NotImplementedException();
-            //if (letterBox == null)
-            //    return null;
-
-            //return new LetterboxReturnModel
-            //{
-            //    Url = _urlHelper.Link("GetUserById", new {id = user.Id}),
-            //};
-        }
-
         public RoleReturnModelLite CreateLite(IdentityRole role)
         {
             if (role == null)
@@ -188,6 +176,25 @@ namespace Camarilla.RestApi.ControllerModels
                 User = CreateLite(persona.User)
             };
         }
+
+        public MailReturnModel Create(Mail mail)
+        {
+            if (mail == null)
+                return null;
+
+            return new MailReturnModel
+            {
+                Url = _urlHelper.Link("GetMailById", new {id = mail.Id}),
+                Id = mail.Id,
+                Subject = mail.Subject,
+                Message = mail.Message
+            };
+        }
+
+        public MailboxReturnModel Create(Mailbox letterBox)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class UserReturnModelLite
@@ -208,7 +215,7 @@ namespace Camarilla.RestApi.ControllerModels
         public IList<PersonaReturnModelLite> Personae { get; set; } 
     }
 
-    public class LetterboxReturnModel
+    public class MailboxReturnModel
     {
         
     }
@@ -249,6 +256,18 @@ namespace Camarilla.RestApi.ControllerModels
         public ClanCategory ClanCategory { get; set; }
         public ClanKind ClanKind { get; set; }
         public string Description { get; set; }
+    }
+
+    public class MailReturnModelLite
+    {
+        public string Url { get; set; }
+        public int Id { get; set; }
+    }
+
+    public class MailReturnModel : MailReturnModelLite
+    {
+        public string Message { get; set; }
+        public string Subject { get; set; }
     }
 
     public class PersonaReturnModelLite

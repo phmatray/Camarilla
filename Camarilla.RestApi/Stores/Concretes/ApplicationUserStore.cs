@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Camarilla.RestApi.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace Camarilla.RestApi.Managers
+namespace Camarilla.RestApi.Stores.Concretes
 {
     public class ApplicationUserStore<T> : UserStore<T> where T : User
     {

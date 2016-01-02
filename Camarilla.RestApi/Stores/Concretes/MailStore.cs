@@ -11,37 +11,34 @@ using Microsoft.AspNet.Identity;
 
 namespace Camarilla.RestApi.Stores.Concretes
 {
-    public class PersonaStore : RepositoryBase, IPersonaStore<Persona>
+    public class MailStore : RepositoryBase, IMailStore<Mail>
     {
-        public PersonaStore(CamarillaContext context)
+        public MailStore(CamarillaContext context)
             : base(context)
         {
         }
 
-        public IQueryable<Persona> GetAll()
+        public IQueryable<Mail> GetAll()
         {
-            return _context.Personae
-                .Include(x => x.Clan)
-                .Include(x => x.Race)
-                .Include(x => x.Mailbox)
+            return _context.Mails
                 .AsQueryable();
         }
 
-        public async Task<IdentityResult> CreateAsync(Persona entity)
+        public async Task<IdentityResult> CreateAsync(Mail entity)
         {
             return await CatchIdentityErrorsAsync(async () =>
             {
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                var persona = _context.Personae.Add(entity);
-                entity.Id = persona.Id;
+                var clan = _context.Mails.Add(entity);
+                entity.Id = clan.Id;
 
                 await _context.SaveChangesAsync();
             });
         }
 
-        public async Task<IdentityResult> UpdateAsync(Persona entity)
+        public async Task<IdentityResult> UpdateAsync(Mail entity)
         {
             return await CatchIdentityErrorsAsync(async () =>
             {
@@ -54,34 +51,28 @@ namespace Camarilla.RestApi.Stores.Concretes
             });
         }
 
-        public async Task<IdentityResult> DeleteAsync(Persona entity)
+        public async Task<IdentityResult> DeleteAsync(Mail entity)
         {
             return await CatchIdentityErrorsAsync(async () =>
             {
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                _context.Personae.Remove(entity);
+                _context.Mails.Remove(entity);
                 await _context.SaveChangesAsync();
             });
         }
 
-        public async Task<List<Persona>> FindAllAsync()
+        public async Task<List<Mail>> FindAllAsync()
         {
-            return await GetAll()
+            return await _context.Mails
                 .ToListAsync();
         }
 
-        public async Task<Persona> FindByIdAsync(int id)
+        public async Task<Mail> FindByIdAsync(int id)
         {
-            return await GetAll()
-                .FirstOrDefaultAsync(persona => persona.Id == id);
-        }
-
-        public async Task<Persona> FindByPseudoAsync(string pseudo)
-        {
-            return await GetAll()
-                .FirstOrDefaultAsync(persona => persona.Pseudo == pseudo);
+            return await _context.Mails
+                .FirstOrDefaultAsync(mail => mail.Id == id);
         }
     }
 }

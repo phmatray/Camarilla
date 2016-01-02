@@ -1,47 +1,49 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using Camarilla.RestApi.Infrastructure;
-using Camarilla.RestApi.Models;
 using Camarilla.RestApi.Stores.Base;
 using Camarilla.RestApi.Stores.Interfaces;
 using Microsoft.AspNet.Identity;
+using Mailbox = Camarilla.RestApi.Models.Mailbox;
 
 namespace Camarilla.RestApi.Stores.Concretes
 {
-    public class PersonaStore : RepositoryBase, IPersonaStore<Persona>
+    public class MailboxStore : RepositoryBase, IMailboxStore<Mailbox>
     {
-        public PersonaStore(CamarillaContext context)
+        public MailboxStore(CamarillaContext context)
             : base(context)
         {
         }
 
-        public IQueryable<Persona> GetAll()
+        public IQueryable<Mailbox> GetAll()
         {
-            return _context.Personae
-                .Include(x => x.Clan)
-                .Include(x => x.Race)
-                .Include(x => x.Mailbox)
+            return _context.Mailboxes
+                .Include(x => x.MailboxOf)
+                .Include(x => x.Mails)
+                .Include(x => x.Mails.Select(y => y.Mail))
+                .Include(x => x.Mails.Select(y => y.Persona))
                 .AsQueryable();
         }
 
-        public async Task<IdentityResult> CreateAsync(Persona entity)
+        public async Task<IdentityResult> CreateAsync(Mailbox entity)
         {
             return await CatchIdentityErrorsAsync(async () =>
             {
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                var persona = _context.Personae.Add(entity);
-                entity.Id = persona.Id;
+                var clan = _context.Mailboxes.Add(entity);
+                entity.Id = clan.Id;
 
                 await _context.SaveChangesAsync();
             });
         }
 
-        public async Task<IdentityResult> UpdateAsync(Persona entity)
+        public async Task<IdentityResult> UpdateAsync(Mailbox entity)
         {
             return await CatchIdentityErrorsAsync(async () =>
             {
@@ -54,34 +56,28 @@ namespace Camarilla.RestApi.Stores.Concretes
             });
         }
 
-        public async Task<IdentityResult> DeleteAsync(Persona entity)
+        public async Task<IdentityResult> DeleteAsync(Mailbox entity)
         {
             return await CatchIdentityErrorsAsync(async () =>
             {
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                _context.Personae.Remove(entity);
+                _context.Mailboxes.Remove(entity);
                 await _context.SaveChangesAsync();
             });
         }
 
-        public async Task<List<Persona>> FindAllAsync()
+        public async Task<List<Mailbox>> FindAllAsync()
         {
-            return await GetAll()
+            return await _context.Mailboxes
                 .ToListAsync();
         }
 
-        public async Task<Persona> FindByIdAsync(int id)
+        public async Task<Mailbox> FindByIdAsync(int id)
         {
-            return await GetAll()
-                .FirstOrDefaultAsync(persona => persona.Id == id);
-        }
-
-        public async Task<Persona> FindByPseudoAsync(string pseudo)
-        {
-            return await GetAll()
-                .FirstOrDefaultAsync(persona => persona.Pseudo == pseudo);
+            return await _context.Mailboxes
+                .FirstOrDefaultAsync(mailbox => mailbox.Id == id);
         }
     }
 }

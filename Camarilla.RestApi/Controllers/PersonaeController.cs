@@ -50,14 +50,14 @@ namespace Camarilla.RestApi.Controllers
         }
 
         [HttpGet]
-        [Route("{pseudo}/letterbox")]
-        [ResponseType(typeof(LetterboxReturnModel))]
-        public async Task<IHttpActionResult> GetLetterboxForPersona(string pseudo)
+        [Route("{pseudo}/mailbox")]
+        [ResponseType(typeof(MailboxReturnModel))]
+        public async Task<IHttpActionResult> GetMailboxForPersona(string pseudo)
         {
             var persona = await ThePersonaStore.FindByPseudoAsync(pseudo);
 
             if (persona != null)
-                return Ok(TheModelFactory.Create(persona.LetterBox));
+                return Ok(TheModelFactory.Create(persona.Mailbox));
 
             return NotFound();
         }
