@@ -6,7 +6,8 @@ namespace Camarilla.RestApi.Models
 {
     public class Mailbox : IModel
     {
-        [Key, ForeignKey("MailboxOf")]
+        [Key]
+        [ForeignKey(nameof(MailboxOf))]
         public int Id { get; set; }
 
         public virtual Persona MailboxOf { get; set; }

@@ -6,7 +6,7 @@ namespace Camarilla.RestApi.Infrastructure
 {
     public class CamarillaContext : IdentityDbContext<User>
     {
-        public CamarillaContext()
+        private CamarillaContext()
             : base("CamarillaContext", false)
         {
             Configuration.ProxyCreationEnabled = false;

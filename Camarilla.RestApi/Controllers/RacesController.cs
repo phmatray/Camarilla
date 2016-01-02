@@ -5,20 +5,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Camarilla.RestApi.ControllerModels;
-using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
-using Camarilla.RestApi.Stores.Concretes;
 
 namespace Camarilla.RestApi.Controllers
 {
     [RoutePrefix("api/races")]
     public class RacesController : BaseApiController
     {
-        private readonly RaceStore _theRaceStore = null;
-
-        protected RaceStore TheRaceStore 
-            => _theRaceStore ?? new RaceStore(new CamarillaContext());
-
         [HttpGet]
         [Route("")]
         [ResponseType(typeof (List<RaceReturnModel>))]

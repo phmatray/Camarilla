@@ -1,28 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Camarilla.RestApi.ControllerModels;
-using Camarilla.RestApi.Infrastructure;
-using Camarilla.RestApi.Models;
-using Camarilla.RestApi.Stores.Concretes;
 
 namespace Camarilla.RestApi.Controllers
 {
     [RoutePrefix("api/mailboxes")]
     public class MailboxesController : BaseApiController
     {
-        private readonly MailboxStore _theMailboxStore = null;
-        private readonly MailStore _theMailStore = null;
-
-        protected MailboxStore TheMailboxStore 
-            => _theMailboxStore ?? new MailboxStore(new CamarillaContext());
-
-        protected MailStore TheMailStore
-            => _theMailStore ?? new MailStore(new CamarillaContext());
-
         [HttpGet]
         [Route("")]
         [ResponseType(typeof (List<MailboxReturnModel>))]

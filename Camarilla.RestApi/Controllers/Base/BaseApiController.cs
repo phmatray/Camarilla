@@ -14,34 +14,70 @@ namespace Camarilla.RestApi.Controllers
     /// </summary>
     public abstract class BaseApiController : ApiController
     {
-        private readonly RoleManager _theRoleManager = null;
-        private readonly ApplicationUserManager _theUserManager = null;
-        private readonly PersonaStore _thePersonaStore = null;
+        private RoleManager _theRoleManager;
+        private ApplicationUserManager _theUserManager;
+        private PersonaStore _thePersonaStore;
+        private ClanStore _theClanStore;
+        private MailboxStore _theMailboxStore;
+        private MailStore _theMailStore;
+        private RaceStore _theRaceStore;
         private ModelFactory _modelFactory;
 
         /// <summary>
         ///     The user manager
         /// </summary>
         protected ApplicationUserManager TheUserManager
-            => _theUserManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            => _theUserManager 
+            ?? (_theUserManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>());
 
         /// <summary>
         ///     The app role manager
         /// </summary>
         protected RoleManager AppRoleManager
-            => _theRoleManager ?? Request.GetOwinContext().GetUserManager<RoleManager>();
+            => _theRoleManager 
+            ?? (_theRoleManager = Request.GetOwinContext().GetUserManager<RoleManager>());
 
         /// <summary>
         ///     The persona store
         /// </summary>
         protected PersonaStore ThePersonaStore
-            => _thePersonaStore ?? new PersonaStore(new CamarillaContext());
+            => _thePersonaStore
+            ?? (_thePersonaStore = new PersonaStore(CamarillaContext.Create()));
+
+        /// <summary>
+        ///     The clan store
+        /// </summary>
+        protected ClanStore TheClanStore
+            => _theClanStore 
+            ?? (_theClanStore = new ClanStore(CamarillaContext.Create()));
+
+        /// <summary>
+        ///     The mailbox store
+        /// </summary>
+        protected MailboxStore TheMailboxStore
+            => _theMailboxStore
+            ?? (_theMailboxStore = new MailboxStore(CamarillaContext.Create()));
+
+        /// <summary>
+        ///     The mail store
+        /// </summary>
+        protected MailStore TheMailStore
+            => _theMailStore
+            ?? (_theMailStore = new MailStore(CamarillaContext.Create()));
+
+        /// <summary>
+        ///     The race store
+        /// </summary>
+        protected RaceStore TheRaceStore
+            => _theRaceStore
+            ?? (_theRaceStore = new RaceStore(CamarillaContext.Create()));
 
         /// <summary>
         ///     The model factory
         /// </summary>
         protected ModelFactory TheModelFactory
-            => _modelFactory ?? (_modelFactory = new ModelFactory(Request, TheUserManager));
+            => _modelFactory
+            ?? (_modelFactory = new ModelFactory(Request, TheUserManager));
 
         /// <summary>
         ///     Get error result

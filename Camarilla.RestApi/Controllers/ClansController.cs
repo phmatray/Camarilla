@@ -5,20 +5,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Camarilla.RestApi.ControllerModels;
-using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
-using Camarilla.RestApi.Stores.Concretes;
 
 namespace Camarilla.RestApi.Controllers
 {
     [RoutePrefix("api/clans")]
     public class ClansController : BaseApiController
     {
-        private readonly ClanStore _theClanStore = null;
-
-        protected ClanStore TheClanStore 
-            => _theClanStore ?? new ClanStore(new CamarillaContext());
-
         [HttpGet]
         [Route("")]
         [ResponseType(typeof (List<ClanReturnModel>))]

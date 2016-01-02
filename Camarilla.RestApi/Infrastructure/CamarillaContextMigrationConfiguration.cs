@@ -26,9 +26,9 @@ namespace Camarilla.RestApi.Infrastructure
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
 
-            var manager = new UserManager<User>(new UserStore<User>(new CamarillaContext()));
-
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new CamarillaContext()));
+            var dbContext = CamarillaContext.Create();
+            var manager = new UserManager<User>(new UserStore<User>(dbContext));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(dbContext));
 
             var god = AppSettingsService.GetGod();
             god.JoinDate = DateTime.Now.AddYears(-3);

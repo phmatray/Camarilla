@@ -5,20 +5,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Camarilla.RestApi.ControllerModels;
-using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Models;
-using Camarilla.RestApi.Stores.Concretes;
 
 namespace Camarilla.RestApi.Controllers
 {
     [RoutePrefix("api/mails")]
     public class MailsController : BaseApiController
     {
-        private readonly MailStore _theMailStore = null;
-
-        protected MailStore TheMailStore 
-            => _theMailStore ?? new MailStore(new CamarillaContext());
-
         [HttpGet]
         [Route("")]
         [ResponseType(typeof (List<MailReturnModel>))]
@@ -89,7 +82,7 @@ namespace Camarilla.RestApi.Controllers
                 Message = createMailModel.Message,
                 Subject = createMailModel.Subject,
                 Sent = DateTime.Now,
-                From = sender,
+                FromId = sender.Id,
                 To = receivers
             };
 

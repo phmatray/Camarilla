@@ -192,6 +192,26 @@
                 The persona store
             </summary>
         </member>
+        <member name="P:Camarilla.RestApi.Controllers.BaseApiController.TheClanStore">
+            <summary>
+                The clan store
+            </summary>
+        </member>
+        <member name="P:Camarilla.RestApi.Controllers.BaseApiController.TheMailboxStore">
+            <summary>
+                The mailbox store
+            </summary>
+        </member>
+        <member name="P:Camarilla.RestApi.Controllers.BaseApiController.TheMailStore">
+            <summary>
+                The mail store
+            </summary>
+        </member>
+        <member name="P:Camarilla.RestApi.Controllers.BaseApiController.TheRaceStore">
+            <summary>
+                The race store
+            </summary>
+        </member>
         <member name="P:Camarilla.RestApi.Controllers.BaseApiController.TheModelFactory">
             <summary>
                 The model factory

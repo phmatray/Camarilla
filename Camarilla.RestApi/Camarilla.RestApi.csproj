@@ -207,6 +207,10 @@
     <Compile Include="Infrastructure\ClaimsAuthorizationAttribute.cs" />
     <Compile Include="Infrastructure\CamarillaContextMigrationConfiguration.cs" />
     <Compile Include="Infrastructure\ExtendedClaimsProvider.cs" />
+    <Compile Include="Migrations\201601021820104_UpdateForeignKeys.cs" />
+    <Compile Include="Migrations\201601021820104_UpdateForeignKeys.Designer.cs">
+      <DependentUpon>201601021820104_UpdateForeignKeys.cs</DependentUpon>
+    </Compile>
     <Compile Include="Stores\Concretes\ApplicationUserStore.cs" />
     <Compile Include="Managers\Base\IManager.cs" />
     <Compile Include="Managers\RoleManager.cs" />
@@ -314,6 +318,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601021329353_CreateMailbox.resx">
       <DependentUpon>201601021329353_CreateMailbox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601021820104_UpdateForeignKeys.resx">
+      <DependentUpon>201601021820104_UpdateForeignKeys.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
