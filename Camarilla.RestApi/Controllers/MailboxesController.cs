@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Camarilla.RestApi.ControllerModels;
+using Camarilla.RestApi.Controllers.ControllerModels;
 
 namespace Camarilla.RestApi.Controllers
 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Camarilla.RestApi.ControllerModels
+﻿namespace Camarilla.RestApi.Controllers.ControllerModels
 {
     public class CreateRaceBindingModel
     {

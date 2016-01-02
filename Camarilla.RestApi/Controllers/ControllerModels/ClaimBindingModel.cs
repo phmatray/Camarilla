@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Camarilla.RestApi.ControllerModels
+namespace Camarilla.RestApi.Controllers.ControllerModels
 {
     public class ClaimBindingModel
     {

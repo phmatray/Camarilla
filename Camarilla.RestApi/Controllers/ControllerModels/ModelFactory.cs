@@ -9,7 +9,7 @@ using Camarilla.RestApi.Infrastructure.Managers;
 using Camarilla.RestApi.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace Camarilla.RestApi.ControllerModels
+namespace Camarilla.RestApi.Controllers.ControllerModels
 {
     public class ModelFactory
     {

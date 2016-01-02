@@ -1,6 +1,6 @@
 ﻿using Camarilla.RestApi.Models;
 
-namespace Camarilla.RestApi.ControllerModels
+namespace Camarilla.RestApi.Controllers.ControllerModels
 {
     public class CreateClanBindingModel
     {

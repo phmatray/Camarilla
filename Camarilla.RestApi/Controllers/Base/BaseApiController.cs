@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
-using Camarilla.RestApi.ControllerModels;
+using Camarilla.RestApi.Controllers.ControllerModels;
 using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Infrastructure.Managers;
 using Camarilla.RestApi.Infrastructure.Stores.Concretes;
