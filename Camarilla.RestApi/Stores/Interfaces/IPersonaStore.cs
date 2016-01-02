@@ -8,6 +8,6 @@ namespace Camarilla.RestApi.Stores.Interfaces
         : IStore<TModel, int>
         where TModel : Persona
     {
-        Task<Persona> FindByNameAsync(string name);
+        Task<Persona> FindByPseudoAsync(string pseudo);
     }
 }

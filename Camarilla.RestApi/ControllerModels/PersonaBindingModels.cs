@@ -17,6 +17,7 @@
 
     public class UpdatePersonaBindingModel
     {
+        public string Pseudo { get; set; }
         public string Name { get; set; }
         public string Background { get; set; }
         public int? Generation { get; set; }

@@ -23,6 +23,7 @@ namespace Camarilla.RestApi.Stores.Concretes
             return _context.Personae
                 .Include(x => x.Clan)
                 .Include(x => x.Race)
+                .Include(x => x.LetterBox)
                 .AsQueryable();
         }
 
@@ -77,10 +78,10 @@ namespace Camarilla.RestApi.Stores.Concretes
                 .FirstOrDefaultAsync(persona => persona.Id == id);
         }
 
-        public async Task<Persona> FindByNameAsync(string name)
+        public async Task<Persona> FindByPseudoAsync(string pseudo)
         {
             return await GetAll()
-                .FirstOrDefaultAsync(persona => persona.Name == name);
+                .FirstOrDefaultAsync(persona => persona.Pseudo == pseudo);
         }
     }
 }

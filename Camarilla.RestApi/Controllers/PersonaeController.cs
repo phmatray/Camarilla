@@ -36,6 +36,32 @@ namespace Camarilla.RestApi.Controllers
             return NotFound();
         }
 
+        [HttpGet]
+        [Route("{pseudo}", Name = "GetPersonaByPseudo")]
+        [ResponseType(typeof(PersonaReturnModel))]
+        public async Task<IHttpActionResult> GetPersonaByPseudo(string pseudo)
+        {
+            var persona = await ThePersonaStore.FindByPseudoAsync(pseudo);
+
+            if (persona != null)
+                return Ok(TheModelFactory.Create(persona));
+
+            return NotFound();
+        }
+
+        [HttpGet]
+        [Route("{pseudo}/letterbox")]
+        [ResponseType(typeof(LetterboxReturnModel))]
+        public async Task<IHttpActionResult> GetLetterboxForPersona(string pseudo)
+        {
+            var persona = await ThePersonaStore.FindByPseudoAsync(pseudo);
+
+            if (persona != null)
+                return Ok(TheModelFactory.Create(persona.LetterBox));
+
+            return NotFound();
+        }
+
         [HttpPut]
         [Route("{id:int}")]
         [ResponseType(typeof(PersonaReturnModel))]
@@ -174,6 +200,8 @@ namespace Camarilla.RestApi.Controllers
 
         protected void UpdateEntity(ref Persona persona, UpdatePersonaBindingModel updatePersonaModel)
         {
+            if (updatePersonaModel.Pseudo != null)
+                persona.Pseudo = updatePersonaModel.Pseudo;
             if (updatePersonaModel.Name != null)
                 persona.Name = updatePersonaModel.Name;
             if (updatePersonaModel.Background != null)

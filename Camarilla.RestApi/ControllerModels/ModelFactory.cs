@@ -55,6 +55,18 @@ namespace Camarilla.RestApi.ControllerModels
             };
         }
 
+        internal LetterboxReturnModel Create(ICollection<PersonaMail> letterBox)
+        {
+            throw new NotImplementedException();
+            //if (letterBox == null)
+            //    return null;
+
+            //return new LetterboxReturnModel
+            //{
+            //    Url = _urlHelper.Link("GetUserById", new {id = user.Id}),
+            //};
+        }
+
         public RoleReturnModelLite CreateLite(IdentityRole role)
         {
             if (role == null)
@@ -194,6 +206,11 @@ namespace Camarilla.RestApi.ControllerModels
         public IList<string> Roles { get; set; }
         public IList<Claim> Claims { get; set; }
         public IList<PersonaReturnModelLite> Personae { get; set; } 
+    }
+
+    public class LetterboxReturnModel
+    {
+        
     }
 
     public class RoleReturnModelLite
