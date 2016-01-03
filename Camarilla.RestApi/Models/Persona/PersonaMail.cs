@@ -17,7 +17,7 @@ namespace Camarilla.RestApi.Models
         public DateTime? Read { get; set; }
         public DateTime? Deleted { get; set; }
 
-        public virtual Persona Persona { get; set; } // connectedPersona
-        public virtual Mail Mail { get; set; }
+        public virtual Persona Persona { get; set; } // associed Persona
+        public virtual Mail Mail { get; set; } // associed Mail
     }
 }

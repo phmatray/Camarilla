@@ -49,18 +49,18 @@ namespace Camarilla.RestApi.Controllers
             return NotFound();
         }
 
-        [HttpGet]
-        [Route("{pseudo}/mailbox")]
-        [ResponseType(typeof(MailboxReturnModel))]
-        public async Task<IHttpActionResult> GetMailboxForPersona(string pseudo)
-        {
-            var persona = await ThePersonaStore.FindByPseudoAsync(pseudo);
+        ////[HttpGet]
+        ////[Route("{pseudo}/mailbox")]
+        ////[ResponseType(typeof(MailboxReturnModel))]
+        ////public async Task<IHttpActionResult> GetMailboxForPersona(string pseudo)
+        ////{
+        ////    var persona = await ThePersonaStore.FindByPseudoAsync(pseudo);
 
-            if (persona != null)
-                return Ok(TheModelFactory.Create(persona.Mailbox));
+        ////    if (persona != null)
+        ////        return Ok(TheModelFactory.Create(persona.Mailbox));
 
-            return NotFound();
-        }
+        ////    return NotFound();
+        ////}
 
         [HttpPut]
         [Route("{id:int}")]

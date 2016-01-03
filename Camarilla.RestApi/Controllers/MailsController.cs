@@ -36,28 +36,6 @@ namespace Camarilla.RestApi.Controllers
             return NotFound();
         }
 
-        //[HttpPut]
-        //[Route("{id:int}")]
-        //[ResponseType(typeof (MailReturnModel))]
-        //public async Task<IHttpActionResult> PutMail(int id, UpdateMailBindingModel updateMailModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
-
-        //    var mail = await TheMailStore.FindByIdAsync(id);
-
-        //    if (mail == null)
-        //        return NotFound();
-
-        //    UpdateEntity(ref mail, updateMailModel);
-
-        //    var result = await TheMailStore.UpdateAsync(mail);
-
-        //    return !result.Succeeded
-        //        ? GetErrorResult(result)
-        //        : Ok();
-        //}
-
         [HttpPost]
         [Route("")]
         [ResponseType(typeof (MailReturnModel))]
@@ -72,7 +50,8 @@ namespace Camarilla.RestApi.Controllers
                 return BadRequest("Sender not found");
 
             // get all the receivers
-            var receivers = await ThePersonaStore.FindAllAsync(x => createMailModel.ToPseudos.Contains(x.Pseudo));
+            var pseudoList = createMailModel.ToPseudos.Split(';').ToList();
+            var receivers = await ThePersonaStore.FindAllAsync(x => pseudoList.Contains(x.Pseudo));
 
             // create the mail
             var mail = new Mail
@@ -80,49 +59,30 @@ namespace Camarilla.RestApi.Controllers
                 Message = createMailModel.Message,
                 Subject = createMailModel.Subject,
                 Sent = DateTime.Now,
-                From = sender,
-                To = receivers
+                FromPseudo = createMailModel.FromPseudo,
+                ToPseudos = string.Join(";", receivers.Select(x => x.Pseudo))
             };
 
+            // store the mail in DB
             var addMailResult = await TheMailStore.CreateAsync(mail);
-
             if (!addMailResult.Succeeded)
                 return GetErrorResult(addMailResult);
+
+            // create the mailboxMails thanks to the mailboxIds
+            var personaIds = new List<Persona>(receivers) { sender }.Select(x => x.Id).ToList();
+            var personaMails = personaIds.Select(x => new PersonaMail { MailId = mail.Id, PersonaId = x }).ToList();
+
+            // store the mailboxMails in DB
+            foreach (var personaMail in personaMails)
+            {
+                var addPersonaMailResult = await ThePersonaMailStore.CreateAsync(personaMail);
+                if (!addPersonaMailResult.Succeeded)
+                    return GetErrorResult(addPersonaMailResult);
+            }
 
             var locationHeader = new Uri(Url.Link("GetMailById", new {id = mail.Id}));
 
             return Created(locationHeader, TheModelFactory.Create(mail));
         }
-
-        [HttpDelete]
-        [Route("{id:int}")]
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> DeleteMail(int id)
-        {
-            var mail = await TheMailStore.FindByIdAsync(id);
-
-            if (mail != null)
-            {
-                var result = await TheMailStore.DeleteAsync(mail);
-
-                return !result.Succeeded
-                    ? GetErrorResult(result)
-                    : Ok();
-            }
-
-            return NotFound();
-        }
-
-        //protected void UpdateEntity(ref Mail mail, UpdateMailBindingModel updateMailModel)
-        //{
-        //    if (updateMailModel.Name != null)
-        //        mail.Name = updateMailModel.Name;
-        //    if (updateMailModel.Description != null)
-        //        mail.Description = updateMailModel.Description;
-        //    if (updateMailModel.MailCategory.HasValue)
-        //        mail.MailCategory = updateMailModel.MailCategory.Value;
-        //    if (updateMailModel.MailKind.HasValue)
-        //        mail.MailKind = updateMailModel.MailKind.Value;
-        //}
     }
 }

@@ -23,7 +23,6 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
             return _context.Personae
                 .Include(x => x.Clan)
                 .Include(x => x.Race)
-                .Include(x => x.Mailbox)
                 .AsQueryable();
         }
 

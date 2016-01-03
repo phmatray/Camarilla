@@ -21,8 +21,8 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
         public IQueryable<Mail> GetAll()
         {
             return _context.Mails
-                .Include(x => x.From)
-                .Include(x => x.To)
+                .Include(x => x.Mailboxes)
+                .Include(x => x.Mailboxes.Select(y => y.Persona))
                 .AsQueryable();
         }
 

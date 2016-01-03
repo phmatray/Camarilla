@@ -37,9 +37,8 @@ namespace Camarilla.RestApi.Models
         public virtual Race Race { get; set; }
         public virtual Persona Sire { get; set; }
         public virtual User User { get; set; }
-        public virtual Mailbox Mailbox { get; set; }
 
-        public virtual ICollection<Mail> Sended { get; set; } = new List<Mail>();
+        public virtual ICollection<PersonaMail> Mails { get; set; } = new List<PersonaMail>();
         public virtual ICollection<Persona> Children { get; set; }  = new List<Persona>();
     }
 }

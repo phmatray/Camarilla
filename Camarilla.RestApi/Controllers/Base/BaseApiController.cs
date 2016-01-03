@@ -19,12 +19,12 @@ namespace Camarilla.RestApi.Controllers
         private ApplicationUserManager _theUserManager;
         private PersonaStore _thePersonaStore;
         private ClanStore _theClanStore;
-        private MailboxStore _theMailboxStore;
+        private PersonaMailStore _thePersonaMailStore;
         private MailStore _theMailStore;
         private RaceStore _theRaceStore;
         private ModelFactory _modelFactory;
 
-        protected CamarillaContext Context
+        private CamarillaContext Context
             => _context
             ?? (_context = CamarillaContext.Create());
 
@@ -57,11 +57,11 @@ namespace Camarilla.RestApi.Controllers
             ?? (_theClanStore = new ClanStore(Context));
 
         /// <summary>
-        ///     The mailbox store
+        ///     The personaMail store
         /// </summary>
-        protected MailboxStore TheMailboxStore
-            => _theMailboxStore
-            ?? (_theMailboxStore = new MailboxStore(Context));
+        protected PersonaMailStore ThePersonaMailStore
+            => _thePersonaMailStore
+            ?? (_thePersonaMailStore = new PersonaMailStore(Context));
 
         /// <summary>
         ///     The mail store

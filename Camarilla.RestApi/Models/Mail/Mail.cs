@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Camarilla.RestApi.Models
 {
@@ -17,13 +16,19 @@ namespace Camarilla.RestApi.Models
 
         public DateTime Sent { get; set; }
 
-        [ForeignKey(nameof(From))]
-        public int? FromId { get; set; }
+        /// <summary>
+        ///     The sender's pseudo
+        /// </summary>
+        public string FromPseudo { get; set; }
 
-        public virtual Persona From { get; set; }
-        public virtual ICollection<Persona> To { get; set; } = new List<Persona>();
+        /// <summary>
+        ///     The pseudos of the receivers separated by a semicolon
+        /// </summary>
+        public string ToPseudos { get; set; }
 
-        public virtual ICollection<PersonaMail> ConnectedPersonae { get; set; } = new List<PersonaMail>();
-        // sender and receivers informations
+        /// <summary>
+        ///     Association table
+        /// </summary>
+        public virtual ICollection<PersonaMail> Mailboxes { get; set; } = new List<PersonaMail>();
     }
 }

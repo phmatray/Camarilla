@@ -200,14 +200,9 @@ namespace Camarilla.RestApi.Controllers.ControllerModels
                 Id = mail.Id,
                 Subject = mail.Subject,
                 Message = mail.Message,
-                From = CreateLite(mail.From),
-                To = mail.To.Select(CreateLite).ToList()
+                From = mail.FromPseudo,
+                To = mail.ToPseudos
             };
-        }
-
-        public MailboxReturnModel Create(Mailbox letterBox)
-        {
-            throw new NotImplementedException();
         }
     }
 
@@ -282,8 +277,8 @@ namespace Camarilla.RestApi.Controllers.ControllerModels
     {
         public string Message { get; set; }
         public string Subject { get; set; }
-        public PersonaReturnModelLite From { get; set; }
-        public IList<PersonaReturnModelLite> To { get; set; } 
+        public string From { get; set; }
+        public string To { get; set; } 
     }
 
     public class PersonaReturnModelLite
@@ -332,6 +327,6 @@ namespace Camarilla.RestApi.Controllers.ControllerModels
     //    public DateTime Sent { get; set; }
     //    public PersonaReturnModel From { get; set; }
     //    public ICollection<Persona> To { get; set; } = new List<Persona>();
-    //    public ICollection<PersonaMail> ConnectedPersonae { get; set; } = new List<PersonaMail>();
+    //    public ICollection<PersonaMail> ConnectedPersonae { get; set; } = new List<MailboxMail>();
     //}
 }

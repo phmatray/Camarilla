@@ -198,7 +198,6 @@
     <Compile Include="Controllers\ControllerModels\AccountBindingModels.cs" />
     <Compile Include="Controllers\ClaimsController.cs" />
     <Compile Include="Controllers\MailsController.cs" />
-    <Compile Include="Controllers\MailboxesController.cs" />
     <Compile Include="Controllers\RacesController.cs" />
     <Compile Include="Controllers\ClansController.cs" />
     <Compile Include="Controllers\PersonaeController.cs" />
@@ -208,42 +207,20 @@
     <Compile Include="Infrastructure\ClaimsAuthorizationAttribute.cs" />
     <Compile Include="Infrastructure\CamarillaContextMigrationConfiguration.cs" />
     <Compile Include="Infrastructure\ExtendedClaimsProvider.cs" />
-    <Compile Include="Migrations\201601021820104_UpdateForeignKeys.cs" />
-    <Compile Include="Migrations\201601021820104_UpdateForeignKeys.Designer.cs">
-      <DependentUpon>201601021820104_UpdateForeignKeys.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Infrastructure\Stores\Base\CompositeKey.cs" />
     <Compile Include="Infrastructure\Stores\Concretes\ApplicationUserStore.cs" />
     <Compile Include="Infrastructure\Managers\Base\IManager.cs" />
     <Compile Include="Infrastructure\Managers\RoleManager.cs" />
     <Compile Include="Infrastructure\Managers\ApplicationUserManager.cs" />
-    <Compile Include="Migrations\201511121511112_InitialCreate.cs" />
-    <Compile Include="Migrations\201511121511112_InitialCreate.Designer.cs">
-      <DependentUpon>201511121511112_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511122046529_UserJoinDate.cs" />
-    <Compile Include="Migrations\201511122046529_UserJoinDate.Designer.cs">
-      <DependentUpon>201511122046529_UserJoinDate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511122107556_NullableDateUser.cs" />
-    <Compile Include="Migrations\201511122107556_NullableDateUser.Designer.cs">
-      <DependentUpon>201511122107556_NullableDateUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511161823306_OptionalGender.cs" />
-    <Compile Include="Migrations\201511161823306_OptionalGender.Designer.cs">
-      <DependentUpon>201511161823306_OptionalGender.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512291750556_ExtendPersona.cs" />
-    <Compile Include="Migrations\201512291750556_ExtendPersona.Designer.cs">
-      <DependentUpon>201512291750556_ExtendPersona.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201601021329353_CreateMailbox.cs" />
-    <Compile Include="Migrations\201601021329353_CreateMailbox.Designer.cs">
-      <DependentUpon>201601021329353_CreateMailbox.cs</DependentUpon>
+    <Compile Include="Infrastructure\Stores\Concretes\PersonaMailStore.cs" />
+    <Compile Include="Infrastructure\Stores\Interfaces\IMailboxMailStore.cs" />
+    <Compile Include="Migrations\201601032005096_InitialCreate.cs" />
+    <Compile Include="Migrations\201601032005096_InitialCreate.Designer.cs">
+      <DependentUpon>201601032005096_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Asset\Asset.cs" />
     <Compile Include="Models\Asset\Enum\AssetCategory.cs" />
     <Compile Include="Models\Asset\Enum\AssetSideEffect.cs" />
-    <Compile Include="Models\Mailbox\Mailbox.cs" />
     <Compile Include="Models\Persona\Enum\PersonaGender.cs" />
     <Compile Include="Models\User\User.cs" />
     <Compile Include="Models\Clan\Clan.cs" />
@@ -278,11 +255,9 @@
     <Compile Include="Infrastructure\Stores\Base\IStore.cs" />
     <Compile Include="Infrastructure\Stores\Base\RepositoryBase.cs" />
     <Compile Include="Infrastructure\Stores\Concretes\ClanStore.cs" />
-    <Compile Include="Infrastructure\Stores\Concretes\MailboxStore.cs" />
     <Compile Include="Infrastructure\Stores\Concretes\MailStore.cs" />
     <Compile Include="Infrastructure\Stores\Concretes\PersonaStore.cs" />
     <Compile Include="Infrastructure\Stores\Concretes\RaceStore.cs" />
-    <Compile Include="Infrastructure\Stores\Interfaces\IMailboxStore.cs" />
     <Compile Include="Infrastructure\Stores\Interfaces\IClanStore.cs" />
     <Compile Include="Infrastructure\Stores\Interfaces\IMailStore.cs" />
     <Compile Include="Infrastructure\Stores\Interfaces\IPersonaStore.cs" />
@@ -302,26 +277,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511121511112_InitialCreate.resx">
-      <DependentUpon>201511121511112_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511122046529_UserJoinDate.resx">
-      <DependentUpon>201511122046529_UserJoinDate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511122107556_NullableDateUser.resx">
-      <DependentUpon>201511122107556_NullableDateUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511161823306_OptionalGender.resx">
-      <DependentUpon>201511161823306_OptionalGender.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512291750556_ExtendPersona.resx">
-      <DependentUpon>201512291750556_ExtendPersona.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601021329353_CreateMailbox.resx">
-      <DependentUpon>201601021329353_CreateMailbox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601021820104_UpdateForeignKeys.resx">
-      <DependentUpon>201601021820104_UpdateForeignKeys.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601032005096_InitialCreate.resx">
+      <DependentUpon>201601032005096_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
