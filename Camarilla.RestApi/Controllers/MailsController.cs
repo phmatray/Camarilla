@@ -87,7 +87,6 @@ namespace Camarilla.RestApi.Controllers
 
         [HttpGet]
         [Route("{pseudo}")]
-        [Route("~/api/personae/{pseudo}/mails")]
         [ResponseType(typeof(PersonaWithMailReturnModel))]
         public async Task<IHttpActionResult> GetMailsForPersona(string pseudo)
         {
