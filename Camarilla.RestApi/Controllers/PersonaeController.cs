@@ -83,6 +83,7 @@ namespace Camarilla.RestApi.Controllers
             
             var persona = new Persona
             {
+                Pseudo = createPersonaModel.Pseudo,
                 Name = createPersonaModel.Name,
                 Background = createPersonaModel.Background,
                 Generation = 1,
