@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Camarilla.RestApi.Models
 {
@@ -30,5 +32,9 @@ namespace Camarilla.RestApi.Models
         ///     Association table
         /// </summary>
         public virtual ICollection<PersonaMail> Mailboxes { get; set; } = new List<PersonaMail>();
+
+        [NotMapped]
+        public List<string> ToPseudosList
+            => ToPseudos.Split(';').ToList();
     }
 }

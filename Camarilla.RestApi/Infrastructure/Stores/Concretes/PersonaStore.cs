@@ -20,7 +20,7 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
 
         public IQueryable<Persona> GetAll()
         {
-            return _context.Personae
+            return Context.Personae
                 .Include(x => x.Clan)
                 .Include(x => x.Race)
                 .AsQueryable();
@@ -33,10 +33,10 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                var persona = _context.Personae.Add(entity);
+                var persona = Context.Personae.Add(entity);
                 entity.Id = persona.Id;
 
-                await _context.SaveChangesAsync();
+                await Context.SaveChangesAsync();
             });
         }
 
@@ -47,9 +47,9 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                _context.Entry(entity).State = EntityState.Modified;
+                Context.Entry(entity).State = EntityState.Modified;
 
-                await _context.SaveChangesAsync();
+                await Context.SaveChangesAsync();
             });
         }
 
@@ -60,8 +60,8 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                _context.Personae.Remove(entity);
-                await _context.SaveChangesAsync();
+                Context.Personae.Remove(entity);
+                await Context.SaveChangesAsync();
             });
         }
 
@@ -87,6 +87,16 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
         {
             return await GetAll()
                 .FirstOrDefaultAsync(persona => persona.Pseudo == pseudo);
+        }
+
+        public async Task<Persona> FindByPseudoWithMailsAsync(string pseudo)
+        {
+            return await Context.Personae
+                .Include(x => x.Clan)
+                .Include(x => x.Race)
+                .Include(x => x.Mails)
+                .Include(x => x.Mails.Select(y => y.Mail))
+                .FirstOrDefaultAsync(x => x.Pseudo == pseudo);
         }
     }
 }

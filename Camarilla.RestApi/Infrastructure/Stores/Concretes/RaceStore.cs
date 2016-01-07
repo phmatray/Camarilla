@@ -20,7 +20,7 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
 
         public IQueryable<Race> GetAll()
         {
-            return _context.Races
+            return Context.Races
                 .AsQueryable();
         }
 
@@ -31,10 +31,10 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                var race = _context.Races.Add(entity);
+                var race = Context.Races.Add(entity);
                 entity.Id = race.Id;
 
-                await _context.SaveChangesAsync();
+                await Context.SaveChangesAsync();
             });
         }
 
@@ -45,9 +45,9 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                _context.Entry(entity).State = EntityState.Modified;
+                Context.Entry(entity).State = EntityState.Modified;
 
-                await _context.SaveChangesAsync();
+                await Context.SaveChangesAsync();
             });
         }
 
@@ -58,8 +58,8 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                _context.Races.Remove(entity);
-                await _context.SaveChangesAsync();
+                Context.Races.Remove(entity);
+                await Context.SaveChangesAsync();
             });
         }
 
@@ -89,7 +89,7 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
 
         public async Task<Race> FindDefaultAsync()
         {
-            return await _context.Races
+            return await Context.Races
                 .FirstOrDefaultAsync();
         }
     }

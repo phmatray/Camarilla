@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Camarilla.RestApi.Models
 {
@@ -40,5 +41,17 @@ namespace Camarilla.RestApi.Models
 
         public virtual ICollection<PersonaMail> Mails { get; set; } = new List<PersonaMail>();
         public virtual ICollection<Persona> Children { get; set; }  = new List<Persona>();
+
+        [NotMapped]
+        public List<PersonaMail> SentMails
+            => Mails.Where(x => x.Deleted == null && x.Mail.FromPseudo == Pseudo).ToList();
+
+        [NotMapped]
+        public List<PersonaMail> ReceivedMails
+            => Mails.Where(x => x.Deleted == null && x.Mail.ToPseudosList.Contains(Pseudo)).ToList();
+
+        [NotMapped]
+        public List<PersonaMail> DeletedMails
+            => Mails.Where(x => x.Deleted != null).ToList();
     }
 }

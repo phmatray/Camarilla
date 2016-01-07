@@ -20,7 +20,7 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
 
         public IQueryable<Clan> GetAll()
         {
-            return _context.Clans
+            return Context.Clans
                 .AsQueryable();
         }
 
@@ -31,10 +31,10 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                var clan = _context.Clans.Add(entity);
+                var clan = Context.Clans.Add(entity);
                 entity.Id = clan.Id;
 
-                await _context.SaveChangesAsync();
+                await Context.SaveChangesAsync();
             });
         }
 
@@ -45,9 +45,9 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                _context.Entry(entity).State = EntityState.Modified;
+                Context.Entry(entity).State = EntityState.Modified;
 
-                await _context.SaveChangesAsync();
+                await Context.SaveChangesAsync();
             });
         }
 
@@ -58,8 +58,8 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                _context.Clans.Remove(entity);
-                await _context.SaveChangesAsync();
+                Context.Clans.Remove(entity);
+                await Context.SaveChangesAsync();
             });
         }
 
@@ -78,13 +78,13 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
 
         public async Task<Clan> FindByIdAsync(int id)
         {
-            return await _context.Clans
+            return await Context.Clans
                 .FirstOrDefaultAsync(clan => clan.Id == id);
         }
 
         public async Task<Clan> FindByNameAsync(string name)
         {
-            return await _context.Clans
+            return await Context.Clans
                 .FirstOrDefaultAsync(clan => clan.Name == name);
         }
     }

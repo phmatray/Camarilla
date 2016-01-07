@@ -177,6 +177,21 @@ namespace Camarilla.RestApi.Controllers.ControllerModels
             };
         }
 
+        public PersonaWithMailReturnModel CreateWithMail(Persona persona)
+        {
+            if (persona == null)
+                return null;
+
+            return new PersonaWithMailReturnModel
+            {
+                Url = _urlHelper.Link("GetPersonaById", new { id = persona.Id }),
+                Id = persona.Id,
+                Pseudo = persona.Pseudo,
+                SentMails = persona.SentMails.Select(Create).ToList(),
+                ReceivedMails = persona.ReceivedMails.Select(Create).ToList()
+            };
+        }
+
         public MailReturnModelLite CreateLite(Mail mail)
         {
             if (mail == null)
@@ -200,8 +215,22 @@ namespace Camarilla.RestApi.Controllers.ControllerModels
                 Id = mail.Id,
                 Subject = mail.Subject,
                 Message = mail.Message,
+                Sent = mail.Sent,
                 From = mail.FromPseudo,
                 To = mail.ToPseudos
+            };
+        }
+
+        public PersonaMailReturnModel Create(PersonaMail personaMail)
+        {
+            if (personaMail == null)
+                return null;
+
+            return new PersonaMailReturnModel
+            {
+                Read = personaMail.Read,
+                Deleted = personaMail.Deleted,
+                Mail = Create(personaMail.Mail)
             };
         }
     }
@@ -222,11 +251,6 @@ namespace Camarilla.RestApi.Controllers.ControllerModels
         public IList<string> Roles { get; set; }
         public IList<Claim> Claims { get; set; }
         public IList<PersonaReturnModelLite> Personae { get; set; } 
-    }
-
-    public class MailboxReturnModel
-    {
-        
     }
 
     public class RoleReturnModelLite
@@ -275,10 +299,11 @@ namespace Camarilla.RestApi.Controllers.ControllerModels
 
     public class MailReturnModel : MailReturnModelLite
     {
-        public string Message { get; set; }
         public string Subject { get; set; }
+        public string Message { get; set; }
+        public DateTime Sent { get; set; }
         public string From { get; set; }
-        public string To { get; set; } 
+        public string To { get; set; }
     }
 
     public class PersonaReturnModelLite
@@ -307,16 +332,21 @@ namespace Camarilla.RestApi.Controllers.ControllerModels
         public UserReturnModelLite User { get; set; }
     }
 
-    //public class PersonaMailReturnModel
-    //{
-    //    public string Url { get; set; }
-    //    public int PersonaId { get; set; }
-    //    public int MailId { get; set; }
-    //    public DateTime? Read { get; set; }
-    //    public DateTime? Deleted { get; set; }
-    //    public PersonaReturnModel Persona { get; set; } // connectedPersona
-    //    public MailReturnModel Mail { get; set; }
-    //}
+    public class PersonaWithMailReturnModel : PersonaReturnModelLite
+    {
+        public List<PersonaMailReturnModel> SentMails { get; set; }
+        public List<PersonaMailReturnModel> ReceivedMails { get; set; }
+    }
+
+    public class PersonaMailReturnModel
+    {
+        public int PersonaId { get; set; }
+        public int MailId { get; set; }
+        public DateTime? Read { get; set; }
+        public DateTime? Deleted { get; set; }
+        public PersonaReturnModel Persona { get; set; } // associed Persona
+        public MailReturnModel Mail { get; set; } // associed Mail
+    }
 
     //public class MailReturnModel
     //{

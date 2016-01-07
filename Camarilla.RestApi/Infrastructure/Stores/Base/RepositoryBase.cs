@@ -9,11 +9,11 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Base
 {
     public abstract class RepositoryBase
     {
-        protected readonly CamarillaContext _context;
+        protected CamarillaContext Context { get;}
 
         protected RepositoryBase(CamarillaContext context)
         {
-            _context = context;
+            Context = context;
         }
 
         protected async Task<IdentityResult> CatchIdentityErrorsAsync(Func<Task> resultBody)

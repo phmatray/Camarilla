@@ -20,7 +20,7 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
 
         public IQueryable<PersonaMail> GetAll()
         {
-            return _context.MailboxMails
+            return Context.MailboxMails
                 .Include(x => x.Persona)
                 .Include(x => x.Mail)
                 .AsQueryable();
@@ -33,11 +33,11 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                var mailboxMail = _context.MailboxMails.Add(entity);
+                var mailboxMail = Context.MailboxMails.Add(entity);
                 entity.PersonaId = mailboxMail.PersonaId;
                 entity.MailId = mailboxMail.MailId;
 
-                await _context.SaveChangesAsync();
+                await Context.SaveChangesAsync();
             });
         }
 
@@ -48,9 +48,9 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                _context.Entry(entity).State = EntityState.Modified;
+                Context.Entry(entity).State = EntityState.Modified;
 
-                await _context.SaveChangesAsync();
+                await Context.SaveChangesAsync();
             });
         }
 
@@ -61,8 +61,8 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                _context.MailboxMails.Remove(entity);
-                await _context.SaveChangesAsync();
+                Context.MailboxMails.Remove(entity);
+                await Context.SaveChangesAsync();
             });
         }
 

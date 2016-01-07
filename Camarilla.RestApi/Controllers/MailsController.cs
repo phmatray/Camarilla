@@ -39,7 +39,7 @@ namespace Camarilla.RestApi.Controllers
         [HttpPost]
         [Route("")]
         [ResponseType(typeof (MailReturnModel))]
-        public async Task<IHttpActionResult> PostMail(CreateMailBindingModel createMailModel)
+        public async Task<IHttpActionResult> SendMail(CreateMailBindingModel createMailModel)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -83,6 +83,20 @@ namespace Camarilla.RestApi.Controllers
             var locationHeader = new Uri(Url.Link("GetMailById", new {id = mail.Id}));
 
             return Created(locationHeader, TheModelFactory.Create(mail));
+        }
+
+        [HttpGet]
+        [Route("{pseudo}")]
+        [Route("~/api/personae/{pseudo}/mails")]
+        [ResponseType(typeof(PersonaWithMailReturnModel))]
+        public async Task<IHttpActionResult> GetMailsForPersona(string pseudo)
+        {
+            var persona = await ThePersonaStore.FindByPseudoWithMailsAsync(pseudo);
+
+            if (persona != null)
+                return Ok(TheModelFactory.CreateWithMail(persona));
+
+            return NotFound();
         }
     }
 }
