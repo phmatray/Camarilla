@@ -29,10 +29,10 @@ namespace Camarilla.RestApi.Infrastructure
             var manager = new UserManager<User>(new UserStore<User>(dbContext));
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(dbContext));
 
-            var god = AppSettingsService.GetGod();
+            var god = AppSettingsService.God;
             god.JoinDate = DateTime.Now.AddYears(-3);
 
-            manager.Create(god, AppSettingsService.GetGodPassword());
+            manager.Create(god, AppSettingsService.GodPassword);
 
             if (!roleManager.Roles.Any())
             {

@@ -24,8 +24,8 @@ namespace Camarilla.RestApi.Infrastructure.Providers
                 throw new ArgumentNullException(nameof(data));
             }
 
-            var audienceId = AppSettingsService.GetAuthorizationServerAudienceId();
-            var symmetricKeyAsBase64 = AppSettingsService.GetAuthorizationServerAudienceSecret();
+            var audienceId = AppSettingsService.AuthorizationServerAudienceId;
+            var symmetricKeyAsBase64 = AppSettingsService.AuthorizationServerAudienceSecret;
 
             var keyByteArray = TextEncodings.Base64Url.Decode(symmetricKeyAsBase64);
 

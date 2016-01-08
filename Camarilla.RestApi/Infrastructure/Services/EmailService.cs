@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using SendGrid;
@@ -18,14 +19,16 @@ namespace Camarilla.RestApi.Infrastructure.Services
             var myMessage = new SendGridMessage();
 
             myMessage.AddTo(message.Destination);
-            myMessage.From = new System.Net.Mail.MailAddress(
-                AppSettingsService.GetAdminEmail(), AppSettingsService.GetAdminFullname());
+            myMessage.From = new MailAddress(
+                AppSettingsService.NoReplyEmail,
+                AppSettingsService.NoReplyFullname);
             myMessage.Subject = message.Subject;
             myMessage.Text = message.Body;
             myMessage.Html = message.Body;
 
             var credentials = new NetworkCredential(
-                AppSettingsService.GetEmailServiceAccount(), AppSettingsService.GetEmailServicePassword());
+                AppSettingsService.EmailServiceAccount,
+                AppSettingsService.EmailServicePassword);
 
             // Create a Web transport for sending email.
             var transportWeb = new Web(credentials);

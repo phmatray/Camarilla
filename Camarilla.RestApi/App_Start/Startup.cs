@@ -55,9 +55,9 @@ namespace Camarilla.RestApi
         private void ConfigureOAuthTokenConsumption(IAppBuilder app)
         {
             var issuer = "http://localhost:20890";
-            var audienceId = AppSettingsService.GetAuthorizationServerAudienceId();
+            var audienceId = AppSettingsService.AuthorizationServerAudienceId;
             var audienceSecret = TextEncodings.Base64Url
-                .Decode(AppSettingsService.GetAuthorizationServerAudienceSecret());
+                .Decode(AppSettingsService.AuthorizationServerAudienceSecret);
 
             // Api controllers with an [Authorize] attribute will be validated with JWT
             app.UseJwtBearerAuthentication(
