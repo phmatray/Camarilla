@@ -35,6 +35,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>XmlComments.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>Camarilla.RestApi.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,8 +45,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>Camarilla.RestApi.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -70,6 +77,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=1.0.0.112, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.1.0.0-rc1-211161024\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -103,7 +114,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
@@ -128,8 +139,8 @@
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.IdentityModel" />
-    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    <Reference Include="System.IdentityModel.Tokens, Version=5.0.0.112, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.5.0.0-rc1-211161024\lib\net451\System.IdentityModel.Tokens.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http" />
@@ -186,17 +197,25 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ControllerModels\ClaimBindingModel.cs" />
-    <Compile Include="Controllers\ControllerModels\ClanBindingModels.cs" />
-    <Compile Include="Controllers\ControllerModels\MailBindingModels.cs" />
-    <Compile Include="Controllers\ControllerModels\PersonaBindingModels.cs" />
-    <Compile Include="Controllers\ControllerModels\RaceBindingModels.cs" />
-    <Compile Include="Controllers\ControllerModels\RoleBindingModels.cs" />
+    <Compile Include="Controllers\ControllerModels\BindingModels\ClaimBindingModel.cs" />
+    <Compile Include="Controllers\ControllerModels\BindingModels\ClanBindingModels.cs" />
+    <Compile Include="Controllers\ControllerModels\BindingModels\MailBindingModels.cs" />
+    <Compile Include="Controllers\ControllerModels\BindingModels\PersonaBindingModels.cs" />
+    <Compile Include="Controllers\ControllerModels\BindingModels\RaceBindingModels.cs" />
+    <Compile Include="Controllers\ControllerModels\BindingModels\RoleBindingModels.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
+    <Compile Include="Controllers\ControllerModels\ReturnModels\ClanReturnModel.cs" />
+    <Compile Include="Controllers\ControllerModels\ReturnModels\MailReturnModel.cs" />
     <Compile Include="Controllers\ControllerModels\ModelFactory.cs" />
-    <Compile Include="Controllers\ControllerModels\AccountBindingModels.cs" />
+    <Compile Include="Controllers\ControllerModels\BindingModels\AccountBindingModels.cs" />
     <Compile Include="Controllers\ClaimsController.cs" />
+    <Compile Include="Controllers\ControllerModels\ReturnModels\PersonaMailReturnModel.cs" />
+    <Compile Include="Controllers\ControllerModels\ReturnModels\PersonaReturnModel.cs" />
+    <Compile Include="Controllers\ControllerModels\ReturnModels\RaceReturnModel.cs" />
+    <Compile Include="Controllers\ControllerModels\ReturnModels\RoleReturnModel.cs" />
+    <Compile Include="Controllers\ControllerModels\ReturnModels\UserReturnModel.cs" />
     <Compile Include="Controllers\MailsController.cs" />
     <Compile Include="Controllers\RacesController.cs" />
     <Compile Include="Controllers\ClansController.cs" />
@@ -265,6 +284,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Camarilla.RestApi.ruleset" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

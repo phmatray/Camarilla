@@ -11,5 +11,6 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Interfaces
     {
         Task<Persona> FindByPseudoAsync(string pseudo);
         Task<Persona> FindByPseudoWithMailsAsync(string pseudo);
+        Task<Persona> FindByPseudoWithAllAsync(string pseudo);
     }
 }

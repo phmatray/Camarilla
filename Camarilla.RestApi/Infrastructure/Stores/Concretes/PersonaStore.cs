@@ -98,5 +98,17 @@ namespace Camarilla.RestApi.Infrastructure.Stores.Concretes
                 .Include(x => x.Mails.Select(y => y.Mail))
                 .FirstOrDefaultAsync(x => x.Pseudo == pseudo);
         }
+
+        public async Task<Persona> FindByPseudoWithAllAsync(string pseudo)
+        {
+            return await Context.Personae
+                .Include(x => x.Clan)
+                .Include(x => x.Clan.Disciplines)
+                .Include(x => x.Race)
+                .Include(x => x.Sire)
+                .Include(x => x.User)
+                .Include(x => x.Children)
+                .FirstOrDefaultAsync(x => x.Pseudo == pseudo);
+        }
     }
 }

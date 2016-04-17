@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using Camarilla.RestApi;
+using Camarilla.RestApi.Controllers.ControllerModels;
 using Camarilla.RestApi.Infrastructure;
 using Camarilla.RestApi.Infrastructure.Managers;
 using Camarilla.RestApi.Infrastructure.Providers;
@@ -27,6 +28,7 @@ namespace Camarilla.RestApi
             ConfigureOAuthTokenConsumption(app);
             WebApiConfig.Register(httpConfig);
             SwaggerConfig.Register(httpConfig);
+            AutoMapperConfig.RegisterMappings();
             app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(httpConfig);
         }

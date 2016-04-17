@@ -49,6 +49,19 @@ namespace Camarilla.RestApi.Controllers
             return NotFound();
         }
 
+        //[HttpGet]
+        //[Route("{pseudo}/details", Name = "GetPersonaDetailsByPseudo")]
+        //[ResponseType(typeof(PersonaReturnModel))]
+        //public async Task<IHttpActionResult> GetPersonaDetailsByPseudo(string pseudo)
+        //{
+        //    var persona = await ThePersonaStore.FindByPseudoWithAllAsync(pseudo);
+
+        //    if (persona != null)
+        //        return Ok(TheModelFactory.Create(persona));
+
+        //    return NotFound();
+        //}
+
         [HttpPut]
         [Route("{id:int}")]
         [ResponseType(typeof(PersonaReturnModel))]

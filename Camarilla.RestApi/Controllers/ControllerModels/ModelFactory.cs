@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Claims;
 using System.Web.Http.Routing;
+using AutoMapper;
 using Camarilla.RestApi.Infrastructure.Helpers;
 using Camarilla.RestApi.Infrastructure.Managers;
 using Camarilla.RestApi.Models;
@@ -13,8 +12,8 @@ namespace Camarilla.RestApi.Controllers.ControllerModels
 {
     public class ModelFactory
     {
-        private readonly ApplicationUserManager _userManager;
         private readonly UrlHelper _urlHelper;
+        private readonly ApplicationUserManager _userManager;
 
         public ModelFactory(HttpRequestMessage request, ApplicationUserManager userManager)
         {
@@ -24,339 +23,147 @@ namespace Camarilla.RestApi.Controllers.ControllerModels
 
         private UserReturnModelLite CreateLite(User user)
         {
-            if (user == null)
-                return null;
+            if (user == null) throw new ArgumentNullException(nameof(user));
 
-            return new UserReturnModelLite
-            {
-                Url = _urlHelper.Link("GetUserById", new {id = user.Id}),
-                Id = user.Id
-            };
+            var model = Mapper.Map<UserReturnModelLite>(user);
+            model.Url = _urlHelper.Link("GetUserById", new {id = user.Id});
+            return model;
         }
 
         public UserReturnModel Create(User user)
         {
-            if (user == null)
-                return null;
+            if (user == null) throw new ArgumentNullException(nameof(user));
 
-            return new UserReturnModel
-            {
-                Url = _urlHelper.Link("GetUserById", new {id = user.Id}),
-                Id = user.Id,
-                UserName = user.UserName,
-                FullName = $"{user.FirstName} {user.LastName}",
-                Email = user.Email,
-                EmailConfirmed = user.EmailConfirmed,
-                JoinDate = user.JoinDate,
-                Roles = _userManager.GetRolesAsync(user.Id).Result,
-                Claims = _userManager.GetClaimsAsync(user.Id).Result,
-                Personae = user.Personae.Select(CreateLite).ToList()
-            };
+            var model = Mapper.Map<UserReturnModel>(user);
+            model.Url = _urlHelper.Link("GetUserById", new {id = user.Id});
+            model.Roles = _userManager.GetRolesAsync(user.Id).Result;
+            model.Claims = _userManager.GetClaimsAsync(user.Id).Result;
+            model.Personae = user.Personae.Select(CreateLite).ToList();
+            return model;
         }
 
         public RoleReturnModelLite CreateLite(IdentityRole role)
         {
-            if (role == null)
-                return null;
+            if (role == null) throw new ArgumentNullException(nameof(role));
 
-            return new RoleReturnModelLite
-            {
-                Url = _urlHelper.Link("GetRoleById", new {id = role.Id}),
-                Id = role.Id,
-            };
+            var model = Mapper.Map<RoleReturnModelLite>(role);
+            model.Url = _urlHelper.Link("GetRoleById", new {id = role.Id});
+            return model;
         }
 
         public RoleReturnModel Create(IdentityRole role)
         {
-            if (role == null)
-                return null;
+            if (role == null) throw new ArgumentNullException(nameof(role));
 
-            return new RoleReturnModel
-            {
-                Url = _urlHelper.Link("GetRoleById", new {id = role.Id}),
-                Id = role.Id,
-                Name = role.Name
-            };
+            var model = Mapper.Map<RoleReturnModel>(role);
+            model.Url = _urlHelper.Link("GetRoleById", new {id = role.Id});
+            return model;
         }
 
         public RaceReturnModelLite CreateLite(Race race)
         {
-            if (race == null)
-                return null;
+            if (race == null) throw new ArgumentNullException(nameof(race));
 
-            return new RaceReturnModelLite
-            {
-                Url = _urlHelper.Link("GetRaceById", new { id = race.Id }),
-                Id = race.Id,
-                Name = race.Name
-            };
+            var model = Mapper.Map<RaceReturnModelLite>(race);
+            model.Url = _urlHelper.Link("GetRaceById", new {id = race.Id});
+            return model;
         }
 
         public RaceReturnModel Create(Race race)
         {
-            if (race == null)
-                return null;
+            if (race == null) throw new ArgumentNullException(nameof(race));
 
-            return new RaceReturnModel
-            {
-                Url = _urlHelper.Link("GetRaceById", new { id = race.Id }),
-                Id = race.Id,
-                Name = race.Name,
-                Description = race.Description,
-                Experience = race.Experience
-            };
+            var model = Mapper.Map<RaceReturnModel>(race);
+            model.Url = _urlHelper.Link("GetRaceById", new {id = race.Id});
+            return model;
         }
 
         public ClanReturnModelLite CreateLite(Clan clan)
         {
-            if (clan == null)
-                return null;
+            if (clan == null) throw new ArgumentNullException(nameof(clan));
 
-            return new ClanReturnModelLite
-            {
-                Url = _urlHelper.Link("GetClanById", new { id = clan.Id }),
-                Id = clan.Id,
-                Name = clan.Name
-            };
+            var model = Mapper.Map<ClanReturnModelLite>(clan);
+            model.Url = _urlHelper.Link("GetClanById", new {id = clan.Id});
+            return model;
         }
 
         public ClanReturnModel Create(Clan clan)
         {
-            if (clan == null)
-                return null;
+            if (clan == null) throw new ArgumentNullException(nameof(clan));
 
-            return new ClanReturnModel
-            {
-                Url = _urlHelper.Link("GetClanById", new {id = clan.Id}),
-                Id = clan.Id,
-                ClanCategory = clan.ClanCategory,
-                ClanKind = clan.ClanKind,
-                Description = clan.Description,
-                Name = clan.Name
-            };
+            var model = Mapper.Map<ClanReturnModel>(clan);
+            model.Url = _urlHelper.Link("GetClanById", new {id = clan.Id});
+            model.Category = clan.ClanCategory.GetDisplayName();
+            model.Kind = clan.ClanKind.GetDisplayName();
+            return model;
         }
 
         public PersonaReturnModelLite CreateLite(Persona persona)
         {
-            if (persona == null)
-                return null;
+            if (persona == null) throw new ArgumentNullException(nameof(persona));
 
-            return new PersonaReturnModelLite
-            {
-                Url = _urlHelper.Link("GetPersonaById", new { id = persona.Id }),
-                Id = persona.Id,
-                Pseudo = persona.Pseudo
-            };
+            var model = Mapper.Map<PersonaReturnModelLite>(persona);
+            model.Url = _urlHelper.Link("GetPersonaById", new {id = persona.Id});
+            return model;
         }
 
         public PersonaReturnModel Create(Persona persona)
         {
-            if (persona == null)
-                return null;
+            if (persona == null) throw new ArgumentNullException(nameof(persona));
 
-            return new PersonaReturnModel
-            {
-                Url = _urlHelper.Link("GetPersonaById", new {id = persona.Id}),
-                Id = persona.Id,
-                Pseudo = persona.Pseudo,
-                Name = persona.Name,
-                Gender = persona.PersonaGender.GetDisplayName(),
-                BirthDate = persona.BirthDate,
-                BirthPlace = persona.BirthPlace,
-                Background = persona.Background,
-                Generation = persona.Generation,
-                ExperienceActual = persona.ExperienceActual,
-                ExperienceRemaining = persona.ExperienceRemaining,
-                Nights = persona.Nights,
-                Willingness = persona.Willingness,
-                Humanity = persona.Humanity,
-                PictureUrl = persona.PictureUrl,
-                Race = CreateLite(persona.Race),
-                Clan = CreateLite(persona.Clan),
-                User = CreateLite(persona.User)
-            };
+            var model = Mapper.Map<PersonaReturnModel>(persona);
+            model.Url = _urlHelper.Link("GetPersonaById", new {id = persona.Id});
+            model.Race = CreateLite(persona.Race);
+            model.Clan = CreateLite(persona.Clan);
+            model.User = CreateLite(persona.User);
+            return model;
         }
 
         public PersonaWithMailReturnModel CreateWithMail(Persona persona)
         {
-            if (persona == null)
-                return null;
+            if (persona == null) throw new ArgumentNullException(nameof(persona));
 
-            return new PersonaWithMailReturnModel
-            {
-                Url = _urlHelper.Link("GetPersonaById", new { id = persona.Id }),
-                Id = persona.Id,
-                Pseudo = persona.Pseudo,
-                SentMails = persona.SentMails.Select(Create).ToList(),
-                ReceivedMails = persona.ReceivedMails.Select(Create).ToList()
-            };
+            var model = Mapper.Map<PersonaWithMailReturnModel>(persona);
+            model.Url = _urlHelper.Link("GetPersonaById", new {id = persona.Id});
+            model.SentMails = persona.SentMails.Select(Create).ToList();
+            model.ReceivedMails = persona.ReceivedMails.Select(Create).ToList();
+            return model;
+        }
+
+        public PersonaWithAllReturnModel CreateWithAll(Persona persona)
+        {
+            if (persona == null) throw new ArgumentNullException(nameof(persona));
+
+            var model = Mapper.Map<PersonaWithAllReturnModel>(persona);
+            model.Url = _urlHelper.Link("GetPersonaById", new {id = persona.Id});
+            return model;
         }
 
         public MailReturnModelLite CreateLite(Mail mail)
         {
-            if (mail == null)
-                return null;
+            if (mail == null) throw new ArgumentNullException(nameof(mail));
 
-            return new MailReturnModelLite
-            {
-                Url = _urlHelper.Link("GetMailById", new {id = mail.Id}),
-                Id = mail.Id
-            };
+            var model = Mapper.Map<MailReturnModelLite>(mail);
+            model.Url = _urlHelper.Link("GetMailById", new {id = mail.Id});
+            return model;
         }
 
         public MailReturnModel Create(Mail mail)
         {
-            if (mail == null)
-                return null;
+            if (mail == null) throw new ArgumentNullException(nameof(mail));
 
-            return new MailReturnModel
-            {
-                Url = _urlHelper.Link("GetMailById", new { id = mail.Id }),
-                Id = mail.Id,
-                Subject = mail.Subject,
-                Message = mail.Message,
-                Sent = mail.Sent,
-                From = mail.FromPseudo,
-                To = mail.ToPseudos
-            };
+            var model = Mapper.Map<MailReturnModel>(mail);
+            model.Url = _urlHelper.Link("GetMailById", new {id = mail.Id});
+            return model;
         }
 
         public PersonaMailReturnModel Create(PersonaMail personaMail)
         {
-            if (personaMail == null)
-                return null;
+            if (personaMail == null) throw new ArgumentNullException(nameof(personaMail));
 
-            return new PersonaMailReturnModel
-            {
-                Read = personaMail.Read,
-                Deleted = personaMail.Deleted,
-                Mail = Create(personaMail.Mail)
-            };
+            var model = Mapper.Map<PersonaMailReturnModel>(personaMail);
+            model.Mail = Create(personaMail.Mail);
+            return model;
         }
     }
-
-    public class UserReturnModelLite
-    {
-        public string Url { get; set; }
-        public string Id { get; set; }
-    }
-
-    public class UserReturnModel : UserReturnModelLite
-    {
-        public string UserName { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
-        public DateTime? JoinDate { get; set; }
-        public IList<string> Roles { get; set; }
-        public IList<Claim> Claims { get; set; }
-        public IList<PersonaReturnModelLite> Personae { get; set; } 
-    }
-
-    public class RoleReturnModelLite
-    {
-        public string Url { get; set; }
-        public string Id { get; set; }
-    }
-
-    public class RoleReturnModel : RoleReturnModelLite
-    {
-        public string Name { get; set; }
-    }
-
-    public class RaceReturnModelLite
-    {
-        public string Url { get; set; }
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class RaceReturnModel : RaceReturnModelLite
-    {
-        public string Description { get; set; }
-        public int Experience { get; set; }
-    }
-
-    public class ClanReturnModelLite
-    {
-        public string Url { get; set; }
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class ClanReturnModel : ClanReturnModelLite
-    {
-        public ClanCategory ClanCategory { get; set; }
-        public ClanKind ClanKind { get; set; }
-        public string Description { get; set; }
-    }
-
-    public class MailReturnModelLite
-    {
-        public string Url { get; set; }
-        public int Id { get; set; }
-    }
-
-    public class MailReturnModel : MailReturnModelLite
-    {
-        public string Subject { get; set; }
-        public string Message { get; set; }
-        public DateTime Sent { get; set; }
-        public string From { get; set; }
-        public string To { get; set; }
-    }
-
-    public class PersonaReturnModelLite
-    {
-        public string Url { get; set; }
-        public int Id { get; set; }
-        public string Pseudo { get; set; }
-    }
-
-    public class PersonaReturnModel : PersonaReturnModelLite
-    {
-        public string Name { get; set; }
-        public string Gender { get; set; }
-        public DateTime? BirthDate { get; set; }
-        public string BirthPlace { get; set; }
-        public string Background { get; set; }
-        public int Generation { get; set; }
-        public int ExperienceActual { get; set; }
-        public int ExperienceRemaining { get; set; }
-        public int Nights { get; set; }
-        public int Willingness { get; set; }
-        public int Humanity { get; set; }
-        public string PictureUrl { get; set; }
-        public RaceReturnModelLite Race { get; set; }
-        public ClanReturnModelLite Clan { get; set; }
-        public UserReturnModelLite User { get; set; }
-    }
-
-    public class PersonaWithMailReturnModel : PersonaReturnModelLite
-    {
-        public List<PersonaMailReturnModel> SentMails { get; set; }
-        public List<PersonaMailReturnModel> ReceivedMails { get; set; }
-    }
-
-    public class PersonaMailReturnModel
-    {
-        public int PersonaId { get; set; }
-        public int MailId { get; set; }
-        public DateTime? Read { get; set; }
-        public DateTime? Deleted { get; set; }
-        public PersonaReturnModel Persona { get; set; } // associed Persona
-        public MailReturnModel Mail { get; set; } // associed Mail
-    }
-
-    //public class MailReturnModel
-    //{
-    //    public string Url { get; set; }
-    //    public int Id { get; set; }
-    //    public string Subject { get; set; } = string.Empty;
-    //    public string Message { get; set; } = string.Empty;
-    //    public DateTime Sent { get; set; }
-    //    public PersonaReturnModel From { get; set; }
-    //    public ICollection<Persona> To { get; set; } = new List<Persona>();
-    //    public ICollection<PersonaMail> ConnectedPersonae { get; set; } = new List<MailboxMail>();
-    //}
 }
